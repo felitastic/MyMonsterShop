@@ -12,6 +12,8 @@ public class Controls : MonoBehaviour
     public float verticalSpeed = 1f;
     public float horizontalSpeed = 1f;
 
+    enum Controlscheme { followfinger, pressarrow };
+    Controlscheme controlscheme = Controlscheme.followfinger;
     private float newPosX;
 
     public void Start()
@@ -20,29 +22,62 @@ public class Controls : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.touchCount > 0)
+        switch (controlscheme)
         {
-            Touch touch = Input.GetTouch(0);
-            newPosX = Cam.ScreenToWorldPoint(touch.position).x;
-        }
+            case Controlscheme.followfinger:
+                if (Input.touchCount > 0)
+                {
+                    Touch touch = Input.GetTouch(0);
+                    newPosX = Cam.ScreenToWorldPoint(touch.position).x;
+                }
 
-        if (!Mathf.Approximately(Monster.transform.position.x, newPosX))
-        {
-            if (Monster.transform.position.x > newPosX)
-            {
-                //left
-                Monster.velocity = new Vector2(-horizontalSpeed, verticalSpeed);
-            }
-            else if (Monster.transform.position.x < newPosX)
-            {
-                //right
-                Monster.velocity = new Vector2(horizontalSpeed, verticalSpeed);
-            }
-        }
-        else
-        {
-            Monster.velocity = new Vector2(0f, verticalSpeed);
-        }
+                if (!Mathf.Approximately(Monster.transform.position.x, newPosX))
+                {
+                    if (Monster.transform.position.x > newPosX)
+                    {
+                        //left
+                        Monster.velocity = new Vector2(-horizontalSpeed, verticalSpeed);
+                    }
+                    else if (Monster.transform.position.x < newPosX)
+                    {
+                        //right
+                        Monster.velocity = new Vector2(horizontalSpeed, verticalSpeed);
+                    }
+                }
+                else
+                {
+                    Monster.velocity = new Vector2(0f, verticalSpeed);
+                }
+
+                break;
+            case Controlscheme.pressarrow:
+                if (Input.touchCount > 0)
+                {
+                    Touch touch = Input.GetTouch(0);
+                    newPosX = Cam.ScreenToWorldPoint(touch.position).x;
+                }
+
+                if (!Mathf.Approximately(Monster.transform.position.x, newPosX))
+                {
+                    if (Monster.transform.position.x > newPosX)
+                    {
+                        //left
+                        Monster.velocity = new Vector2(-horizontalSpeed, verticalSpeed);
+                    }
+                    else if (Monster.transform.position.x < newPosX)
+                    {
+                        //right
+                        Monster.velocity = new Vector2(horizontalSpeed, verticalSpeed);
+                    }
+                }
+                else
+                {
+                    Monster.velocity = new Vector2(0f, verticalSpeed);
+                }
+                break;
+            default:
+                break;
+        }       
 
         Cam.transform.position = new Vector3(0f, Monster.transform.position.y + 5.0f, -10f);
     }
@@ -51,5 +86,11 @@ public class Controls : MonoBehaviour
     {
         CollectedCount += value;
         CollectedText.text = ""+CollectedCount;
+    }
+
+    public void ChangeControls(int control)
+    {
+        controlscheme = (Controlscheme)control;
+        print("controlscheme name = " + controlscheme);
     }
 }
