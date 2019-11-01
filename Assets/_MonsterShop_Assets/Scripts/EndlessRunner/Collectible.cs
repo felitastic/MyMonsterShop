@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Collectible : MonoBehaviour
 {
-    public Controls controls;
+    public Controls1 controls;
     public int value = 1;
 
     private void OnTriggerEnter(Collider other)

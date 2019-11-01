@@ -11,13 +11,9 @@ public class Controls1 : MonoBehaviour
     public Rigidbody Monster;
     public float verticalSpeed = 1f;
     public float horizontalSpeed = 1f;
-
-
-    public Collider2D leftButton;
-    public Collider2D rightButton;
-
-    //private Touch touch;
-    //private Vector2 touchPos;
+    
+    [SerializeField] private bool pointerdown;
+    [SerializeField] private float horizontalDirection;
 
     public void Start()
     {
@@ -25,52 +21,31 @@ public class Controls1 : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.touchCount > 0)
-        {
-            Touch touch = Input.GetTouch(0);
-            Vector2 touchPos = Cam.ScreenToWorldPoint(touch.position);
-            CheckForTouch(touchPos);
-            //switch (touch.phase)
-            //{
-            //    case TouchPhase.Began:
-            //        touchPos = Cam.ScreenToWorldPoint(touch.position);
-            //        break;
-            //    case TouchPhase.Moved:
-            //        Vector2 direction = touch.position - touchPos;
-            //        break;
-            //    case TouchPhase.Stationary:
-            //        if it touches one of the arrow colliders
-            //        break;
-            //    case TouchPhase.Ended:
+        Cam.transform.position = new Vector3(0f, Monster.transform.position.y + 5.0f, -10f);
 
-            //        break;
-            //    case TouchPhase.Canceled:
-            //        break;
-            //    default:
-            //        break;
-            //}
-        }
-        else
+        if (!ointerdown)
         {
             Monster.velocity = new Vector2(0f, verticalSpeed);
         }
-        Cam.transform.position = new Vector3(0f, Monster.transform.position.y + 5.0f, -10f);
+        else
+        {
+            Monster.velocity = new Vector2(horizontalSpeed * horizontalDirection, verticalSpeed);
+        }
     }
 
-    void CheckForTouch(Vector2 TouchPos)
+    public void OnPointerDown(bool left)
     {
-        if (leftButton == Physics2D.OverlapPoint(TouchPos))
-        {
-            Monster.velocity = new Vector2(-horizontalSpeed, verticalSpeed);
-        }
-        else if (rightButton == Physics2D.OverlapPoint(TouchPos))
-        {
-            Monster.velocity = new Vector2(horizontalSpeed, verticalSpeed);
-        }
+        pointerdown = true;
+
+        if (left)
+            horizontalDirection = -1;
         else
-        {
-            Monster.velocity = new Vector2(0f, verticalSpeed);
-        }
+            horizontalDirection = +1;
+    }
+
+    public void OnPointerUp()
+    {
+        pointerdown = false;
     }
 
     public void UpdateCollectedCount(int value)
