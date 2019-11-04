@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class GlobalValues : MonoBehaviour
 {
-    public int gold;
+    public int Gold;
+    public float XP;
     
     //monsterslots (class)
     //log data

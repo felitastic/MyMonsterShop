@@ -1,17 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class Controls1 : MonoBehaviour
+public class PlayerControls : MonoBehaviour
 {
-    public int CollectedCount;
-    public Text CollectedText;
+    public RunnerController controller;
     public Camera Cam;
     public Rigidbody Monster;
-    public float verticalSpeed = 1f;
-    public float horizontalSpeed = 1f;
-    
+    private float verticalSpeed { get { return controller.VerticalSpeed; } }
+    private float horizontalSpeed { get { return controller.HorizontalSpeed; } }
+
     [SerializeField] private bool pointerdown;
     [SerializeField] private float horizontalDirection;
 
@@ -23,7 +21,7 @@ public class Controls1 : MonoBehaviour
     {
         Cam.transform.position = new Vector3(0f, Monster.transform.position.y + 5.0f, -10f);
 
-        if (!ointerdown)
+        if (!pointerdown)
         {
             Monster.velocity = new Vector2(0f, verticalSpeed);
         }
@@ -46,11 +44,5 @@ public class Controls1 : MonoBehaviour
     public void OnPointerUp()
     {
         pointerdown = false;
-    }
-
-    public void UpdateCollectedCount(int value)
-    {
-        CollectedCount += value;
-        CollectedText.text = "" + CollectedCount;
     }
 }
