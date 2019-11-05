@@ -10,7 +10,7 @@ public class Debuglog : MonoBehaviour
     public KeyCode OnOffKey = KeyCode.Escape;
     public Color textColor = Color.green;
 
-    [SerializeField] private Text[] line;
+    public Text[] line;
     private int curLine = 0;
 
     private void Awake()

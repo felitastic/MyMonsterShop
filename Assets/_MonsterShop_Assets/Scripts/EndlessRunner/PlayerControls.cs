@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class PlayerControls : MonoBehaviour
 {
-    public RunnerController controller;
+    public EndlessRunnerVars vars;
     public Camera Cam;
     public Rigidbody Monster;
-    private float verticalSpeed { get { return controller.VerticalSpeed; } }
-    private float horizontalSpeed { get { return controller.HorizontalSpeed; } }
+    private float verticalSpeed { get { return vars.VerticalSpeed; } }
+    private float horizontalSpeed { get { return vars.HorizontalSpeed; } }
 
     [SerializeField] private bool pointerdown;
     [SerializeField] private float horizontalDirection;
@@ -19,7 +19,7 @@ public class PlayerControls : MonoBehaviour
     }
     private void Update()
     {
-        Cam.transform.position = new Vector3(0f, Monster.transform.position.y + 5.0f, -10f);
+        Cam.transform.position = new Vector3(0f, Monster.transform.position.y + 6.0f, -10f);
 
         if (!pointerdown)
         {

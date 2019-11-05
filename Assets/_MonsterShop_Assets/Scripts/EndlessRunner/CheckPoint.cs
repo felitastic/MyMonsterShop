@@ -4,14 +4,26 @@ using UnityEngine;
 
 public class CheckPoint : MonoBehaviour
 {
-    public RunnerController controller;
+    public EndlessRunnerVars vars;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            controller.ModifySpeed();
-            controller.AddCollectableValue();
+            if (this.CompareTag("Checkpoint"))
+            {
+                vars.ModifySpeed();
+                vars.AddCollectableValue();
+            }
+            else if (this.CompareTag("Goal"))
+            {
+                vars.CollectedCountWinModifier();
+                vars.GameEndText.text = "YOU WIN";                
+            }
+            else
+            {
+                Debug.LogError("No tag set to checkpoint: " + this.gameObject.name);
+            }
         }
     }
 }
