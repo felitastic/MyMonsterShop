@@ -4,18 +4,21 @@ using UnityEngine;
 
 public class Collectable : MonoBehaviour
 {
-    public EndlessRunnerVars vars;
+    float valueModifier { get { return RunnerController.inst.ValueModifier; } }
 
-    private float value { get { return vars.CollectableValue; } }
-
-    //If player touches Collectable
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            vars.UpdateCollectedCount(value);
-            StartCoroutine(vars.cOnCollectFeedback());
+            UpdateCollectedCount();
+            StartCoroutine(RunnerController.inst.cOnCollectFeedback());
             Destroy(this.gameObject, 0.25f);
         }
+    }
+
+    public void UpdateCollectedCount()
+    {
+        RunnerController.inst.CollectedCount += valueModifier;
+        RunnerController.inst.CollectedText.text = "" + Mathf.RoundToInt(RunnerController.inst.CollectedCount);
     }
 }

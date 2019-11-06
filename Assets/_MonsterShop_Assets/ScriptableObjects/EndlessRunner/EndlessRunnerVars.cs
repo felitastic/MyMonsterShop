@@ -11,60 +11,75 @@ public class EndlessRunnerVars : ScriptableObject
     [Tooltip("Base XP value of one powerup")]
     public float CollectableValue;
     [Tooltip("Speed of the monster forwards")]
-    public float VerticalSpeed = 1f;
+    public float VerticalSpeed;
     [Tooltip("Speed of the monster left and right")]
-    public float HorizontalSpeed = 1f;
+    public float HorizontalSpeed;
     [Tooltip("Speed multiplier for every checkpoint")]
-    public float SpeedModifier = 1f;
+    public float SpeedModifier;
     [Tooltip("Added value for the powerup per Checkpoint")]
-    public float ValueModifier = 1f;
+    public float ValueModifier;
     [Tooltip("Multiplier for reward after reaching the goal")]
-    public float GoalReward = 1f;
+    public float GoalReward;
 
     [Header("ONLY for programmer")]
     public float CollectedCount;
+    public int curTile;
     [Tooltip("Prefabs of the tiles of this level")]
     public GameObject[] LevelTiles;
-    public int curTile;
     public Text CollectedText;
     public Text GameEndText;
     public Text CollectedFeedbackText;
+
+    [Header("Copies for changing values")]
+    //[HideInInspector]
+    public float curCollectableValue;
+    //[HideInInspector]
+    public float curVerticalSpeed;
+    //[HideInInspector]
+    public float curHorizontalSpeed;
+    //[HideInInspector]
+    public float curCollectedCount;
+    //[HideInInspector]
+    public int StartTile;
 
     //public Text GameEndText;
     //[Tooltip("Temporary feedback text for XP gain")]
     //public Text CollectedFeedbackText;
     //public GameObject LevelSpawn;
-    public void ResetValues()
+    public void ResetToStartValues()
     {
-        CollectedCount = 0;
-        curTile = 0;
+        curCollectableValue = CollectableValue;
+        curVerticalSpeed = VerticalSpeed;
+        curHorizontalSpeed = HorizontalSpeed;
+        curCollectedCount = CollectedCount;
+        StartTile = curTile;
     }
 
     public void ModifySpeed()
     {
-        VerticalSpeed *= SpeedModifier;
+        curVerticalSpeed *= SpeedModifier;
     }
 
     public void AddCollectableValue()
     {
-        CollectableValue += ValueModifier;
+        curCollectableValue += ValueModifier;
     }
 
     public void CollectedCountWinModifier()
     {
-        CollectedCount *= GoalReward;
+        curCollectableValue *= GoalReward;
     }
 
     public void UpdateCollectedCount(float value)
     {
-        CollectedCount += value;
-        CollectedText.text = "" + Mathf.RoundToInt(CollectedCount);
+        curCollectedCount += value;
+        CollectedText.text = "" + Mathf.RoundToInt(curCollectedCount);
     }
 
 
     public IEnumerator cOnCollectFeedback()
     {
-        CollectedFeedbackText.text = "+" + CollectableValue + "XP";
+        CollectedFeedbackText.text = "+" + curCollectableValue + "XP";
         yield return new WaitForSeconds(0.1f);
         CollectedFeedbackText.text = "";
 

@@ -6,52 +6,48 @@ using UnityEngine.SceneManagement;
 
 public class RunnerController : MonoBehaviour
 {
-    public EndlessRunnerVars vars;
+    public static RunnerController inst;
 
-    public float CollectableValue;
+    [Header("BALANCING values for GD")]
+    [Tooltip("Speed of the monster forwards")]
     public float VerticalSpeed;
+    [Tooltip("Speed of the monster left and right")]
     public float HorizontalSpeed;
     [Tooltip("Speed multiplier for every checkpoint")]
-    public float SpeedModifier = 1f;    
+    public float SpeedModifier;
+    [Tooltip("Base XP value of one powerup")]
+    public float CollectableValue;
     [Tooltip("Added value for the powerup per Checkpoint")]
-    public float ValueModifier = 1f;    
+    public float ValueModifier;
     [Tooltip("Multiplier for reward after reaching the goal")]
-    public float GoalReward = 1f;
+    public float GoalReward;
 
-    [Header("Do no touch unless you are The Programmer")]
+    [Header("ONLY for programmer")]
     public float CollectedCount;
-    public Text CollectedText;
-    public Text GameEndText;
-    [Tooltip("Temporary feedback text for XP gain")]
-    public Text CollectedFeedbackText;
+    [HideInInspector]
+    public int curTile;
     [Tooltip("Prefabs of the tiles of this level")]
     public GameObject[] LevelTiles;
-    public int curTile;
-    public GameObject LevelSpawn;
 
-    //Spawned when player collects item
-    //public GameObject FeedbackPrefab;
-    //public RectTransform FeedbackSpawm;
+    //public float TileDistance = 19.0f;
 
-    void Start()
+    public Text CollectedText;
+    public Text GameEndText;
+    public Text CollectedFeedbackText;
+
+
+    private void Start()
     {
-        vars.ResetValues();
-        GameEndText.text = "";
-        InstantiateFirstTiles();
-    }
-       
-    public void InstantiateFirstTiles()
-    {
-        Instantiate(LevelTiles[curTile], LevelSpawn.transform);
-        Instantiate(LevelTiles[curTile + 1], LevelSpawn.transform);
+        if (inst == null)
+            inst = this;
+        else
+            Destroy(this);
+
+        InstantiateNextTile(curTile);
+        curTile += 1;
+        InstantiateNextTile(curTile);
     }
 
-
-    public void UpdateCollectedCount(float value)
-    {
-        CollectedCount += value;
-        CollectedText.text = "" + Mathf.RoundToInt(CollectedCount);
-    }
 
     public IEnumerator cOnCollectFeedback()
     {
@@ -71,27 +67,10 @@ public class RunnerController : MonoBehaviour
         SceneManager.LoadScene(scene.name);
     }
 
-
-    //
-    //
-    public void ResetValues()
+    public void InstantiateNextTile(int whichTile)
     {
-        CollectedCount = 0;
-        curTile = 0;
+        Instantiate(LevelTiles[whichTile]);
+        //Instantiate(vars.LevelTiles[curTile+1], LevelSpawn.transform);
     }
 
-    public void ModifySpeed()
-    {
-        VerticalSpeed *= SpeedModifier;
-    }
-
-    public void AddCollectableValue()
-    {
-        CollectableValue += ValueModifier;
-    }
-
-    public void CollectedCountWinModifier()
-    {
-        CollectedCount *= GoalReward;
-    }
 }

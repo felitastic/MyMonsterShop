@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class CheckPoint : MonoBehaviour
 {
-    public EndlessRunnerVars vars;
+    float speedModifier { get { return RunnerController.inst.SpeedModifier; } }
+    float valueModifier { get { return RunnerController.inst.ValueModifier; } }
+    float goalReward { get { return RunnerController.inst.GoalReward; } }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -12,18 +14,33 @@ public class CheckPoint : MonoBehaviour
         {
             if (this.CompareTag("Checkpoint"))
             {
-                vars.ModifySpeed();
-                vars.AddCollectableValue();
+                ModifySpeed();
+                AddCollectableValue();
             }
             else if (this.CompareTag("Goal"))
             {
-                vars.CollectedCountWinModifier();
-                vars.GameEndText.text = "YOU WIN";                
+                CollectedCountWinModifier();
+                RunnerController.inst.GameEndText.text = "YOU WIN";                
             }
             else
             {
                 Debug.LogError("No tag set to checkpoint: " + this.gameObject.name);
             }
         }
+    }
+
+    public void ModifySpeed()
+    {
+        RunnerController.inst.VerticalSpeed *= speedModifier;
+    }
+
+    public void AddCollectableValue()
+    {
+        RunnerController.inst.CollectableValue += valueModifier;
+    }
+
+    public void CollectedCountWinModifier()
+    {
+        RunnerController.inst.CollectableValue *= goalReward;
     }
 }

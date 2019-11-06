@@ -7,8 +7,6 @@ TagManager:
   - Checkpoint
   - Goal
   - Obstacle
-  - InstantiateTile
-  - DestroyTile
   layers:
   - Default
   - TransparentFX

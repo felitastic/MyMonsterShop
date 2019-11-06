@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class Obstacle : MonoBehaviour
 {
-    public EndlessRunnerVars vars;
-
     private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            vars.GameEndText.text = "GAME OVER";
+            RunnerController.inst.GameEndText.text = "GAME OVER";
             other.gameObject.SetActive(false);
-            StartCoroutine(vars.GameEnd());
+            StartCoroutine(RunnerController.inst.GameEnd());
         }
     }
 }
