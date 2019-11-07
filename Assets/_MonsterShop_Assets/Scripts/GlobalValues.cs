@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class GlobalValues : MonoBehaviour
 {
-    public int Gold;
-    public float XP;
-    
-    //monsterslots (class)
-    //log data
+    /*
+     * Gold des Spielers
+     * Momentane Monster im Home Screen und deren XP & Value
+     * Monster Log Freischaltungen & Highscores
+     * Freigeschaltete Monster-Slots?
+     * 
+     */
+
+
 }

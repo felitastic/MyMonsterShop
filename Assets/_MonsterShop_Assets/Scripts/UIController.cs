@@ -1,18 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
-public class UIController : MonoBehaviour
+public abstract class UIController
+//: MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    //public static UIController inst;
+
+    //private void Start()
+    //{
+    //    if (inst == null)
+    //        inst = this;
+    //    else
+    //        Destroy(this);
+
+    //    DontDestroyOnLoad(this);
+    //}
+
+    public void DisableText(Text thisText)
     {
-        
+
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
