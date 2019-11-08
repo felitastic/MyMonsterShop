@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Tests;
 public class _testchildclass : _testabstractclass 
 {
     public override void DisableMenu(GameObject menu)

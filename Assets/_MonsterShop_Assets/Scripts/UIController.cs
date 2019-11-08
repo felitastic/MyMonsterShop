@@ -2,26 +2,39 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
-public abstract class UIController
-//: MonoBehaviour
+public abstract class UIController : MonoBehaviour
 {
-    //public static UIController inst;
+    //Menus in the Scene
+    public GameObject[] Menus;
+    //CanvasGroups in the Scene for Fadeout
+    public CanvasGroup[] Canvasgroups;
+    //Text fields for changing them
+    public Text[] Textfields;
+    //Buttons in the Scene for en/disable etc
+    public Button[] Buttons;
 
-    //private void Start()
-    //{
-    //    if (inst == null)
-    //        inst = this;
-    //    else
-    //        Destroy(this);
-
-    //    DontDestroyOnLoad(this);
-    //}
-
-    public void DisableText(Text thisText)
+    public void SetUIinManager()
     {
-
+        GameManager.inst.curUI = this;
     }
 
+    public void DisableMenu(GameObject menu)
+    { }
+    public void EnableMenu(GameObject menu)
+    { }
+    public void SetText(string newText)
+    { }
+    public void FadeOut(Text thisText)
+    { }
+
+    public void EnableButton(Button thisButton)
+    { }
+    public void DisableButton(Button thisButton)
+    { }
+
+    public void InfoPopup()
+    { }
 }
+
+
