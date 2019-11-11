@@ -55,7 +55,7 @@ namespace Tests
 
         public void PressLeftButton()
         {
-            if (screen != curScreen.left)
+            if (screen != curScreen.left && !lerping)
             {
                 screen -= 1;
                 SetScreen();
@@ -64,7 +64,7 @@ namespace Tests
 
         public void PressRightButton()
         {
-            if (screen != curScreen.right)
+            if (screen != curScreen.right && !lerping)
             {
                 screen += 1;
                 SetScreen();

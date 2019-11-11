@@ -5,20 +5,36 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager inst;
-    public UIController curUI;
+
+    //ui controller schreibt sich bei onenable/awake hier rein
+    public UIController CurUI;
+    
+    public int CurPlayerID;
+
+    public int CurCreatureSlot;
+
+    //wie oft spieler schon minigames gespielt hat (für unlocks)
     public int MinigamesPlayed;
     public eScene CurScene;
 
-    public List<Creature> CurCreatures = new List<Creature>(3);
+    //momentane creatures, die der Spieler hat
+    public List<MonsterSlot> CurMonsters = new List<MonsterSlot>(3);
+
+    //Lautstärke vom Spieler eingestellt
+    public float BGMVolume;
+    public float SFXVolume;
 
 
 
-    void Start()
+
+    void Awake()
     {
         if (inst == null)
             inst = this;
         else
             Destroy(this);
+
+        DontDestroyOnLoad(this);
     }
 
     // Update is called once per frame

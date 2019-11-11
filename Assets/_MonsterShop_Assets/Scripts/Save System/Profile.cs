@@ -8,5 +8,9 @@ using UnityEngine;
 public class Profile : MonoBehaviour
 {
     public int PlayerID;
-    
+ 
+    public struct PlayerData
+    {
+
+    }
 }

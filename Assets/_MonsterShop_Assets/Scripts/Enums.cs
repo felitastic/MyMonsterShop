@@ -1,9 +1,16 @@
-﻿public enum eMonsterStage
+﻿public enum eMonsterType
+{    
+    pumpkin,
+    slime
+}
+
+public enum eMonsterStage
 {
     egg,
     baby,
     teen,
-    adult
+    adult,
+    none
 }
 
 public enum eRarity
