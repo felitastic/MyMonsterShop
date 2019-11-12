@@ -27,3 +27,10 @@ public enum eScene
     minigames,
     endlessRunner
 }
+
+public enum eCurHomeScreen 
+{ 
+    left, 
+    middle, 
+    right 
+}

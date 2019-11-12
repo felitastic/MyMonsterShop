@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcb2da6d4402cdf47b668a6ba841bf43, type: 3}
+  m_Name: Capsule
+  m_EditorClassIdentifier: 
+  LevelThreshold:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  CreaturePrefabs:
+  - {fileID: 1726278807984886216, guid: 2e59b769548a21e4faf212389ac273b4, type: 3}
+  - {fileID: 1726278807984886216, guid: 6d5d861b82afeed4a976ab8f7fb73a53, type: 3}
+  CreatureName: 
+  materials:
+  - {fileID: 2100000, guid: 88483f0a9bfb29b428228fb8e167f447, type: 2}
+  - {fileID: 2100000, guid: 93a3add241d743742af17caa40dcd727, type: 2}
+  - {fileID: 2100000, guid: 86336b697daca994bade58052253f94a, type: 2}
+  anim: {fileID: 2556948032981834109, guid: 2e59b769548a21e4faf212389ac273b4, type: 3}
+  rigid: {fileID: 850193822743985044, guid: 2e59b769548a21e4faf212389ac273b4, type: 3}

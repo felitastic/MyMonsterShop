@@ -23,6 +23,8 @@ public class SoundController : MonoBehaviour
         else
             Destroy(this);
 
+        DontDestroyOnLoad(this);
+
     }
 
     public void StartBGM()

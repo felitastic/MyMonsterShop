@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class HomeUI : UIController
 {
+    [SerializeField]
+    private Monster curEgg;
+    private int freeSlot;
     public enum eMenus
     {
         Hatchery,
@@ -35,7 +38,7 @@ public class HomeUI : UIController
 
     public void Start()
     {
-        SetUIinManager();        
+        SetUIinManager();
     }
 
     public void ShopButtonPressed()
@@ -52,18 +55,31 @@ public class HomeUI : UIController
         EnableMenu(Menus[(int)eMenus.Hatchery]);
         DisableMenu(Menus[(int)eMenus.Shop]);
     }
-    
-    public void ChooseEgg()
-    {
-        //check if there are creatures in every slot already
-        //if (GameManager.inst.)
-        //if not, save empty slot position
 
-        SetText(Textfields[(int)eTexts.ShopDialogue], "You really wanna buy this egg?");
-        // Y/N popup    
-        DisableMenu(Menus[(int)eMenus.S_EggMenu]);
-        EnableMenu(Menus[(int)eMenus.S_PurchaseConfirm]);
-        DisableMenu(Menus[(int)eMenus.S_BottomButtons]);
+    public void ChooseEgg(Monster monsteregg)
+    {
+        if (GM.CurMonsters[(int)GM.curHomeScreen].CurMonster != null)
+        {
+            SetText(Textfields[(int)eTexts.ShopDialogue], "There is already a monster in this spot!");
+        }
+        else
+        {
+            if (GM.CurMonsters[(int)GM.curHomeScreen].Unlocked)
+            {
+                freeSlot = (int)GM.curHomeScreen;
+                print("free slot is no " + freeSlot);
+                curEgg = monsteregg;
+                SetText(Textfields[(int)eTexts.ShopDialogue], "You really wanna buy this egg?");
+                // Y/N popup    
+                DisableMenu(Menus[(int)eMenus.S_EggMenu]);
+                EnableMenu(Menus[(int)eMenus.S_PurchaseConfirm]);
+                DisableMenu(Menus[(int)eMenus.S_BottomButtons]);
+            }
+            else
+            {
+                SetText(Textfields[(int)eTexts.ShopDialogue], "You haven't unlocked this spot yet!");
+            }
+        }
     }
 
     public void ConfirmEggPurchase(bool isTrue)
@@ -71,6 +87,7 @@ public class HomeUI : UIController
         if (isTrue)
         {
             //put egg in empty slot position
+            GM.CurMonsters[freeSlot].CurMonster = curEgg;
             StartCoroutine(ConfirmEggPurchase());
         }
         else
@@ -84,10 +101,11 @@ public class HomeUI : UIController
     public IEnumerator ConfirmEggPurchase()
     {
         SetText(Textfields[(int)eTexts.ShopDialogue], "Alright, one egg to go!");
+        GM.HomeCam.SetScreen((eCurHomeScreen)freeSlot);
         yield return new WaitForSeconds(0.5f);
         DisableMenu(Menus[(int)eMenus.Shop]);
         EnableMenu(Menus[(int)eMenus.Hatchery]);
-        //place egg n shit?! 
+        GM.CurMonsters[freeSlot].SpawnEgg();
     }
 
     public IEnumerator CancelEggPurchas()

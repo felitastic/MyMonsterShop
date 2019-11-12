@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public abstract class UIController : MonoBehaviour
 {
+    //Game Manager shortcut
+    public GameManager GM;
+
     //Menus in the Scene
     [Tooltip("Menu Objects to en/disable")]
     public GameObject[] Menus;
@@ -18,12 +21,15 @@ public abstract class UIController : MonoBehaviour
 
     public virtual void SetUIinManager()
     {
-        GameManager.inst.CurUI = this;
+        GM = GameManager.inst;
 
-        if (GameManager.inst.CurUI != null)
-            print("current UI: " + GameManager.inst.CurUI.name);
+        GM.CurUI = this;
+
+        if (GM.CurUI != null)
+            print("current UI: " + GM.CurUI.name);
         else
             print("current UI controller script not set");
+
     }
 
     public virtual void DisableMenu(GameObject menu)
@@ -35,15 +41,13 @@ public abstract class UIController : MonoBehaviour
         menu.SetActive(true);
     }
     public virtual void SetText(Text textfield, string newText)
-    { }
-    public virtual void FadeOut(Text thisText)
-    { }
-
+    {
+        textfield.text = newText;
+    }
     public virtual void EnableButton(Button thisButton)
     { }
     public virtual void DisableButton(Button thisButton)
     { }
-
     public virtual void InfoPopup()
     { }
 }

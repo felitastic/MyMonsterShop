@@ -8,16 +8,21 @@ public class GameManager : MonoBehaviour
 
     //ui controller schreibt sich bei onenable/awake hier rein
     public UIController CurUI;
+
+    public CameraMovement HomeCam;
     
     public int CurPlayerID;
 
     public int CurCreatureSlot;
 
+    public int PlayerMoney;
+
     //wie oft spieler schon minigames gespielt hat (für unlocks)
     public int MinigamesPlayed;
     public eScene CurScene;
+    public eCurHomeScreen curHomeScreen;
 
-    //momentane creatures, die der Spieler hat
+    //momentane unlocked slots and creatures, die der Spieler hat
     public List<MonsterSlot> CurMonsters = new List<MonsterSlot>(3);
 
     //Lautstärke vom Spieler eingestellt
@@ -25,16 +30,21 @@ public class GameManager : MonoBehaviour
     public float SFXVolume;
 
 
-
-
     void Awake()
     {
+        DontDestroyOnLoad(this);
+
         if (inst == null)
             inst = this;
         else
             Destroy(this);
-
-        DontDestroyOnLoad(this);
+    }
+    private void Start()
+    {
+        foreach (MonsterSlot slot in CurMonsters)
+        {
+            slot.SlotID = CurMonsters.IndexOf(slot);
+        }
     }
 
     // Update is called once per frame

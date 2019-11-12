@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Unchanging base values of the Monsters
+/// </summary>
 [CreateAssetMenu(fileName = "newMonster", menuName = "MonsterShop/Monster", order = 1)]
 public class Monster : ScriptableObject
 {
@@ -19,14 +22,13 @@ public class Monster : ScriptableObject
     public float[] LevelThreshold = new float[9];
 
     [Header("--- FOR PROGRAMMERS GENTLE TOUCH ONLY ---")]
-    [Tooltip("Creature model prefab")]
-    public GameObject CreaturePrefab;
+    [Tooltip("Creature model prefabs")]
+    public GameObject[] CreaturePrefabs;
     [Tooltip("Name of the creature")]
     public string CreatureName;
     [Tooltip("List of materials for different rarities: normal, epic, legendary")]
     public Material[] materials = new Material[3];
-    [Tooltip("Rarity rank of the creature")]
-    public eRarity Rarity;
+
     //drag n drop ? not sure if works cause prefab
     public Animator anim;
     public Rigidbody rigid;
