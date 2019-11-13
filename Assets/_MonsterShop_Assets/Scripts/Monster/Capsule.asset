@@ -25,6 +25,14 @@ MonoBehaviour:
   CreaturePrefabs:
   - {fileID: 1726278807984886216, guid: 2e59b769548a21e4faf212389ac273b4, type: 3}
   - {fileID: 1726278807984886216, guid: 6d5d861b82afeed4a976ab8f7fb73a53, type: 3}
+  - {fileID: 1726278807984886216, guid: 6d5d861b82afeed4a976ab8f7fb73a53, type: 3}
+  - {fileID: 1726278807984886216, guid: 6d5d861b82afeed4a976ab8f7fb73a53, type: 3}
+  - {fileID: 1726278807984886216, guid: 6d5d861b82afeed4a976ab8f7fb73a53, type: 3}
+  - {fileID: 1726278807984886216, guid: 6d5d861b82afeed4a976ab8f7fb73a53, type: 3}
+  - {fileID: 1726278807984886216, guid: 6d5d861b82afeed4a976ab8f7fb73a53, type: 3}
+  - {fileID: 1726278807984886216, guid: 6d5d861b82afeed4a976ab8f7fb73a53, type: 3}
+  - {fileID: 1726278807984886216, guid: 6d5d861b82afeed4a976ab8f7fb73a53, type: 3}
+  - {fileID: 1726278807984886216, guid: 6d5d861b82afeed4a976ab8f7fb73a53, type: 3}
   CreatureName: 
   materials:
   - {fileID: 2100000, guid: 88483f0a9bfb29b428228fb8e167f447, type: 2}

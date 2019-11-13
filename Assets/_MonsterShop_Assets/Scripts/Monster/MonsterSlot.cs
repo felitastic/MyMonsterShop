@@ -11,11 +11,12 @@ public class MonsterSlot : MonoBehaviour
     public int SlotID;
 
     //position to spawn the creature at
+    public Transform EggSpawn;
     public Transform MonsterSpawn;
 
     //Scriptable Objekt der Creature einlesen
     public Monster CurMonster;
-
+    private GameObject monsterBody;
     //has player unlocked this slot?
     public bool Unlocked;
 
@@ -28,11 +29,24 @@ public class MonsterSlot : MonoBehaviour
     public float CreatureXP = 0;
     public float CreatureValue = 0;
     
-    public void SpawnEgg()
+    public IEnumerator C_SetStage(eMonsterStage newStage)
     {
-        GameObject egg = Instantiate(CurMonster.CreaturePrefabs[0], MonsterSpawn);
+        MonsterStage = newStage;
+        if (MonsterStage != (int)eMonsterStage.egg)
+        {
+            //play effect for level up
+            Destroy(monsterBody, 0.25f);
+            yield return new WaitForSeconds(0.3f);
+            monsterBody = Instantiate(CurMonster.CreaturePrefabs[(int)MonsterStage], MonsterSpawn);
+        }
+        else
+        {
+            //play effect for egg spawn
+            yield return new WaitForSeconds(0.3f);
+            //CurMonster.CreaturePrefabs[(int)MonsterStage].GetComponentInChildren<Material>() = CurMonster.materials[(int)Rarity];
+            monsterBody = Instantiate(CurMonster.CreaturePrefabs[(int)MonsterStage], EggSpawn);
+        }        
     }
-
 
     public void GetXP()
     {

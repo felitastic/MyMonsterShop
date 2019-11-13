@@ -8,15 +8,20 @@ public class HomeUI : UIController
     [SerializeField]
     private Monster curEgg;
     private int freeSlot;
+    private int hatchTaps;
+
     public enum eMenus
     {
-        Hatchery,
+        Home,
         Shop,
         H_SwipeButtons,
         H_BottomButtons,
         S_BottomButtons,
         S_PurchaseConfirm,
-        S_EggMenu
+        S_EggMenu,
+        HomeBG,
+        ShopBG,
+        S_TappEggButton
     }
 
     public enum eButtons
@@ -43,7 +48,9 @@ public class HomeUI : UIController
 
     public void ShopButtonPressed()
     {
-        DisableMenu(Menus[(int)eMenus.Hatchery]);
+        DisableMenu(Menus[(int)eMenus.HomeBG]);
+        DisableMenu(Menus[(int)eMenus.Home]);
+        EnableMenu(Menus[(int)eMenus.ShopBG]);
         EnableMenu(Menus[(int)eMenus.Shop]);
         EnableMenu(Menus[(int)eMenus.S_EggMenu]);
         EnableMenu(Menus[(int)eMenus.S_BottomButtons]);
@@ -52,8 +59,10 @@ public class HomeUI : UIController
 
     public void ExitShopButtonPressed()
     {
-        EnableMenu(Menus[(int)eMenus.Hatchery]);
+        EnableMenu(Menus[(int)eMenus.Home]);
+        EnableMenu(Menus[(int)eMenus.HomeBG]);
         DisableMenu(Menus[(int)eMenus.Shop]);
+        DisableMenu(Menus[(int)eMenus.ShopBG]);
     }
 
     public void ChooseEgg(Monster monsteregg)
@@ -70,10 +79,10 @@ public class HomeUI : UIController
                 print("free slot is no " + freeSlot);
                 curEgg = monsteregg;
                 SetText(Textfields[(int)eTexts.ShopDialogue], "You really wanna buy this egg?");
-                // Y/N popup    
-                DisableMenu(Menus[(int)eMenus.S_EggMenu]);
-                EnableMenu(Menus[(int)eMenus.S_PurchaseConfirm]);
+                // Make Button "selected"
+                //DisableMenu(Menus[(int)eMenus.S_EggMenu]);
                 DisableMenu(Menus[(int)eMenus.S_BottomButtons]);
+                EnableMenu(Menus[(int)eMenus.S_PurchaseConfirm]);
             }
             else
             {
@@ -101,17 +110,42 @@ public class HomeUI : UIController
     public IEnumerator ConfirmEggPurchase()
     {
         SetText(Textfields[(int)eTexts.ShopDialogue], "Alright, one egg to go!");
-        GM.HomeCam.SetScreen((eCurHomeScreen)freeSlot);
-        yield return new WaitForSeconds(0.5f);
-        DisableMenu(Menus[(int)eMenus.Shop]);
-        EnableMenu(Menus[(int)eMenus.Hatchery]);
-        GM.CurMonsters[freeSlot].SpawnEgg();
+        //GM.HomeCam.SetScreen((eCurHomeScreen)freeSlot);
+        yield return new WaitForSeconds(0.3f);
+        DisableMenu(Menus[(int)eMenus.S_EggMenu]);
+        StartCoroutine(GM.CurMonsters[freeSlot].C_SetStage(eMonsterStage.egg));
+        DisableMenu(Menus[(int)eMenus.S_BottomButtons]);
+        SetText(Textfields[(int)eTexts.ShopDialogue], "Tap egg to hatch it!");
+        EnableMenu(Menus[(int)eMenus.S_TappEggButton]);
+        //EnableMenu(Menus[(int)eMenus.Home]);
     }
 
     public IEnumerator CancelEggPurchas()
     {
-        EnableMenu(Menus[(int)eMenus.S_EggMenu]);
+        //make button deselected
+        //EnableMenu(Menus[(int)eMenus.S_EggMenu]);
         SetText(Textfields[(int)eTexts.ShopDialogue], "Can I get you another one?");
         yield return new WaitForSeconds(0.5f);
+    }
+
+    public void TapEgg()
+    {
+        hatchTaps += 1;
+        print("tapped " + hatchTaps);
+        if (hatchTaps == 5)
+        {
+            GM.CurMonsters[freeSlot].Rarity = (eRarity)Random.Range(0, 4);
+            StartCoroutine(WaitForEggToHatch());
+            DisableMenu(Menus[(int)eMenus.S_TappEggButton]);
+        }
+    }
+
+    public IEnumerator WaitForEggToHatch()
+    {
+        StartCoroutine(GM.CurMonsters[freeSlot].C_SetStage(eMonsterStage.baby));
+        yield return new WaitForSeconds(0.5f);
+        DisableMenu(Menus[(int)eMenus.ShopBG]);
+        EnableMenu(Menus[(int)eMenus.Home]);
+        EnableMenu(Menus[(int)eMenus.HomeBG]);
     }
 }

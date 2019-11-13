@@ -22,8 +22,10 @@ public class Monster : ScriptableObject
     public float[] LevelThreshold = new float[9];
 
     [Header("--- FOR PROGRAMMERS GENTLE TOUCH ONLY ---")]
-    [Tooltip("Creature model prefabs")]
-    public GameObject[] CreaturePrefabs;
+
+    [Tooltip("Creature model prefabs by Rarity and Age")]
+    public GameObject[,] CreaturePrefabs;
+
     [Tooltip("Name of the creature")]
     public string CreatureName;
     [Tooltip("List of materials for different rarities: normal, epic, legendary")]
