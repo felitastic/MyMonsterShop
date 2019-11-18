@@ -6,10 +6,10 @@
 
 public enum eMonsterStage
 {
-    egg,
     baby,
     teen,
     adult,
+    egg,
     none
 }
 

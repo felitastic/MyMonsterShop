@@ -12,6 +12,60 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcb2da6d4402cdf47b668a6ba841bf43, type: 3}
   m_Name: Capsule
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 1726278807984886216, guid: 2e59b769548a21e4faf212389ac273b4, type: 3}
+    - {fileID: 1726278807984886216, guid: 942fd82a969cc304ea8ac10d46294b20, type: 3}
+    - {fileID: 1726278807984886216, guid: 0c671f3f705174441b9d4605d1d1591c, type: 3}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: m_CreaturePrefabs
+      Entry: 7
+      Data: 0|UnityEngine.GameObject[,], UnityEngine.CoreModule
+    - Name: 
+      Entry: 12
+      Data: 9
+    - Name: ranks
+      Entry: 1
+      Data: 3|3
+    - Name: 
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 10
+      Data: 1
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 10
+      Data: 2
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
   LevelThreshold:
   - 0
   - 0
@@ -22,21 +76,7 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  CreaturePrefabs:
-  - {fileID: 1726278807984886216, guid: 2e59b769548a21e4faf212389ac273b4, type: 3}
-  - {fileID: 1726278807984886216, guid: 6d5d861b82afeed4a976ab8f7fb73a53, type: 3}
-  - {fileID: 1726278807984886216, guid: 6d5d861b82afeed4a976ab8f7fb73a53, type: 3}
-  - {fileID: 1726278807984886216, guid: 6d5d861b82afeed4a976ab8f7fb73a53, type: 3}
-  - {fileID: 1726278807984886216, guid: 6d5d861b82afeed4a976ab8f7fb73a53, type: 3}
-  - {fileID: 1726278807984886216, guid: 6d5d861b82afeed4a976ab8f7fb73a53, type: 3}
-  - {fileID: 1726278807984886216, guid: 6d5d861b82afeed4a976ab8f7fb73a53, type: 3}
-  - {fileID: 1726278807984886216, guid: 6d5d861b82afeed4a976ab8f7fb73a53, type: 3}
-  - {fileID: 1726278807984886216, guid: 6d5d861b82afeed4a976ab8f7fb73a53, type: 3}
-  - {fileID: 1726278807984886216, guid: 6d5d861b82afeed4a976ab8f7fb73a53, type: 3}
+  Cost: 100
   CreatureName: 
-  materials:
-  - {fileID: 2100000, guid: 88483f0a9bfb29b428228fb8e167f447, type: 2}
-  - {fileID: 2100000, guid: 93a3add241d743742af17caa40dcd727, type: 2}
-  - {fileID: 2100000, guid: 86336b697daca994bade58052253f94a, type: 2}
-  anim: {fileID: 2556948032981834109, guid: 2e59b769548a21e4faf212389ac273b4, type: 3}
-  rigid: {fileID: 850193822743985044, guid: 2e59b769548a21e4faf212389ac273b4, type: 3}
+  MonsterEgg: {fileID: 1127267322663477947, guid: 3dbce3d84f875c14eab50598dbb47967,
+    type: 3}

@@ -7,7 +7,6 @@ using UnityEngine;
 /// </summary>
 public class MonsterSlot : MonoBehaviour
 {
-    [HideInInspector]
     public int SlotID;
 
     //position to spawn the creature at
@@ -28,23 +27,35 @@ public class MonsterSlot : MonoBehaviour
     public int CreatureLevel = 0;
     public float CreatureXP = 0;
     public float CreatureValue = 0;
-    
+
+    private float WaitForHatch = 0.01f;
+    private float WaitforStageChange = 0.25f;
+
+    private void Start()
+    {
+        GameManager.Instance.CurMonsters[SlotID] = this;
+    }
+
     public IEnumerator C_SetStage(eMonsterStage newStage)
     {
         MonsterStage = newStage;
-        if (MonsterStage != (int)eMonsterStage.egg)
+        if(MonsterStage == eMonsterStage.egg)
+        {
+            //play effect for egg spawn
+            yield return new WaitForSeconds(WaitForHatch);
+            //CurMonster.CreaturePrefabs[(int)MonsterStage].GetComponentInChildren<Material>() = CurMonster.materials[(int)Rarity];
+            monsterBody = Instantiate(CurMonster.MonsterEgg, EggSpawn);
+        }
+        else if (MonsterStage != eMonsterStage.none)
         {
             //play effect for level up
             Destroy(monsterBody, 0.25f);
-            yield return new WaitForSeconds(0.3f);
-            monsterBody = Instantiate(CurMonster.CreaturePrefabs[(int)MonsterStage], MonsterSpawn);
+            yield return new WaitForSeconds(WaitforStageChange);
+            monsterBody = Instantiate(CurMonster.CreaturePrefabs[(int)Rarity, (int)MonsterStage], MonsterSpawn);
         }
         else
         {
-            //play effect for egg spawn
-            yield return new WaitForSeconds(0.3f);
-            //CurMonster.CreaturePrefabs[(int)MonsterStage].GetComponentInChildren<Material>() = CurMonster.materials[(int)Rarity];
-            monsterBody = Instantiate(CurMonster.CreaturePrefabs[(int)MonsterStage], EggSpawn);
+            //empty slot
         }        
     }
 

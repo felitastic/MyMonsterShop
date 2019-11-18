@@ -1,19 +1,16 @@
-﻿using System.Collections;
+﻿using core;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
-    public static GameManager inst;
-
     //ui controller schreibt sich bei onenable/awake hier rein
     public UIController CurUI;
 
     public CameraMovement HomeCam;
     
     public int CurPlayerID;
-
-    public int CurCreatureSlot;
 
     public int PlayerMoney;
 
@@ -23,34 +20,19 @@ public class GameManager : MonoBehaviour
     public eCurHomeScreen curHomeScreen;
 
     //momentane unlocked slots and creatures, die der Spieler hat
-    public List<MonsterSlot> CurMonsters = new List<MonsterSlot>(3);
+    public MonsterSlot[] CurMonsters = new MonsterSlot[3];
 
     //Lautstärke vom Spieler eingestellt
     public float BGMVolume;
     public float SFXVolume;
 
+    // um zu verhindern, dass andere/Kind Elemente den Konstruktor des GameManagers aufruft
+    protected GameManager() { }
 
-    void Awake()
-    {
-        DontDestroyOnLoad(this);
-
-        if (inst == null)
-            inst = this;
-        else
-            Destroy(this);
-    }
     private void Start()
     {
-        foreach (MonsterSlot slot in CurMonsters)
-        {
-            slot.SlotID = CurMonsters.IndexOf(slot);
-        }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        Application.targetFrameRate = 60;
+        PlayerMoney = 500;
     }
 
     public void SetScene(eScene curScene)

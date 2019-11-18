@@ -21,7 +21,7 @@ public abstract class UIController : MonoBehaviour
 
     public virtual void SetUIinManager()
     {
-        GM = GameManager.inst;
+        GM = GameManager.Instance;
 
         GM.CurUI = this;
 
@@ -32,21 +32,21 @@ public abstract class UIController : MonoBehaviour
 
     }
 
-    public virtual void DisableMenu(GameObject menu)
+    public virtual void DisableMenu(int menu)
     {
-        menu.SetActive(false);
+        Menus[menu].SetActive(false);
     }
-    public virtual void EnableMenu(GameObject menu)
+    public virtual void EnableMenu(int menu)
     { 
-        menu.SetActive(true);
+        Menus[menu].SetActive(true);
     }
-    public virtual void SetText(Text textfield, string newText)
+    public virtual void SetText(int textfield, string newText)
     {
-        textfield.text = newText;
+        Textfields[textfield].text = newText;
     }
-    public virtual void EnableButton(Button thisButton)
+    public virtual void EnableButton(int thisButton)
     { }
-    public virtual void DisableButton(Button thisButton)
+    public virtual void DisableButton(int thisButton)
     { }
     public virtual void InfoPopup()
     { }

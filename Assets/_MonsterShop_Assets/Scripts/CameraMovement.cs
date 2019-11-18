@@ -24,7 +24,7 @@ public class CameraMovement : MonoBehaviour
 
     private void Start()
     {
-        GM = GameManager.inst;
+        GM = GameManager.Instance;
         GM.HomeCam = this;
         SetScreen(eCurHomeScreen.middle);
     }

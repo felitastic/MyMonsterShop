@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 /// <summary>
 /// Unchanging base values of the Monsters
 /// </summary>
 [CreateAssetMenu(fileName = "newMonster", menuName = "MonsterShop/Monster", order = 1)]
-public class Monster : ScriptableObject
+public class Monster : SerializedScriptableObject
 {
     /*
  * Monster level (steigert stage & value)
@@ -20,23 +21,24 @@ public class Monster : ScriptableObject
     [Header("Values for GD to tweak")]
     [Tooltip("XP threshold for each level of the creature")]
     public float[] LevelThreshold = new float[9];
+    [Tooltip("How much the egg costs in shop")]
+    public int Cost;
 
     [Header("--- FOR PROGRAMMERS GENTLE TOUCH ONLY ---")]
 
-    [Tooltip("Creature model prefabs by Rarity and Age")]
-    public GameObject[,] CreaturePrefabs;
-
     [Tooltip("Name of the creature")]
     public string CreatureName;
-    [Tooltip("List of materials for different rarities: normal, epic, legendary")]
-    public Material[] materials = new Material[3];
-
+    public GameObject MonsterEgg;
+    [Tooltip("Creature model prefabs by Rarity and Age")]
+    [SerializeField]
+    private GameObject[,] m_CreaturePrefabs = new GameObject[3,3];
+    public GameObject[,] CreaturePrefabs { get { return m_CreaturePrefabs; } }
     //drag n drop ? not sure if works cause prefab
-    public Animator anim;
-    public Rigidbody rigid;
+    private Animator anim;
+    private Rigidbody rigid;
 
 
-/* ~~~ Code von Monsterlinker ~~~ */
+    /* ~~~ Code von Monsterlinker ~~~ */
 
     //public List<Material> ToriiColor;
     //public List<Material> EnemySkin;

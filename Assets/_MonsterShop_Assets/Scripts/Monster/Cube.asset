@@ -12,6 +12,60 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcb2da6d4402cdf47b668a6ba841bf43, type: 3}
   m_Name: Cube
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 6393821976897875123, guid: 32f418798e0bf2642b7e8158cee01356, type: 3}
+    - {fileID: 6393821976897875123, guid: cfea4941829a44646941d7468d8e3f31, type: 3}
+    - {fileID: 6393821976897875123, guid: eab5201c6bf04d34aa55ea1b0a7efd7c, type: 3}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: m_CreaturePrefabs
+      Entry: 7
+      Data: 0|UnityEngine.GameObject[,], UnityEngine.CoreModule
+    - Name: 
+      Entry: 12
+      Data: 9
+    - Name: ranks
+      Entry: 1
+      Data: 3|3
+    - Name: 
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 10
+      Data: 1
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 10
+      Data: 2
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
   LevelThreshold:
   - 0
   - 0
@@ -22,13 +76,7 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  CreaturePrefabs:
-  - {fileID: 6393821976897875123, guid: 32f418798e0bf2642b7e8158cee01356, type: 3}
-  - {fileID: 6393821976897875123, guid: c36e0986ba8f1424fb106504b4803d73, type: 3}
+  Cost: 200
   CreatureName: 
-  materials:
-  - {fileID: 2100000, guid: 88483f0a9bfb29b428228fb8e167f447, type: 2}
-  - {fileID: 2100000, guid: 93a3add241d743742af17caa40dcd727, type: 2}
-  - {fileID: 2100000, guid: 86336b697daca994bade58052253f94a, type: 2}
-  anim: {fileID: -8361324589882331720, guid: 32f418798e0bf2642b7e8158cee01356, type: 3}
-  rigid: {fileID: -9060966194831282172, guid: 32f418798e0bf2642b7e8158cee01356, type: 3}
+  MonsterEgg: {fileID: 1127267322663477947, guid: a9c3a29d2d3d06e4599a15db2f8b68b9,
+    type: 3}

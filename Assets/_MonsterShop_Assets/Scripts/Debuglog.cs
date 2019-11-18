@@ -1,9 +1,10 @@
-﻿using System.Collections;
+﻿using core;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Debuglog : MonoBehaviour
+public class Debuglog : Singleton<Debuglog>
 {
     public static Debuglog instance;
     public GameObject LogTexts;
@@ -13,16 +14,8 @@ public class Debuglog : MonoBehaviour
     public Text[] line;
     private int curLine = 0;
 
-    private void Awake()
-    {
-        DontDestroyOnLoad(this);
-
-        if (instance == null)
-            instance = this;
-        else
-            Destroy(this);
-    }
-
+    protected Debuglog() { }
+    
     public void Update()
     {
         if (Input.GetKeyDown(OnOffKey))
