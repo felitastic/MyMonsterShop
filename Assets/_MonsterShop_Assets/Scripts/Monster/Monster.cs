@@ -18,14 +18,21 @@ public class Monster : SerializedScriptableObject
  * Animator, Rigidbody, Material
  */
 
-    [Header("Values for GD to tweak")]
-    [Tooltip("XP threshold for each level of the creature")]
-    public float[] LevelThreshold = new float[9];
+    [Header("--- VALUES FOR GD TO TWEAK ---")]
+    [Tooltip("XP threshold for normal creature")]
+    public float[] LevelThreshold_normal = new float[9];    
+    [Tooltip("XP threshold for rare creature")]
+    public float[] LevelThreshold_rare = new float[9];    
+    [Tooltip("XP threshold for legendary creature")]
+    public float[] LevelThreshold_legendary = new float[9];
     [Tooltip("How much the egg costs in shop")]
     public int Cost;
+    [Tooltip("gold = modificator * xp + base value")]
+    public float Modificator;
+    [Tooltip("gold = modificator * xp + base value")]
+    public int BaseValue;
 
     [Header("--- FOR PROGRAMMERS GENTLE TOUCH ONLY ---")]
-
     [Tooltip("Name of the creature")]
     public string CreatureName;
     public GameObject MonsterEgg;

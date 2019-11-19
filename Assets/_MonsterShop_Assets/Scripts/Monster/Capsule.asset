@@ -17,8 +17,11 @@ MonoBehaviour:
     SerializedBytes: 
     ReferencedUnityObjects:
     - {fileID: 1726278807984886216, guid: 2e59b769548a21e4faf212389ac273b4, type: 3}
+    - {fileID: 1726278807984886216, guid: 3bae605bf4ef56746aab75be7af505d1, type: 3}
     - {fileID: 1726278807984886216, guid: 942fd82a969cc304ea8ac10d46294b20, type: 3}
+    - {fileID: 1726278807984886216, guid: bc20ca332ae5e4a4dbd3adc35adc573a, type: 3}
     - {fileID: 1726278807984886216, guid: 0c671f3f705174441b9d4605d1d1591c, type: 3}
+    - {fileID: 1726278807984886216, guid: 5f700ae8c1cd40243a117c12f5a99054, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -37,17 +40,8 @@ MonoBehaviour:
       Entry: 10
       Data: 0
     - Name: 
-      Entry: 6
-      Data: 
-    - Name: 
-      Entry: 6
-      Data: 
-    - Name: 
       Entry: 10
       Data: 1
-    - Name: 
-      Entry: 6
-      Data: 
     - Name: 
       Entry: 6
       Data: 
@@ -55,8 +49,17 @@ MonoBehaviour:
       Entry: 10
       Data: 2
     - Name: 
+      Entry: 10
+      Data: 3
+    - Name: 
       Entry: 6
       Data: 
+    - Name: 
+      Entry: 10
+      Data: 4
+    - Name: 
+      Entry: 10
+      Data: 5
     - Name: 
       Entry: 6
       Data: 
@@ -66,7 +69,27 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  LevelThreshold:
+  LevelThreshold_normal:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  LevelThreshold_rare:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  LevelThreshold_legendary:
   - 0
   - 0
   - 0
@@ -77,6 +100,8 @@ MonoBehaviour:
   - 0
   - 0
   Cost: 100
-  CreatureName: 
+  Modificator: 1.25
+  BaseValue: 50
+  CreatureName: Capsule
   MonsterEgg: {fileID: 1127267322663477947, guid: 3dbce3d84f875c14eab50598dbb47967,
     type: 3}

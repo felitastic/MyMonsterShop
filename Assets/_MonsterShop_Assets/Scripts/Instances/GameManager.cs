@@ -11,7 +11,6 @@ public class GameManager : Singleton<GameManager>
     public CameraMovement HomeCam;
     
     public int CurPlayerID;
-
     public int PlayerMoney;
 
     //wie oft spieler schon minigames gespielt hat (für unlocks)

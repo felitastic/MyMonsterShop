@@ -18,6 +18,8 @@ public class MonsterSlot : MonoBehaviour
     private GameObject monsterBody;
     //has player unlocked this slot?
     public bool Unlocked;
+    public GameObject Lock;
+    public GameObject Plus;
 
     public eMonsterStage MonsterStage;
     [Tooltip("Rarity rank of the creature")]
@@ -26,7 +28,8 @@ public class MonsterSlot : MonoBehaviour
     //current values, starting with zero/base
     public int CreatureLevel = 0;
     public float CreatureXP = 0;
-    public float CreatureValue = 0;
+    public int CreatureValue { get { return Mathf.RoundToInt(_CreatureValue); } }
+    private float _CreatureValue = 0;
 
     private float WaitForHatch = 0.01f;
     private float WaitforStageChange = 0.25f;
@@ -34,12 +37,45 @@ public class MonsterSlot : MonoBehaviour
     private void Start()
     {
         GameManager.Instance.CurMonsters[SlotID] = this;
+        SetSymbol();
+    }
+
+    public void CalculateValue()
+    {
+        _CreatureValue = (CurMonster.Modificator * CreatureXP) + (float)CurMonster.BaseValue;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public void SetSymbol()
+    {        
+        if (null == CurMonster)
+        {
+            if (!Unlocked)
+            {
+                Plus.SetActive(false);
+                Lock.SetActive(true);
+            }
+            else
+            {
+                Lock.SetActive(false);
+                Plus.SetActive(true);
+
+            }
+        }
+        else
+        {
+            Lock.SetActive(false);
+            Plus.SetActive(false);
+        }
     }
 
     public IEnumerator C_SetStage(eMonsterStage newStage)
     {
         MonsterStage = newStage;
-        if(MonsterStage == eMonsterStage.egg)
+        print(newStage);
+        if(MonsterStage == eMonsterStage.Egg)
         {
             //play effect for egg spawn
             yield return new WaitForSeconds(WaitForHatch);
@@ -56,7 +92,8 @@ public class MonsterSlot : MonoBehaviour
         else
         {
             //empty slot
-        }        
+        }
+        CalculateValue();
     }
 
     public void GetXP()

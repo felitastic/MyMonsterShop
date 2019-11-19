@@ -66,7 +66,27 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  LevelThreshold:
+  LevelThreshold_normal:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  LevelThreshold_rare:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  LevelThreshold_legendary:
   - 0
   - 0
   - 0
@@ -77,6 +97,8 @@ MonoBehaviour:
   - 0
   - 0
   Cost: 200
-  CreatureName: 
+  Modificator: 1.25
+  BaseValue: 100
+  CreatureName: Cube
   MonsterEgg: {fileID: 1127267322663477947, guid: a9c3a29d2d3d06e4599a15db2f8b68b9,
     type: 3}

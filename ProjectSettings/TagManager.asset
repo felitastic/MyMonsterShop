@@ -44,3 +44,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: EggShop
+    uniqueID: 2716194059
+    locked: 0
+  - name: Home
+    uniqueID: 3876676919
+    locked: 0
