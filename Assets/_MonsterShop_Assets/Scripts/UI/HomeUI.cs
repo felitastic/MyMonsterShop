@@ -131,7 +131,11 @@ public class HomeUI : UIController
     {
         DisableMenu((int)eMenus.Home);
         EnableMenu((int)eMenus.MiniGames);
-        SceneManager.LoadScene(1);
+    }
+
+    public void ChooseMinigame(int scene)
+    {
+        SceneManager.LoadScene(scene);
     }
 
     public void ExitTrainMenu()

@@ -31,9 +31,12 @@ public class RunnerController : MonoBehaviour
     public int curTile;
     [Tooltip("Prefabs of the tiles of this level")]
     public GameObject[] LevelTiles;
-    
+    public bool IsRunning;
+
     private void Start()
     {
+        IsRunning = false;
+
         if (GameManager.Instance)
         {
             GameManager.Instance.runnerController = this;
@@ -51,6 +54,10 @@ public class RunnerController : MonoBehaviour
         InstantiateNextTile(curTile);
     }
 
+    public void StartPressed()
+    {
+        IsRunning = true;
+    }
 
     public IEnumerator cOnCollectFeedback()
     {

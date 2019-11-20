@@ -23,15 +23,18 @@ public class PlayerControls : MonoBehaviour
     }
     private void Update()
     {
-        Cam.transform.position = new Vector3(0f, Monster.transform.position.y + 6.0f, -10f);
+        if (GM.runnerController.IsRunning)
+        {
+            Cam.transform.position = new Vector3(0f, Monster.transform.position.y + 6.0f, -10f);
 
-        if (!pointerdown)
-        {
-            Monster.velocity = new Vector2(0f, verticalSpeed);
-        }
-        else
-        {
-            Monster.velocity = new Vector2(horizontalSpeed * horizontalDirection, verticalSpeed);
+            if (!pointerdown)
+            {
+                Monster.velocity = new Vector2(0f, verticalSpeed);
+            }
+            else
+            {
+                Monster.velocity = new Vector2(horizontalSpeed * horizontalDirection, verticalSpeed);
+            }
         }
     }
 
