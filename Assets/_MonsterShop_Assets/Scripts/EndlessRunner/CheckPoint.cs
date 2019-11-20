@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class CheckPoint : MonoBehaviour
 {
-    float speedModifier { get { return RunnerController.inst.SpeedModifier; } }
-    float valueModifier { get { return RunnerController.inst.ValueModifier; } }
-    float goalReward { get { return RunnerController.inst.GoalReward; } }
+    //float speedModifier { get { return RunnerController.inst.SpeedModifier; } }
+    //float valueModifier { get { return RunnerController.inst.ValueModifier; } }
+    //float goalReward { get { return RunnerController.inst.GoalReward; } }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -20,7 +20,7 @@ public class CheckPoint : MonoBehaviour
             else if (this.CompareTag("Goal"))
             {
                 CollectedCountWinModifier();
-                RunnerController.inst.GameEndText.text = "YOU WIN";                
+                GameManager.Instance.CurUI.game
             }
             else
             {
@@ -31,12 +31,12 @@ public class CheckPoint : MonoBehaviour
 
     public void ModifySpeed()
     {
-        RunnerController.inst.VerticalSpeed *= speedModifier;
+        GameManager.Instance.runnerController.curSpeedModifier *= GameManager.Instance.runnerController.RunnerValues.SpeedModifier;
     }
 
     public void AddCollectableValue()
     {
-        RunnerController.inst.CollectableValue += valueModifier;
+        GameManager.Instance.runnerController.curValueModifier += GameManager.Instance.runnerController.RunnerValues.ValueModifier;
     }
 
     public void CollectedCountWinModifier()

@@ -6,42 +6,41 @@ using UnityEngine.SceneManagement;
 
 public class RunnerController : MonoBehaviour
 {
-    public static RunnerController inst;
+    [Header("Draag n Drop")]
+    public EndlessRunner_Values RunnerValues;
+    public PlayerControls playerControls;
 
-    [Header("BALANCING values for GD")]
-    [Tooltip("Speed of the monster forwards")]
-    public float VerticalSpeed;
-    [Tooltip("Speed of the monster left and right")]
-    public float HorizontalSpeed;
-    [Tooltip("Speed multiplier for every checkpoint")]
-    public float SpeedModifier;
-    [Tooltip("Base XP value of one powerup")]
-    public float CollectableValue;
-    [Tooltip("Added value for the powerup per Checkpoint")]
-    public float ValueModifier;
-    [Tooltip("Multiplier for reward after reaching the goal")]
-    public float GoalReward;
+    GameManager GM;
 
-    [Header("ONLY for programmer")]
+    //[HideInInspector]
+    public float curValueModifier;
+    public float curSpeedModifier = 1.01f;
     public float CollectedCount;
-    [HideInInspector]
-    public int curTile;
-    [Tooltip("Prefabs of the tiles of this level")]
-    public GameObject[] LevelTiles;
+    public float CollectedResult;
 
     //public float TileDistance = 19.0f;
 
+    //kommt in die UI
     public Text CollectedText;
     public Text GameEndText;
     public Text CollectedFeedbackText;
-
-
+         
+    //level spawn stuff, maybe second controller dafür
+    public int curTile;
+    [Tooltip("Prefabs of the tiles of this level")]
+    public GameObject[] LevelTiles;
+    
     private void Start()
     {
-        if (inst == null)
-            inst = this;
+        if (GameManager.Instance)
+        {
+            GameManager.Instance.runnerController = this;
+        }
         else
-            Destroy(this);
+        {
+            Debug.LogWarning("Could not find Game Manager!");
+        }
+
 
         InstantiateNextTile(curTile);
         curTile += 1;
@@ -51,7 +50,7 @@ public class RunnerController : MonoBehaviour
 
     public IEnumerator cOnCollectFeedback()
     {
-        CollectedFeedbackText.text = "+" + CollectableValue + "XP";
+        CollectedFeedbackText.text = "+" + _CollectableValue + "XP";
         yield return new WaitForSeconds(0.1f);
         CollectedFeedbackText.text = "";
 
