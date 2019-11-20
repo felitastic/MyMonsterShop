@@ -6,7 +6,9 @@ using UnityEngine.UI;
 
 public class Debuglog : Singleton<Debuglog>
 {
-    public static Debuglog instance;
+    protected Debuglog() { }
+
+    public Text BuildInfo;
     public GameObject LogTexts;
     public KeyCode OnOffKey = KeyCode.Escape;
     public Color textColor = Color.green;
@@ -14,8 +16,11 @@ public class Debuglog : Singleton<Debuglog>
     public Text[] line;
     private int curLine = 0;
 
-    protected Debuglog() { }
-    
+    public void OnEnable()
+    {
+        BuildInfo.text = "Development Build \nNo final assets";
+    }
+
     public void Update()
     {
         if (Input.GetKeyDown(OnOffKey))

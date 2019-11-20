@@ -1223,8 +1223,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.4270811, y: 19.199999, z: 0.2}
-  m_Center: {x: -5.186459, y: 0, z: 0}
+  m_Size: {x: 1, y: 19.199999, z: 1}
+  m_Center: {x: -4.8, y: 0, z: 0}
 --- !u!65 &8255961496714585143
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1236,8 +1236,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.38237858, y: 19.199999, z: 0.2}
-  m_Center: {x: 5.2088103, y: 0, z: 0}
+  m_Size: {x: 1, y: 19.199999, z: 1}
+  m_Center: {x: 4.8, y: 0, z: 0}
 --- !u!1 &8359366425021388727
 GameObject:
   m_ObjectHideFlags: 0
@@ -1318,7 +1318,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c9f9d887c9e5637498b83fdbd6944638, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 87a0398ee2095024cb6edec285595787, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

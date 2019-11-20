@@ -5,9 +5,14 @@ using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
+    // um zu verhindern, dass andere/Kind Elemente den Konstruktor des GameManagers aufruft
+    protected GameManager() { }
+
+    [Header("Home Screen Values")]
     //ui controller schreibt sich bei onenable/awake hier rein
     public UIController CurUI;
 
+    [Header("Monster Values")]
     public CameraMovement HomeCam;
     
     public int CurPlayerID;
@@ -25,14 +30,16 @@ public class GameManager : Singleton<GameManager>
     public float BGMVolume;
     public float SFXVolume;
 
-    // um zu verhindern, dass andere/Kind Elemente den Konstruktor des GameManagers aufruft
-    protected GameManager() { }
+
+    //Scripte für die Minigames
+    public RunnerController runnerController;
 
     private void Start()
     {
         Application.targetFrameRate = 60;
         PlayerMoney = 500;
     }
+
 
     public void SetScene(eScene curScene)
     {
