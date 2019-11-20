@@ -4,21 +4,21 @@ using UnityEngine;
 
 public class Collectable : MonoBehaviour
 {
-    float valueModifier { get { return RunnerController.inst.ValueModifier; } }
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
             UpdateCollectedCount();
-            StartCoroutine(RunnerController.inst.cOnCollectFeedback());
+            StartCoroutine(GameManager.Instance.runnerController.cOnCollectFeedback());
             Destroy(this.gameObject, 0.25f);
         }
     }
 
     public void UpdateCollectedCount()
     {
-        RunnerController.inst.CollectedCount += valueModifier;
-        RunnerController.inst.CollectedText.text = "" + Mathf.RoundToInt(RunnerController.inst.CollectedCount);
+        GameManager.Instance.runnerController.CollectedCount += 1;
+        GameManager.Instance.runnerController.CollectedXP += GameManager.Instance.runnerController.curCollectableValue;
+        GameManager.Instance.runnerController.CollectedText.text = "" + Mathf.RoundToInt(GameManager.Instance.runnerController.CollectedCount);
+        print("cur XP: " + GameManager.Instance.runnerController.CollectedXP);
     }
 }

@@ -9,13 +9,15 @@ public class RunnerController : MonoBehaviour
     [Header("Draag n Drop")]
     public EndlessRunner_Values RunnerValues;
     public PlayerControls playerControls;
+    public RunnerUI UI;
 
     GameManager GM;
 
     //[HideInInspector]
-    public float curValueModifier;
-    public float curSpeedModifier = 1.01f;
+    public float curCollectableValue;
+    public float curSpeedModifier;
     public float CollectedCount;
+    public float CollectedXP;
     public float CollectedResult;
 
     //public float TileDistance = 19.0f;
@@ -41,6 +43,8 @@ public class RunnerController : MonoBehaviour
             Debug.LogWarning("Could not find Game Manager!");
         }
 
+        curSpeedModifier = 1.00f;
+        curCollectableValue = RunnerValues.CollectableValue;
 
         InstantiateNextTile(curTile);
         curTile += 1;
@@ -50,8 +54,8 @@ public class RunnerController : MonoBehaviour
 
     public IEnumerator cOnCollectFeedback()
     {
-        CollectedFeedbackText.text = "+" + _CollectableValue + "XP";
-        yield return new WaitForSeconds(0.1f);
+        CollectedFeedbackText.text = "+" + curCollectableValue + "XP";
+        yield return new WaitForSeconds(0.2f);
         CollectedFeedbackText.text = "";
 
         //GameObject feedback = Instantiate(FeedbackPrefab, FeedbackSpawm);

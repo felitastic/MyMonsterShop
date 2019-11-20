@@ -19,8 +19,8 @@ public class CheckPoint : MonoBehaviour
             }
             else if (this.CompareTag("Goal"))
             {
-                CollectedCountWinModifier();
-                GameManager.Instance.CurUI.game
+                //CollectedCountWinModifier();
+                GameManager.Instance.runnerController.GameEndText.text = "YOU WIN";
             }
             else
             {
@@ -36,11 +36,11 @@ public class CheckPoint : MonoBehaviour
 
     public void AddCollectableValue()
     {
-        GameManager.Instance.runnerController.curValueModifier += GameManager.Instance.runnerController.RunnerValues.ValueModifier;
+        GameManager.Instance.runnerController.curCollectableValue += GameManager.Instance.runnerController.RunnerValues.ValueModifier;
     }
 
-    public void CollectedCountWinModifier()
-    {
-        RunnerController.inst.CollectableValue *= goalReward;
-    }
+    //public void CollectedCountWinModifier()
+    //{
+    //    GameManager.Instance.runnerController.CollectedXP *= GameManager.Instance.runnerController.RunnerValues.GoalReward;
+    //}
 }

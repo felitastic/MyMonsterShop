@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "EndlessRunnerValues", menuName = "MonsterShop/Minigame/", order = 3)]
+[CreateAssetMenu(fileName = "RunnerValues", menuName = "MonsterShop/Minigame/EndlessRunner")]
 public class EndlessRunner_Values : ScriptableObject
 {
     [Tooltip("Speed of the monster forwards")]

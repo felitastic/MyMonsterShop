@@ -15,6 +15,7 @@ public class RunnerUI : UIController
 
     private enum eButtons
     {
+
     }
 
     private enum eTextfields
@@ -26,7 +27,7 @@ public class RunnerUI : UIController
 
     private void Start()
     {
-        SetUIinManager();
+        //SetUIinManager();
     }
 
     public void GameOver(bool win)

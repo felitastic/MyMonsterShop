@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class HomeUI : UIController
 {
@@ -130,6 +131,7 @@ public class HomeUI : UIController
     {
         DisableMenu((int)eMenus.Home);
         EnableMenu((int)eMenus.MiniGames);
+        SceneManager.LoadScene(1);
     }
 
     public void ExitTrainMenu()
