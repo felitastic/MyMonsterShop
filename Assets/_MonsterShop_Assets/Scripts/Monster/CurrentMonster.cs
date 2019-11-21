@@ -14,5 +14,6 @@ public class CurrentMonster
     public eRarity Rarity;
     public int CreatureLevel;
     public float CreatureXP;
-    public int thisSlot;
+    public float _CreatureValue;
+    public int thisSlot = 4;
 }

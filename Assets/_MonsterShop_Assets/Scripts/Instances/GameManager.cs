@@ -22,7 +22,7 @@ public class GameManager : Singleton<GameManager>
     public CameraMovement HomeCam;
     
     public int CurPlayerID;
-    public int PlayerMoney;
+    public int PlayerMoney = 0;
 
     //wie oft spieler schon minigames gespielt hat (für unlocks)
     public int MinigamesPlayed;
@@ -67,20 +67,24 @@ public class GameManager : Singleton<GameManager>
 
     public void WriteCurrentMonsters()
     {
-        print("Writing current Monster values back");
+        if (thisMonster.thisSlot < 3)
+        {
+            print("Writing current Monster values back");
 
-         CurMonsters[thisMonster.thisSlot].CurMonster = thisMonster.CurMonster;
-         CurMonsters[thisMonster.thisSlot].Unlocked = thisMonster.Unlocked;
-         CurMonsters[thisMonster.thisSlot].LevelThreshold_current = thisMonster.LevelThreshold_current;
-         CurMonsters[thisMonster.thisSlot].MonsterStage = thisMonster.MonsterStage;
-         CurMonsters[thisMonster.thisSlot].Rarity = thisMonster.Rarity;
-         CurMonsters[thisMonster.thisSlot].CreatureLevel = thisMonster.CreatureLevel;
-         CurMonsters[thisMonster.thisSlot].CreatureXP = thisMonster.CreatureXP;
+            CurMonsters[thisMonster.thisSlot].CurMonster = thisMonster.CurMonster;
+            CurMonsters[thisMonster.thisSlot].Unlocked = thisMonster.Unlocked;
+            CurMonsters[thisMonster.thisSlot].LevelThreshold_current = thisMonster.LevelThreshold_current;
+            CurMonsters[thisMonster.thisSlot].MonsterStage = thisMonster.MonsterStage;
+            CurMonsters[thisMonster.thisSlot].Rarity = thisMonster.Rarity;
+            CurMonsters[thisMonster.thisSlot].CreatureLevel = thisMonster.CreatureLevel;
+            CurMonsters[thisMonster.thisSlot].CreatureXP = thisMonster.CreatureXP;
+        }
     }
 
     public void SetGold(int value)
     {
         PlayerMoney += value;
+        print("player gold: " + PlayerMoney);
         homeUI.SetGoldCounter();
     }
 

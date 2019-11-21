@@ -28,9 +28,10 @@ public class HomeUI : UIController
         PlayerInfo,
         MonsterStats,
         MiniGames,
+        S_RarityText,
         DungeonBG,
         Dungeon,
-        D_BottomButtons
+        D_BottomButtons,
     }
 
     private enum  eButtons
@@ -51,7 +52,8 @@ public class HomeUI : UIController
         GoldCount,
         MonsterTypeandStage,
         MonsterValue,
-        DungeonDialogue
+        Hatch_Rarity,
+        DungeonDialogue,
     }
 
     private void Awake()
@@ -60,6 +62,12 @@ public class HomeUI : UIController
         GM.homeUI = this;
     }
     
+    public void SetMonsterValue()
+    {
+        GM.homeUI.SetText((int)eTextfields.MonsterValue, "Value: " + GM.CurMonsters[(int)GM.curHomeScreen].CreatureValue);
+        print("Value: " + GM.CurMonsters[(int)GM.curHomeScreen].CreatureValue);
+    }
+
     public void DungeonButtonPressed()
     {
         camHomePos = Camera.main.transform.position;
@@ -241,13 +249,16 @@ public class HomeUI : UIController
             {
                 case eRarity.normal:
                     GM.CurMonsters[(int)GM.curHomeScreen].LevelThreshold_current = GM.CurMonsters[(int)GM.curHomeScreen].CurMonster.LevelThreshold_normal;
+                    SetText((int)eTextfields.Hatch_Rarity, "Normal");
                     break;
                 case eRarity.rare:
                     GM.CurMonsters[(int)GM.curHomeScreen].LevelThreshold_current = GM.CurMonsters[(int)GM.curHomeScreen].CurMonster.LevelThreshold_rare;
+                    SetText((int)eTextfields.Hatch_Rarity, "Rare!");
 
                     break;
                 case eRarity.legendary:
                     GM.CurMonsters[(int)GM.curHomeScreen].LevelThreshold_current = GM.CurMonsters[(int)GM.curHomeScreen].CurMonster.LevelThreshold_legendary;
+                    SetText((int)eTextfields.Hatch_Rarity, "Legendary!");
 
                     break;
                 default:
@@ -262,14 +273,17 @@ public class HomeUI : UIController
 
     public IEnumerator WaitForEggToHatch()
     {
-        yield return new WaitForSeconds(0.15f);
-        Camera.main.transform.position = camHomePos;
-        StartCoroutine(GM.CurMonsters[(int)GM.curHomeScreen].C_SetStage(eMonsterStage.Baby, GM.CurMonsters[(int)GM.curHomeScreen].MonsterSpawn));
-        SetMonsterTexts((int)GM.curHomeScreen);
         DisableMenu((int)eMenus.ShopBG);
         DisableMenu((int)eMenus.Shop);
         EnableMenu((int)eMenus.Home);
         EnableMenu((int)eMenus.HomeBG);
+        StartCoroutine(GM.CurMonsters[(int)GM.curHomeScreen].C_SetStage(eMonsterStage.Baby, GM.CurMonsters[(int)GM.curHomeScreen].MonsterSpawn));
+        yield return new WaitForSeconds(0.15f);
+        Camera.main.transform.position = camHomePos;
+        EnableMenu((int)eMenus.S_RarityText);
+        SetMonsterTexts((int)GM.curHomeScreen);
+        yield return new WaitForSeconds(1f);
+        DisableMenu((int)eMenus.S_RarityText);
     }
 
     public void SetMonsterTexts(int thisSlot)
@@ -277,12 +291,12 @@ public class HomeUI : UIController
         if (GM.CurMonsters[thisSlot].CurMonster == null)
         {
             SetText((int)eTextfields.MonsterTypeandStage, "");
-            SetText((int)eTextfields.MonsterValue, "");
+            SetMonsterValue();
         }
         else
         {
             SetText((int)eTextfields.MonsterTypeandStage, GM.CurMonsters[thisSlot].MonsterStage + " " + GM.CurMonsters[thisSlot].CurMonster.CreatureName);
-            SetText((int)eTextfields.MonsterValue, "Value: " + GM.CurMonsters[thisSlot].CreatureValue);
+            SetMonsterValue(); 
         }
     }
 

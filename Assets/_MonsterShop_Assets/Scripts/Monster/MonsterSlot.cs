@@ -15,7 +15,7 @@ public class MonsterSlot : MonoBehaviour
     public GameObject Lock;
     public GameObject Plus;
     public int CreatureValue { get { return Mathf.RoundToInt(_CreatureValue); } }
-    private float _CreatureValue = 0;
+    public float _CreatureValue = 0;
 
     private float WaitForHatch = 0.01f;
     private float WaitforStageChange = 0.25f;
@@ -42,13 +42,15 @@ public class MonsterSlot : MonoBehaviour
         GM = GameManager.Instance;
             GM.CurMonsters[SlotID] = this;
 
-        if ((int)GM.curHomeScreen == SlotID)
+        if ((int)GM.thisMonster.thisSlot == SlotID)
         {
             GM.WriteCurrentMonsters();
-            GM.SetGold(GM.PlayerMoney);
+            CalculateValue();
+            GM.SetGold(0);
             if (CurMonster != null)
             {
                 SpawnCurrentMonster(CurMonster.CreaturePrefabs[(int)Rarity, (int)MonsterStage],MonsterSpawn);
+                GM.homeUI.SetMonsterTexts(SlotID);
             }
         }
         SetSymbol();

@@ -54,6 +54,7 @@ public class CameraMovement : MonoBehaviour
         if (GM.curHomeScreen != eCurHomeScreen.left && !lerping)
         {
             SetScreen(GM.curHomeScreen -= 1);
+            GM.homeUI.SetMonsterValue();
         }
     }
 
@@ -61,7 +62,8 @@ public class CameraMovement : MonoBehaviour
     {
         if (GM.curHomeScreen != eCurHomeScreen.right && !lerping)
         {
-            SetScreen(GM.curHomeScreen += 1);            
+            SetScreen(GM.curHomeScreen += 1);
+            GM.homeUI.SetMonsterValue();
         }
     }
 
