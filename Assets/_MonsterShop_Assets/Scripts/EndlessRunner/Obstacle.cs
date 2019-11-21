@@ -8,9 +8,9 @@ public class Obstacle : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            GameManager.Instance.runnerController.GameEndText.text = "GAME OVER";
+            GameManager.Instance.runnerController.win = false;
             other.gameObject.SetActive(false);
-            StartCoroutine(GameManager.Instance.runnerController.GameEnd());
+            StartCoroutine(GameManager.Instance.runnerController.cGameEnd());
         }
     }
 }

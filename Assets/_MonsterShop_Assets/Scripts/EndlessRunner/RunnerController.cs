@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class RunnerController : MonoBehaviour
 {
@@ -10,8 +9,9 @@ public class RunnerController : MonoBehaviour
     public EndlessRunner_Values RunnerValues;
     public PlayerControls playerControls;
     public RunnerUI UI;
+    public Transform monsterSpawn;
 
-    GameManager GM;
+    public GameManager GM;
 
     //[HideInInspector]
     public float curCollectableValue;
@@ -19,6 +19,7 @@ public class RunnerController : MonoBehaviour
     public float CollectedCount;
     public float CollectedXP;
     public float CollectedResult;
+    public Vector3 ResultCamPos;
 
     //public float TileDistance = 19.0f;
 
@@ -32,14 +33,17 @@ public class RunnerController : MonoBehaviour
     [Tooltip("Prefabs of the tiles of this level")]
     public GameObject[] LevelTiles;
     public bool IsRunning;
+    public bool win;
 
     private void Start()
     {
         IsRunning = false;
+        ResultCamPos = new Vector3(-25.0f, 0.0f, -10.0f);
 
         if (GameManager.Instance)
         {
-            GameManager.Instance.runnerController = this;
+            GM = GameManager.Instance;
+            GM.runnerController = this;
         }
         else
         {
@@ -56,6 +60,7 @@ public class RunnerController : MonoBehaviour
 
     public void StartPressed()
     {
+        UI.StartGame();
         IsRunning = true;
     }
 
@@ -70,11 +75,14 @@ public class RunnerController : MonoBehaviour
         //Destroy(feedback, 0.3f);
     }
 
-    public IEnumerator GameEnd()
+    public IEnumerator cGameEnd()
     {
-        yield return new WaitForSeconds(0.5f);
-        Scene scene = SceneManager.GetActiveScene();
-        SceneManager.LoadScene(scene.name);
+        //show fancy anims oder so
+        GM.runnerController.IsRunning = false;
+        yield return new WaitForSeconds(0.01f);
+        UI.GameOver();
+        //Scene scene = SceneManager.GetActiveScene();
+        //SceneManager.LoadScene(scene.name);
     }
 
     public void InstantiateNextTile(int whichTile)

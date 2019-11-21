@@ -38,7 +38,7 @@ public class PlayerControls : MonoBehaviour
         }
     }
 
-    public void OnPointerDown(bool left)
+    public void PointerEnter(bool left)
     {
         pointerdown = true;
 
@@ -48,8 +48,9 @@ public class PlayerControls : MonoBehaviour
             horizontalDirection = +1;
     }
 
-    public void OnPointerUp()
+    public void PointerExit()
     {
         pointerdown = false;
     }
+
 }

@@ -45,9 +45,13 @@ public abstract class UIController : MonoBehaviour
         Textfields[textfield].text = newText;
     }
     public virtual void EnableButton(int thisButton)
-    { }
+    {
+        Buttons[thisButton].interactable = true;
+    }
     public virtual void DisableButton(int thisButton)
-    { }
+    { 
+        Buttons[thisButton].interactable = false;
+    }
     public virtual void InfoPopup()
     { }
 }

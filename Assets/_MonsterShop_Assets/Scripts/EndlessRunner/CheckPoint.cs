@@ -20,7 +20,8 @@ public class CheckPoint : MonoBehaviour
             else if (this.CompareTag("Goal"))
             {
                 //CollectedCountWinModifier();
-                GameManager.Instance.runnerController.GameEndText.text = "YOU WIN";
+                GameManager.Instance.runnerController.win = true;
+                StartCoroutine(GameManager.Instance.runnerController.cGameEnd());
             }
             else
             {

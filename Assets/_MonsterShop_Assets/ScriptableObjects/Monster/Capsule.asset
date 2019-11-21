@@ -70,7 +70,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   LevelThreshold_normal:
-  - 0
+  - 50
   - 0
   - 0
   - 0
@@ -80,7 +80,7 @@ MonoBehaviour:
   - 0
   - 0
   LevelThreshold_rare:
-  - 0
+  - 50
   - 0
   - 0
   - 0
@@ -90,7 +90,7 @@ MonoBehaviour:
   - 0
   - 0
   LevelThreshold_legendary:
-  - 0
+  - 50
   - 0
   - 0
   - 0

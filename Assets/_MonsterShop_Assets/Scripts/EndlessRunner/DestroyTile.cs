@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DestroyTile : MonoBehaviour
 {
-    public float TimeTilDestroy = 0.5f;
+    public float TimeTilDestroy = 0.25f;
 
     private void OnTriggerExit(Collider other)
     {
