@@ -26,7 +26,7 @@ public class CameraMovement : MonoBehaviour
     {
         GM = GameManager.Instance;
         GM.HomeCam = this;
-        SetScreen(eCurHomeScreen.middle);
+        SetScreen(ecurMonsterSlot.middle);
     }
 
     public void Update()
@@ -51,38 +51,38 @@ public class CameraMovement : MonoBehaviour
 
     public void PressLeftButton()
     {
-        if (GM.curHomeScreen != eCurHomeScreen.left && !lerping)
+        if (GM.curMonsterSlot != ecurMonsterSlot.left && !lerping)
         {
-            SetScreen(GM.curHomeScreen -= 1);
+            SetScreen(GM.curMonsterSlot -= 1);
             GM.homeUI.SetMonsterValue();
         }
     }
 
     public void PressRightButton()
     {
-        if (GM.curHomeScreen != eCurHomeScreen.right && !lerping)
+        if (GM.curMonsterSlot != ecurMonsterSlot.right && !lerping)
         {
-            SetScreen(GM.curHomeScreen += 1);
+            SetScreen(GM.curMonsterSlot += 1);
             GM.homeUI.SetMonsterValue();
         }
     }
 
-    public void SetScreen(eCurHomeScreen curScreen)
+    public void SetScreen(ecurMonsterSlot curScreen)
     {
-        GM.curHomeScreen = curScreen;
+        GM.curMonsterSlot = curScreen;
         StartPos = Camera.main.transform.position;
 
-        switch (GM.curHomeScreen)
+        switch (GM.curMonsterSlot)
         {
-            case eCurHomeScreen.left:
+            case ecurMonsterSlot.left:
                 EndPos = new Vector3(-CamXMovement, 0, -10);
 
                 break;
-            case eCurHomeScreen.middle:
+            case ecurMonsterSlot.middle:
                 EndPos = new Vector3(0, 0, -10);
 
                 break;
-            case eCurHomeScreen.right:
+            case ecurMonsterSlot.right:
                 EndPos = new Vector3(CamXMovement, 0, -10);
 
                 break;

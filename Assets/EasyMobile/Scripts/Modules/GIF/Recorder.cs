@@ -250,7 +250,7 @@ namespace EasyMobile
                 else
                 {
                     // Discard the reused RT's content before rendering new content into it
-                    // to avoid a "restore" operation, which is costly on many mobile GPUs and
+                    // to avoid a "restore" operation, which is BaseCostly on many mobile GPUs and
                     // multi-GPU systems and will cause Unity to issue a warning.
                     tempRT.DiscardContents();
                 }

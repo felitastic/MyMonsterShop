@@ -37,7 +37,7 @@ public class RunnerUI : UIController
 
     private void Awake()
     {
-        SetUIinManager();
+        GetGameManager();
         GM.runnerUI = this;
         DisableButton((int)eButtons.LeftButton);
         DisableButton((int)eButtons.RightButton);
@@ -52,11 +52,11 @@ public class RunnerUI : UIController
     {
         if (GM.runnerController.win)
         {
-            GM.CurUI.SetText((int)eTextfields.GameOverFeedback, "YOU WIN");
+            GM.runnerUI.SetText((int)eTextfields.GameOverFeedback, "YOU WIN");
         }
         else
         {
-            GM.CurUI.SetText((int)eTextfields.GameOverFeedback, "GAME OVER");
+            GM.runnerUI.SetText((int)eTextfields.GameOverFeedback, "GAME OVER");
         }
         StartCoroutine(cShowResult());
     }
@@ -64,7 +64,7 @@ public class RunnerUI : UIController
     public IEnumerator cShowResult()
     {
         yield return new WaitForSeconds(0.2f);
-        //xpBar.fillAmount = GM.CurMonsters[(int)GM.curHomeScreen].CreatureXP / GM.CurMonsters[(int)GM.curHomeScreen].LevelThreshold_current[GM.CurMonsters[(int)GM.curHomeScreen].CreatureLevel];
+        //xpBar.fillAmount = GM.CurMonsters[(int)GM.curMonsterSlot].CreatureXP / GM.CurMonsters[(int)GM.curMonsterSlot].LevelThreshold_current[GM.CurMonsters[(int)GM.curMonsterSlot].CreatureLevel];
 
         float curXP = GM.thisMonster.CreatureXP;
         float LevelUpAt = GM.thisMonster.LevelThreshold_current[GM.thisMonster.CreatureLevel];
@@ -73,9 +73,9 @@ public class RunnerUI : UIController
         
         DisableMenu((int)eMenus.InGameStuff);
         Camera.main.transform.position = GM.runnerController.ResultCamPos;
-                //GM.CurMonsters[(int)GM.curHomeScreen].SpawnCurrentMonster(GM.runnerController.monsterSpawn);
+                //GM.CurMonsters[(int)GM.curMonsterSlot].SpawnCurrentMonster(GM.runnerController.monsterSpawn);
 
-        GM.CurMonsters[(int)GM.curHomeScreen].SpawnCurrentMonster(GM.thisMonster.CurMonster.CreaturePrefabs[(int)GM.thisMonster.Rarity, (int)GM.thisMonster.MonsterStage], GM.runnerController.monsterSpawn);
+        GM.CurMonsters[(int)GM.curMonsterSlot].SpawnCurrentMonster(GM.thisMonster.CurMonster.CreaturePrefabs[(int)GM.thisMonster.Rarity, (int)GM.thisMonster.MonsterStage], GM.runnerController.monsterSpawn);
         
         SetText((int)eTextfields.CollectedNo, GM.runnerController.CollectedCount+" x");
         SetText((int)eTextfields.XPValue, GM.runnerController.CollectedXP+" XP");
@@ -91,9 +91,9 @@ public class RunnerUI : UIController
         yield return new WaitForSeconds(0.5f);
 
         GM.thisMonster.MonsterStage += 1;
-        StartCoroutine(GM.CurMonsters[(int)GM.curHomeScreen].C_SetStage(GM.thisMonster.MonsterStage, GM.runnerController.monsterSpawn));
+        StartCoroutine(GM.CurMonsters[(int)GM.curMonsterSlot].C_SetStage(GM.thisMonster.MonsterStage, GM.runnerController.monsterSpawn));
 
-        //StartCoroutine(GM.CurMonsters[(int)GM.curHomeScreen].C_SetStage(GM.CurMonsters[(int)GM.curHomeScreen].MonsterStage + 1, GM.runnerController.monsterSpawn));      
+        //StartCoroutine(GM.CurMonsters[(int)GM.curMonsterSlot].C_SetStage(GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage + 1, GM.runnerController.monsterSpawn));      
         yield return new WaitForSeconds(0.5f);
         EnableMenu((int)eMenus.EndResultButton);
     }

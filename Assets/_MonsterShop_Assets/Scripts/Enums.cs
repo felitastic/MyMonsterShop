@@ -28,7 +28,7 @@ public enum eScene
     endlessRunner
 }
 
-public enum eCurHomeScreen 
+public enum ecurMonsterSlot 
 { 
     left, 
     middle, 

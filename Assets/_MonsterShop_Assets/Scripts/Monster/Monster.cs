@@ -25,17 +25,20 @@ public class Monster : SerializedScriptableObject
     public float[] LevelThreshold_rare = new float[9];
     [Tooltip("XP threshold for legendary creature")]
     public float[] LevelThreshold_legendary = new float[9];
-    [Tooltip("How much the egg costs in shop")]
-    public int Cost;
-    [Tooltip("gold = modificator * xp + base value")]
+    [Tooltip("How much the egg BaseCosts in shop")]
+    public int BaseCost;
+    [Tooltip("Value modificator: gold = modificator * xp + base value")]
     public float Modificator;
     [Tooltip("gold = modificator * xp + base value")]
     public int BaseValue;
 
     [Header("--- FOR PROGRAMMERS GENTLE TOUCH ONLY ---")]
+    public eMonsterType MonsterType;
     [Tooltip("Name of the creature")]
     public string CreatureName;
-    public GameObject MonsterEgg;
+    [Tooltip("Sprite to use in Shop?")]
+    public Sprite EggSprite;
+    public GameObject EggPrefab;
     [Tooltip("Creature model prefabs by Rarity and Age")]
     [SerializeField]
     private GameObject[,] m_CreaturePrefabs = new GameObject[3, 3];

@@ -19,16 +19,16 @@ public abstract class UIController : MonoBehaviour
     //Buttons in the Scene for en/disable etc
     public Button[] Buttons;
 
-    public virtual void SetUIinManager()
+    public virtual void GetGameManager()
     {
         GM = GameManager.Instance;
 
-        GM.CurUI = this;
+        //GM.CurUI = this;
 
-        if (GM.CurUI != null)
-            print("current UI: " + GM.CurUI.name);
-        else
-            print("current UI controller script not set");
+        //if (GM.CurUI != null)
+        //    print("current UI: " + GM.CurUI.name);
+        //else
+        //    print("current UI controller script not set");
 
     }
 

@@ -56,16 +56,24 @@ public class HomeUI : UIController
         DungeonDialogue,
     }
 
+    private enum eScene
+    {
+        Home,
+        Eggshop,
+        Minigame,
+        Dungeonlord
+    }
+
     private void Awake()
     {
-        SetUIinManager();
+        GetGameManager();
         GM.homeUI = this;
     }
     
     public void SetMonsterValue()
     {
-        GM.homeUI.SetText((int)eTextfields.MonsterValue, "Value: " + GM.CurMonsters[(int)GM.curHomeScreen].CreatureValue);
-        print("Value: " + GM.CurMonsters[(int)GM.curHomeScreen].CreatureValue);
+        GM.homeUI.SetText((int)eTextfields.MonsterValue, "Value: " + GM.CurMonsters[(int)GM.curMonsterSlot].CreatureValue);
+        print("Value: " + GM.CurMonsters[(int)GM.curMonsterSlot].CreatureValue);
     }
 
     public void DungeonButtonPressed()
@@ -85,7 +93,7 @@ public class HomeUI : UIController
     {
         string textline = ""; 
 
-        switch (GM.CurMonsters[(int)GM.curHomeScreen].MonsterStage)
+        switch (GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage)
         {
             case eMonsterStage.Baby:
                 textline = "Eh, canon fodder.";
@@ -156,7 +164,7 @@ public class HomeUI : UIController
 
     public void FeedButtonPressed()
     {
-        StartCoroutine(GM.CurMonsters[(int)GM.curHomeScreen].C_SetStage(eMonsterStage.Teen,GM.CurMonsters[(int)GM.curHomeScreen].MonsterSpawn));
+        StartCoroutine(GM.CurMonsters[(int)GM.curMonsterSlot].C_SetStage(eMonsterStage.Teen,GM.CurMonsters[(int)GM.curMonsterSlot].MonsterSpawn));
         print("Feeding time");
     }
 
@@ -169,21 +177,21 @@ public class HomeUI : UIController
         DisableMenu((int)eMenus.ShopBG);
     }
 
-    public void ChooseEgg(Monster monsteregg)
+    public void ChooseEgg(Monster EggPrefab)
     {
-        if (GM.CurMonsters[(int)GM.curHomeScreen].CurMonster != null && GM.PlayerMoney >= monsteregg.Cost)
+        if (GM.CurMonsters[(int)GM.curMonsterSlot].CurMonster != null && GM.PlayerMoney >= EggPrefab.BaseCost)
         {
             SetText((int)eTextfields.ShopDialogue, "There is already a monster in this spot!");
         }
-        else if (GM.PlayerMoney < monsteregg.Cost)
+        else if (GM.PlayerMoney < EggPrefab.BaseCost)
         {
             SetText((int)eTextfields.ShopDialogue, "It seems you cannot afford this egg!");
         }
         else
         {
-            if (GM.CurMonsters[(int)GM.curHomeScreen].Unlocked)
+            if (GM.CurMonsters[(int)GM.curMonsterSlot].Unlocked)
             {
-                curEgg = monsteregg;
+                curEgg = EggPrefab;
                 SetText((int)eTextfields.ShopDialogue, "You really wanna buy this egg?");
                 // Make Button "selected"
                 //DisableMenu(Menus[(int)eMenus.S_EggMenu]);
@@ -202,7 +210,7 @@ public class HomeUI : UIController
         if (isTrue)
         {
             //put egg in empty slot position
-            GM.CurMonsters[(int)GM.curHomeScreen].CurMonster = curEgg;
+            GM.CurMonsters[(int)GM.curMonsterSlot].CurMonster = curEgg;
             StartCoroutine(ConfirmEggPurchase());
         }
         else
@@ -216,12 +224,12 @@ public class HomeUI : UIController
     public IEnumerator ConfirmEggPurchase()
     {
         SetText((int)eTextfields.ShopDialogue, "Alright, one egg to go!");
-        GM.SetGold(-GM.CurMonsters[(int)GM.curHomeScreen].CurMonster.Cost);
-        GM.CurMonsters[(int)GM.curHomeScreen].SetSymbol();
-        //GM.HomeCam.SetScreen((eCurHomeScreen)freeSlot);
+        GM.SetGold(-GM.CurMonsters[(int)GM.curMonsterSlot].CurMonster.BaseCost);
+        GM.CurMonsters[(int)GM.curMonsterSlot].SetSymbol();
+        //GM.HomeCam.SetScreen((ecurMonsterSlot)freeSlot);
         yield return new WaitForSeconds(0.3f);
         DisableMenu((int)eMenus.S_EggMenu);
-        StartCoroutine(GM.CurMonsters[(int)GM.curHomeScreen].C_SetStage(eMonsterStage.Egg, GM.CurMonsters[(int)GM.curHomeScreen].EggSpawn));
+        StartCoroutine(GM.CurMonsters[(int)GM.curMonsterSlot].C_SetStage(eMonsterStage.Egg, GM.CurMonsters[(int)GM.curMonsterSlot].EggSpawn));
         DisableMenu((int)eMenus.S_BottomButtons);
         SetText((int)eTextfields.ShopDialogue, "Tap egg to hatch it!");
         EnableMenu((int)eMenus.S_TappEggButton);
@@ -243,21 +251,21 @@ public class HomeUI : UIController
         //print("tapped " + hatchTaps);
         if (hatchTaps == 5)
         {
-            GM.CurMonsters[(int)GM.curHomeScreen].Rarity = (eRarity)Random.Range(0, 3);
+            GM.CurMonsters[(int)GM.curMonsterSlot].Rarity = (eRarity)Random.Range(0, 3);
 
-            switch (GM.CurMonsters[(int)GM.curHomeScreen].Rarity)
+            switch (GM.CurMonsters[(int)GM.curMonsterSlot].Rarity)
             {
                 case eRarity.normal:
-                    GM.CurMonsters[(int)GM.curHomeScreen].LevelThreshold_current = GM.CurMonsters[(int)GM.curHomeScreen].CurMonster.LevelThreshold_normal;
+                    GM.CurMonsters[(int)GM.curMonsterSlot].LevelThreshold_current = GM.CurMonsters[(int)GM.curMonsterSlot].CurMonster.LevelThreshold_normal;
                     SetText((int)eTextfields.Hatch_Rarity, "Normal");
                     break;
                 case eRarity.rare:
-                    GM.CurMonsters[(int)GM.curHomeScreen].LevelThreshold_current = GM.CurMonsters[(int)GM.curHomeScreen].CurMonster.LevelThreshold_rare;
+                    GM.CurMonsters[(int)GM.curMonsterSlot].LevelThreshold_current = GM.CurMonsters[(int)GM.curMonsterSlot].CurMonster.LevelThreshold_rare;
                     SetText((int)eTextfields.Hatch_Rarity, "Rare!");
 
                     break;
                 case eRarity.legendary:
-                    GM.CurMonsters[(int)GM.curHomeScreen].LevelThreshold_current = GM.CurMonsters[(int)GM.curHomeScreen].CurMonster.LevelThreshold_legendary;
+                    GM.CurMonsters[(int)GM.curMonsterSlot].LevelThreshold_current = GM.CurMonsters[(int)GM.curMonsterSlot].CurMonster.LevelThreshold_legendary;
                     SetText((int)eTextfields.Hatch_Rarity, "Legendary!");
 
                     break;
@@ -265,7 +273,7 @@ public class HomeUI : UIController
                     break;
             }
 
-            print(GM.CurMonsters[(int)GM.curHomeScreen].Rarity);
+            print(GM.CurMonsters[(int)GM.curMonsterSlot].Rarity);
             StartCoroutine(WaitForEggToHatch());
             DisableMenu((int)eMenus.S_TappEggButton);
         }
@@ -277,11 +285,11 @@ public class HomeUI : UIController
         DisableMenu((int)eMenus.Shop);
         EnableMenu((int)eMenus.Home);
         EnableMenu((int)eMenus.HomeBG);
-        StartCoroutine(GM.CurMonsters[(int)GM.curHomeScreen].C_SetStage(eMonsterStage.Baby, GM.CurMonsters[(int)GM.curHomeScreen].MonsterSpawn));
+        StartCoroutine(GM.CurMonsters[(int)GM.curMonsterSlot].C_SetStage(eMonsterStage.Baby, GM.CurMonsters[(int)GM.curMonsterSlot].MonsterSpawn));
         yield return new WaitForSeconds(0.15f);
         Camera.main.transform.position = camHomePos;
         EnableMenu((int)eMenus.S_RarityText);
-        SetMonsterTexts((int)GM.curHomeScreen);
+        SetMonsterTexts((int)GM.curMonsterSlot);
         yield return new WaitForSeconds(1f);
         DisableMenu((int)eMenus.S_RarityText);
     }

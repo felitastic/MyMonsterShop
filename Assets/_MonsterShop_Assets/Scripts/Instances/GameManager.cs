@@ -12,9 +12,9 @@ public class GameManager : Singleton<GameManager>
     [Header("Home Screen Values")]
     //ui controller schreibt sich bei onenable/awake hier rein
     //delete later
-    public UIController CurUI;
+    //public UIController CurUI;
 
-    //get the real ones later
+    //UIs
     public HomeUI homeUI;
     public RunnerUI runnerUI;
 
@@ -27,7 +27,8 @@ public class GameManager : Singleton<GameManager>
     //wie oft spieler schon minigames gespielt hat (für unlocks)
     public int MinigamesPlayed;
     //public eScene CurScene;
-    public eCurHomeScreen curHomeScreen;
+    //left, middle, right -> used as (int) to get the right monsterslot ID
+    public ecurMonsterSlot curMonsterSlot;
 
     //momentane unlocked slots and creatures, die der Spieler hat
     //public CurrentMonster[] CurMonsters = new CurrentMonster[3];
@@ -55,14 +56,14 @@ public class GameManager : Singleton<GameManager>
     public void SaveCurrentMonsters()
     {
         print("Saving current Monster values");
-        thisMonster.CurMonster = CurMonsters[(int)curHomeScreen].CurMonster;
-        thisMonster.Unlocked = CurMonsters[(int)curHomeScreen].Unlocked;
-        thisMonster.LevelThreshold_current = CurMonsters[(int)curHomeScreen].LevelThreshold_current;
-        thisMonster.MonsterStage = CurMonsters[(int)curHomeScreen].MonsterStage;
-        thisMonster.Rarity = CurMonsters[(int)curHomeScreen].Rarity;
-        thisMonster.CreatureLevel = CurMonsters[(int)curHomeScreen].CreatureLevel;
-        thisMonster.CreatureXP = CurMonsters[(int)curHomeScreen].CreatureXP;
-        thisMonster.thisSlot = CurMonsters[(int)curHomeScreen].SlotID;
+        thisMonster.CurMonster = CurMonsters[(int)curMonsterSlot].CurMonster;
+        thisMonster.Unlocked = CurMonsters[(int)curMonsterSlot].Unlocked;
+        thisMonster.LevelThreshold_current = CurMonsters[(int)curMonsterSlot].LevelThreshold_current;
+        thisMonster.MonsterStage = CurMonsters[(int)curMonsterSlot].MonsterStage;
+        thisMonster.Rarity = CurMonsters[(int)curMonsterSlot].Rarity;
+        thisMonster.CreatureLevel = CurMonsters[(int)curMonsterSlot].CreatureLevel;
+        thisMonster.CreatureXP = CurMonsters[(int)curMonsterSlot].CreatureXP;
+        thisMonster.thisSlot = CurMonsters[(int)curMonsterSlot].SlotID;
     }
 
     public void WriteCurrentMonsters()
@@ -94,7 +95,7 @@ public class GameManager : Singleton<GameManager>
 
         WriteCurrentMonsters();
         //SetGold(PlayerMoney);
-        //CurMonsters[(int)curHomeScreen].SpawnCurrentMonster(CurMonsters[(int)curHomeScreen].MonsterSpawn);
+        //CurMonsters[(int)curMonsterSlot].SpawnCurrentMonster(CurMonsters[(int)curMonsterSlot].MonsterSpawn);
         yield return new WaitForSeconds(0.25f);
     }
 
