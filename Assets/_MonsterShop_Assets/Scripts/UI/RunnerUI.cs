@@ -94,7 +94,7 @@ public class RunnerUI : UIController
         StartCoroutine(GM.CurMonsters[(int)GM.curHomeScreen].C_SetStage(GM.thisMonster.MonsterStage, GM.runnerController.monsterSpawn));
 
         //StartCoroutine(GM.CurMonsters[(int)GM.curHomeScreen].C_SetStage(GM.CurMonsters[(int)GM.curHomeScreen].MonsterStage + 1, GM.runnerController.monsterSpawn));      
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(0.5f);
         EnableMenu((int)eMenus.EndResultButton);
     }
 

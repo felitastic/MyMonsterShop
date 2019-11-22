@@ -246,7 +246,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &178011487
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2006,6 +2006,7 @@ MonoBehaviour:
   playerControls: {fileID: 352261106}
   UI: {fileID: 1280781711}
   monsterSpawn: {fileID: 1425174613}
+  GM: {fileID: 0}
   curCollectableValue: 0
   curSpeedModifier: 1.01
   CollectedCount: 0
