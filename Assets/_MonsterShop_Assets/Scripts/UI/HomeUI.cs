@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,29 +9,30 @@ public class HomeUI : UIController
     [SerializeField]
     private Monster curEgg;
     private int hatchTaps;
-    private Vector3 camShopPos = new Vector3(0.0f,20.0f, -10.001f);
-    private Vector3 camDungeonPos = new Vector3(-10.801f,20.0f, -10.001f);
+    private Vector3 camShopPos;
+    private Vector3 camDungeonPos;
     private Vector3 camHomePos;
+    private eHomeUIScene curScene;
 
     private enum eMenus
     {
+        PlayerInfo,
+        MonsterStats,
         Home,
         Shop,
+        Dungeon,
+        MiniGames,
+        HomeBG,
+        ShopBG,
+        DungeonBG,
+        MinigameBG,
         H_SwipeButtons,
         H_BottomButtons,
         S_BottomButtons,
         S_PurchaseConfirm,
         S_EggMenu,
-        HomeBG,
-        ShopBG,
         S_TappEggButton,
-        PlayerInfo,
-        MonsterStats,
-        MiniGames,
-        S_RarityText,
-        DungeonBG,
-        Dungeon,
-        D_BottomButtons,
+        D_BottomButtons
     }
 
     private enum  eButtons
@@ -48,15 +49,14 @@ public class HomeUI : UIController
 
     private enum eTextfields
     {
-        ShopDialogue,
         GoldCount,
         MonsterTypeandStage,
         MonsterValue,
-        Hatch_Rarity,
-        DungeonDialogue,
+        ShopDialogue,
+        DungeonDialogue
     }
 
-    private enum eScene
+    public enum eHomeUIScene
     {
         Home,
         Eggshop,
@@ -64,34 +64,134 @@ public class HomeUI : UIController
         Dungeonlord
     }
 
-    private void Awake()
+    private void Start()
     {
+        print("home ui has been started");
         GetGameManager();
         GM.homeUI = this;
+        camHomePos = new Vector3(0.0f, 0.0f, -10.001f); ;
+        camShopPos = new Vector3(0.0f, 20.0f, -10.001f);
+        camDungeonPos = new Vector3(-10.801f, 20.0f, -10.001f);
+        SetUIStage(eHomeUIScene.Home);
+        //SetGoldCounter();
     }
-    
+
+    public void TestButton()
+    {
+        StartCoroutine(GM.TestLoad());
+    }
+
+
+    // Changes UI menus according to scene 
+    // Also camera position
+    // Later including animations
+    public void SetUIStage(eHomeUIScene newScene)
+    {
+        curScene = newScene;
+
+        switch (curScene)
+        {
+            case eHomeUIScene.Home:
+                UI_MonsterView();
+                Camera.main.transform.position = camHomePos;
+
+                break;
+            case eHomeUIScene.Eggshop:
+                UI_EggShop();
+                camHomePos = Camera.main.transform.position;
+                Camera.main.transform.position = camShopPos;
+
+                break;
+            case eHomeUIScene.Minigame:
+                UI_Minigame();
+
+                break;
+            case eHomeUIScene.Dungeonlord:
+                camHomePos = Camera.main.transform.position;
+                Camera.main.transform.position = camDungeonPos;
+                UI_DungeonLord();
+
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void UI_MonsterView()
+    {
+        DisableMenu((int)eMenus.Dungeon);
+        DisableMenu((int)eMenus.DungeonBG);
+        DisableMenu((int)eMenus.D_BottomButtons);
+        DisableMenu((int)eMenus.ShopBG);
+        DisableMenu((int)eMenus.Shop);
+        DisableMenu((int)eMenus.S_EggMenu);
+        DisableMenu((int)eMenus.S_BottomButtons);
+        DisableMenu((int)eMenus.MiniGames);
+
+        EnableMenu((int)eMenus.Home);
+        EnableMenu((int)eMenus.HomeBG);
+        EnableMenu((int)eMenus.H_SwipeButtons);
+        EnableMenu((int)eMenus.H_BottomButtons);
+    }
+
+    private void UI_EggShop()
+    {
+        DisableMenu((int)eMenus.Home);
+        DisableMenu((int)eMenus.HomeBG);
+
+        EnableMenu((int)eMenus.ShopBG);
+        EnableMenu((int)eMenus.Shop);
+        EnableMenu((int)eMenus.S_EggMenu);
+        EnableMenu((int)eMenus.S_BottomButtons);
+    }
+
+    private void UI_DungeonLord()
+    {
+        DisableMenu((int)eMenus.HomeBG);
+        DisableMenu((int)eMenus.Home);
+
+        EnableMenu((int)eMenus.DungeonBG);
+        EnableMenu((int)eMenus.Dungeon);
+        EnableMenu((int)eMenus.D_BottomButtons);
+    }
+
+    private void UI_Minigame()
+    {
+        DisableMenu((int)eMenus.Home);
+        EnableMenu((int)eMenus.MiniGames);
+    }
+
+// Updating Monster and Player Values 
     public void SetMonsterValue()
     {
         GM.homeUI.SetText((int)eTextfields.MonsterValue, "Value: " + GM.CurMonsters[(int)GM.curMonsterSlot].CreatureValue);
         print("Value: " + GM.CurMonsters[(int)GM.curMonsterSlot].CreatureValue);
     }
 
-    public void DungeonButtonPressed()
+    public void SetMonsterTexts(int thisSlot)
     {
-        camHomePos = Camera.main.transform.position;
-        Camera.main.transform.position = camDungeonPos;
-        DisableMenu((int)eMenus.HomeBG);
-        DisableMenu((int)eMenus.Home);
-        EnableMenu((int)eMenus.DungeonBG);
-        EnableMenu((int)eMenus.Dungeon);
-        //Show creature for sale
-        EnableMenu((int)eMenus.D_BottomButtons);
-        SetDungeonDialogue();
+        if (GM.CurMonsters[thisSlot].Monster == null)
+        {
+            SetText((int)eTextfields.MonsterTypeandStage, "");
+            SetMonsterValue();
+        }
+        else
+        {
+            SetText((int)eTextfields.MonsterTypeandStage, GM.CurMonsters[thisSlot].MonsterStage + " " + GM.CurMonsters[thisSlot].Monster.CreatureName);
+            SetMonsterValue();
+        }
     }
 
+    public void SetGoldCounter()
+    {
+        SetText((int)eTextfields.GoldCount, "" + GM.PlayerMoney);
+    }
+
+
+    //Dialogue of the Dungeonlord
     public void SetDungeonDialogue()
     {
-        string textline = ""; 
+        string textline = "";
 
         switch (GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage)
         {
@@ -117,69 +217,44 @@ public class HomeUI : UIController
         SetText((int)eTextfields.DungeonDialogue, textline);
     }
 
-    public void SellMonster()
-    {
+    //Button Inputs for menu changes
 
+    public void GoToEggShop()
+    {
+        SetUIStage(eHomeUIScene.Eggshop);
+        SetText((int)eTextfields.ShopDialogue, "What can I do for you?");
+    }
+
+    public void GoToMinigames()
+    {
+        SetUIStage(eHomeUIScene.Minigame);
+    }
+
+    public void GoToDungeonlord()
+    {
+        SetUIStage(eHomeUIScene.Dungeonlord);
+        SetDungeonDialogue();
     }
 
     public void ExitDungeonMenu()
     {
-        Camera.main.transform.position = camHomePos;
-        EnableMenu((int)eMenus.Home);
-        EnableMenu((int)eMenus.HomeBG);
-        DisableMenu((int)eMenus.Dungeon);
-        DisableMenu((int)eMenus.DungeonBG);
+        SetUIStage(eHomeUIScene.Home);
     }
 
-    public void ShopButtonPressed()
+    public void ExitMinigameMenu()
     {
-        camHomePos = Camera.main.transform.position;
-        Camera.main.transform.position = camShopPos;
-        DisableMenu((int)eMenus.HomeBG);
-        DisableMenu((int)eMenus.Home);
-        EnableMenu((int)eMenus.ShopBG);
-        EnableMenu((int)eMenus.Shop);
-        EnableMenu((int)eMenus.S_EggMenu);
-        EnableMenu((int)eMenus.S_BottomButtons);
-        SetText((int)eTextfields.ShopDialogue, "What can I do for you?");
+        SetUIStage(eHomeUIScene.Home);
     }
 
-    public void TrainButtonPressed()
+    public void ExitEggShop()
     {
-        DisableMenu((int)eMenus.Home);
-        EnableMenu((int)eMenus.MiniGames);
+        SetUIStage(eHomeUIScene.Home);
     }
 
-    public void ChooseMinigame(int scene)
-    {
-        GM.SaveCurrentMonsters();
-        SceneManager.LoadScene(scene);
-    }
-
-    public void ExitTrainMenu()
-    {
-        DisableMenu((int)eMenus.MiniGames);
-        EnableMenu((int)eMenus.Home);
-    }
-
-    public void FeedButtonPressed()
-    {
-        StartCoroutine(GM.CurMonsters[(int)GM.curMonsterSlot].C_SetStage(eMonsterStage.Teen,GM.CurMonsters[(int)GM.curMonsterSlot].MonsterSpawn));
-        print("Feeding time");
-    }
-
-    public void ExitShopButtonPressed()
-    {
-        Camera.main.transform.position = camHomePos;
-        EnableMenu((int)eMenus.Home);
-        EnableMenu((int)eMenus.HomeBG);
-        DisableMenu((int)eMenus.Shop);
-        DisableMenu((int)eMenus.ShopBG);
-    }
-
+    //Button Inputs EggShop
     public void ChooseEgg(Monster EggPrefab)
     {
-        if (GM.CurMonsters[(int)GM.curMonsterSlot].CurMonster != null && GM.PlayerMoney >= EggPrefab.BaseCost)
+        if (GM.CurMonsters[(int)GM.curMonsterSlot].Monster != null && GM.PlayerMoney >= EggPrefab.BaseCost)
         {
             SetText((int)eTextfields.ShopDialogue, "There is already a monster in this spot!");
         }
@@ -210,39 +285,32 @@ public class HomeUI : UIController
         if (isTrue)
         {
             //put egg in empty slot position
-            GM.CurMonsters[(int)GM.curMonsterSlot].CurMonster = curEgg;
-            StartCoroutine(ConfirmEggPurchase());
+            GM.CurMonsters[(int)GM.curMonsterSlot].Monster = curEgg;
+            GM.homeMonsterManager.SetSlotSymbol();
+            DisableMenu((int)eMenus.S_EggMenu);
+            DisableMenu((int)eMenus.S_BottomButtons);
+            SetText((int)eTextfields.ShopDialogue, "Alright, one egg to go!");
+            GM.ChangePlayerGold(-GM.CurMonsters[(int)GM.curMonsterSlot].Monster.BaseCost);
+
+            StartCoroutine(GM.homeMonsterManager.cSpawnEgg());
+            StartCoroutine(cStartEggHatchMinigame());
+
+            //StartCoroutine(ConfirmEggPurchase());
         }
         else
         {
-            StartCoroutine(CancelEggPurchas());
+            StartCoroutine(cCancelEggPurchas());
         }
 
         DisableMenu((int)eMenus.S_PurchaseConfirm);
     }
 
-    public IEnumerator ConfirmEggPurchase()
+    public IEnumerator cStartEggHatchMinigame()
     {
-        SetText((int)eTextfields.ShopDialogue, "Alright, one egg to go!");
-        GM.SetGold(-GM.CurMonsters[(int)GM.curMonsterSlot].CurMonster.BaseCost);
-        GM.CurMonsters[(int)GM.curMonsterSlot].SetSymbol();
-        //GM.HomeCam.SetScreen((ecurMonsterSlot)freeSlot);
-        yield return new WaitForSeconds(0.3f);
-        DisableMenu((int)eMenus.S_EggMenu);
-        StartCoroutine(GM.CurMonsters[(int)GM.curMonsterSlot].C_SetStage(eMonsterStage.Egg, GM.CurMonsters[(int)GM.curMonsterSlot].EggSpawn));
-        DisableMenu((int)eMenus.S_BottomButtons);
+        //wait until egg is spawned
+        yield return new WaitForSeconds(0.35f);
         SetText((int)eTextfields.ShopDialogue, "Tap egg to hatch it!");
         EnableMenu((int)eMenus.S_TappEggButton);
-        //EnableMenu(Menus[(int)eMenus.Home]);
-    }
-
-    public IEnumerator CancelEggPurchas()
-    {
-        //make button deselected
-        //EnableMenu(Menus[(int)eMenus.S_EggMenu]);
-        EnableMenu((int)eMenus.S_BottomButtons);
-        SetText((int)eTextfields.ShopDialogue, "Can I get you another one?");
-        yield return new WaitForSeconds(0.5f);
     }
 
     public void TapEgg()
@@ -251,65 +319,37 @@ public class HomeUI : UIController
         //print("tapped " + hatchTaps);
         if (hatchTaps == 5)
         {
-            GM.CurMonsters[(int)GM.curMonsterSlot].Rarity = (eRarity)Random.Range(0, 3);
-
-            switch (GM.CurMonsters[(int)GM.curMonsterSlot].Rarity)
-            {
-                case eRarity.normal:
-                    GM.CurMonsters[(int)GM.curMonsterSlot].LevelThreshold_current = GM.CurMonsters[(int)GM.curMonsterSlot].CurMonster.LevelThreshold_normal;
-                    SetText((int)eTextfields.Hatch_Rarity, "Normal");
-                    break;
-                case eRarity.rare:
-                    GM.CurMonsters[(int)GM.curMonsterSlot].LevelThreshold_current = GM.CurMonsters[(int)GM.curMonsterSlot].CurMonster.LevelThreshold_rare;
-                    SetText((int)eTextfields.Hatch_Rarity, "Rare!");
-
-                    break;
-                case eRarity.legendary:
-                    GM.CurMonsters[(int)GM.curMonsterSlot].LevelThreshold_current = GM.CurMonsters[(int)GM.curMonsterSlot].CurMonster.LevelThreshold_legendary;
-                    SetText((int)eTextfields.Hatch_Rarity, "Legendary!");
-
-                    break;
-                default:
-                    break;
-            }
-
-            print(GM.CurMonsters[(int)GM.curMonsterSlot].Rarity);
-            StartCoroutine(WaitForEggToHatch());
+            GM.homeMonsterManager.SetEggRarity();
+            StartCoroutine(GM.homeMonsterManager.cHatchEgg(GM.homeMonsterManager.EggSpawn));
             DisableMenu((int)eMenus.S_TappEggButton);
         }
     }
 
-    public IEnumerator WaitForEggToHatch()
+    public IEnumerator cCancelEggPurchas()
     {
-        DisableMenu((int)eMenus.ShopBG);
-        DisableMenu((int)eMenus.Shop);
-        EnableMenu((int)eMenus.Home);
-        EnableMenu((int)eMenus.HomeBG);
-        StartCoroutine(GM.CurMonsters[(int)GM.curMonsterSlot].C_SetStage(eMonsterStage.Baby, GM.CurMonsters[(int)GM.curMonsterSlot].MonsterSpawn));
-        yield return new WaitForSeconds(0.15f);
-        Camera.main.transform.position = camHomePos;
-        EnableMenu((int)eMenus.S_RarityText);
-        SetMonsterTexts((int)GM.curMonsterSlot);
-        yield return new WaitForSeconds(1f);
-        DisableMenu((int)eMenus.S_RarityText);
+        EnableMenu((int)eMenus.S_BottomButtons);
+        SetText((int)eTextfields.ShopDialogue, "Can I get you another one?");
+        yield return new WaitForSeconds(0.5f);
     }
 
-    public void SetMonsterTexts(int thisSlot)
+    //Button Inputs extra menus in home (Minigame, Pet, Feed?)
+    public void ChooseMinigame(int scene)
     {
-        if (GM.CurMonsters[thisSlot].CurMonster == null)
-        {
-            SetText((int)eTextfields.MonsterTypeandStage, "");
-            SetMonsterValue();
-        }
-        else
-        {
-            SetText((int)eTextfields.MonsterTypeandStage, GM.CurMonsters[thisSlot].MonsterStage + " " + GM.CurMonsters[thisSlot].CurMonster.CreatureName);
-            SetMonsterValue(); 
-        }
+        //GM.SaveCurrentMonsters();
+        SceneManager.LoadScene(scene);
     }
 
-    public void SetGoldCounter()
+    public void FeedButtonPressed()
     {
-        SetText((int)eTextfields.GoldCount, "" + GM.PlayerMoney);
+        print("Feeding time");
     }
+
+
+    //Button Inputs Dungeonlord
+
+    public void SellMonster()
+    {
+
+    }
+
 }

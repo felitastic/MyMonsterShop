@@ -99,9 +99,11 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  Cost: 100
-  Modificator: 1.25
+  BaseCost: 0
+  GoldModificator: 0
   BaseValue: 50
+  MonsterType: 0
   CreatureName: Capsule
-  MonsterEgg: {fileID: 1127267322663477947, guid: 3dbce3d84f875c14eab50598dbb47967,
+  EggSprite: {fileID: 0}
+  EggPrefab: {fileID: 1127267322663477947, guid: 3dbce3d84f875c14eab50598dbb47967,
     type: 3}

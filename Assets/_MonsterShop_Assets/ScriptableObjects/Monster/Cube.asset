@@ -96,9 +96,11 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  Cost: 200
-  Modificator: 1.25
+  BaseCost: 0
+  GoldModificator: 0
   BaseValue: 100
+  MonsterType: 1
   CreatureName: Cube
-  MonsterEgg: {fileID: 1127267322663477947, guid: a9c3a29d2d3d06e4599a15db2f8b68b9,
+  EggSprite: {fileID: 0}
+  EggPrefab: {fileID: 1127267322663477947, guid: a9c3a29d2d3d06e4599a15db2f8b68b9,
     type: 3}
