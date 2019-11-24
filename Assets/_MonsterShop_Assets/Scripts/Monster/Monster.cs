@@ -28,7 +28,7 @@ public class Monster : SerializedScriptableObject
     [Tooltip("How much the egg BaseCosts in shop")]
     public int BaseCost;
     [Tooltip("Value modificator: gold = modificator * xp + base value")]
-    public float Modificator;
+    public float GoldModificator;
     [Tooltip("gold = modificator * xp + base value")]
     public int BaseValue;
 

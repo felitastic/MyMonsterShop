@@ -40,6 +40,7 @@ public abstract class UIController : MonoBehaviour
     { 
         Menus[menu].SetActive(true);
     }
+
     public virtual void SetText(int textfield, string newText)
     {
         Textfields[textfield].text = newText;

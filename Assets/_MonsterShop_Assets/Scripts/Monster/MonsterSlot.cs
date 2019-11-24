@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class MonsterSlot
 {
-    public Monster CurMonster;
-    public bool Unlocked;
+    public int SlotID = 4;
+    public Monster Monster = null;
+    public bool Unlocked = false;
     public float[] LevelThreshold_current = new float[9];
-    public eMonsterStage MonsterStage;
+    public eMonsterStage MonsterStage = eMonsterStage.none;
     public eRarity Rarity;
-    public int CreatureLevel;
-    public float CreatureXP;
-    public float CreatureValue;
-    public int thisSlot = 4;
+    public int CreatureLevel = 0;
+    public float CreatureXP = 0;
+    public float CreatureValue = 0;
+    public float GoldModificator;
+    public int BaseValue;
 }

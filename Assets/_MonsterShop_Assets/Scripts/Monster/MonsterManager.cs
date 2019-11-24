@@ -7,135 +7,126 @@ using UnityEngine;
 /// </summary>
 public class MonsterManager : MonoBehaviour
 {
-    public int SlotID;
     public GameManager GM;
-    //position to spawn the creature at
-    public Transform EggSpawn;
-    public Transform MonsterSpawn;
-    private float WaitForHatch = 0.01f;
-    private float WaitforStageChange = 0.25f;
+    public MonsterSlot CurMonster { get { return GM.CurMonsters[SlotID]; } }
+    public int CreatureValue { get { return Mathf.RoundToInt(CurMonster.CreatureValue); } }
+    public int SlotID { get { return (int)GM.curMonsterSlot; } }
+
+    //currently spawned monster model prefabs
+    public GameObject[] monsterBody = new GameObject[3];
+
+    //Pos to spawn creature 
+    public Transform[] MonsterSpawn = new Transform[3];
+    
+
+    //public Transform EggSpawn;
+    //private float WaitForHatch = 0.01f;
+    //public float LevelUpWait = 0.25f;
 
     //put this in UI manager!
-    public GameObject Lock;
-    public GameObject Plus;
-    public int CreatureValue { get { return Mathf.RoundToInt(CurMonster.CreatureValue); } }
+
     //private float _CreatureValue = 0;
        
     //Scriptable Objekt der Creature einlesen
-    public MonsterSlot CurMonster { get { return GM.CurMonsters[SlotID]; } }
-    private GameObject monsterBody;
     //has player unlocked this slot?
-    public bool Unlocked;
+    //public bool Unlocked;
 
-    public float[] LevelThreshold_current = new float[9];
+    //public float[] LevelThreshold_current = new float[9];
 
-    public eMonsterStage MonsterStage;
-    [Tooltip("Rarity rank of the creature")]
+    //public eMonsterStage MonsterStage;
+    //[Tooltip("Rarity rank of the creature")]
     //public eRarity Rarity;
 
     //current values, starting with zero/base
-    public int CreatureLevel = 0;
-    public float CreatureXP = 0;
-
-    private void Start()
+    //public int CreatureLevel = 0;
+    //public float CreatureXP = 0;
+    
+    public void GetGameManager()
     {
         GM = GameManager.Instance;
-            //GM.CurMonsters[SlotID] = this;
-
-        if ((int)GM.thisMonster.thisSlot == SlotID)
-        {
-            GM.WriteCurrentMonsters();
-            CalculateValue();
-            GM.SetGold(0);
-            if (CurMonster != null)
-            {
-                SpawnCurrentMonster(CurMonster.CreaturePrefabs[(int)Rarity, (int)MonsterStage],MonsterSpawn);
-                GM.homeUI.SetMonsterTexts(SlotID);
-            }
-        }
-        SetSymbol();
-        //DontDestroyOnLoad(this);
     }
 
-    public void CalculateValue()
+    public void CalculateMonsterValue()
     {
-        _CreatureValue = (CurMonster.Modificator * CreatureXP) + (float)CurMonster.BaseValue;
+        CurMonster.CreatureValue = (CurMonster.GoldModificator * CurMonster.CreatureXP) + (float)CurMonster.BaseValue;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    public void SetSymbol()
-    {        
-        if (null == CurMonster)
-        {
-            if (!Unlocked)
-            {
-                Plus.SetActive(false);
-                Lock.SetActive(true);
-            }
-            else
-            {
-                Lock.SetActive(false);
-                Plus.SetActive(true);
 
-            }
-        }
-        else
-        {
-            Lock.SetActive(false);
-            Plus.SetActive(false);
-        }
-    }
-
-    public IEnumerator C_SetStage(eMonsterStage newStage, Transform monsterSpawn)
+    public void SpawnCurrentMonster(Transform monsterSpawn)
     {
-        MonsterStage = newStage;
+        monsterBody[SlotID] = Instantiate(CurMonster.Monster.CreaturePrefabs[(int)CurMonster.Rarity, (int)CurMonster.MonsterStage], monsterSpawn);
+        monsterBody[SlotID].transform.SetParent(monsterSpawn);
+    }
+
+    public void SpawnAnyMonster(GameObject monster, Transform monsterSpawn)
+    {
+        monsterBody[SlotID] = Instantiate(monster, monsterSpawn);
+        monsterBody[SlotID].transform.SetParent(monsterSpawn);
+    }
+
+    public IEnumerator cLevelUpMonster(eMonsterStage newStage, Transform monsterSpawn)
+    {
+        CurMonster.MonsterStage = newStage;
         print(newStage);
-        if(MonsterStage == eMonsterStage.Egg)
+
+        if (CurMonster.MonsterStage != eMonsterStage.none)
         {
-            //play effect for egg spawn
-            yield return new WaitForSeconds(WaitForHatch);
-            //CurMonster.CreaturePrefabs[(int)MonsterStage].GetComponentInChildren<Material>() = CurMonster.materials[(int)Rarity];
-            monsterBody = Instantiate(CurMonster.EggPrefab, monsterSpawn);
-        }
-        else if (MonsterStage != eMonsterStage.none)
-        {
-            //play effect for level up
-            Destroy(monsterBody, 0.25f);
-            yield return new WaitForSeconds(WaitforStageChange);
-            monsterBody = Instantiate(CurMonster.CreaturePrefabs[(int)Rarity, (int)MonsterStage], monsterSpawn);
+            //play effect for level up            
+            Destroy(monsterBody[SlotID], 0.25f);
+            yield return new WaitForSeconds(0.25f);
+            SpawnCurrentMonster(monsterSpawn);            
+            yield return null;
         }
         else
         {
-            //empty slot
+            yield return null;
+            //empty slot, monster sold? 
         }
-        CalculateValue();
     }
 
-    public void SpawnCurrentMonster(GameObject monster, Transform monsterSpawn)
-    {
-        monsterBody = Instantiate(monster, monsterSpawn);
-    }
 
-    public void GetXP()
-    {
 
-    }
+    //private void Start()
+    //{
+    //        //GM.CurMonsters[SlotID] = this;
 
-    public void Grow()
-    {
+    //    if ((int)GM.thisMonster.thisSlot == SlotID)
+    //    {
+    //        GM.WriteCurrentMonsters();
+    //        CalculateValue();
+    //        GM.SetGold(0);
+    //        if (CurMonster != null)
+    //        {
+    //            SpawnCurrentMonster(CurMonster.CreaturePrefabs[(int)Rarity, (int)MonsterStage],MonsterSpawn);
+    //            GM.homeUI.SetMonsterTexts(SlotID);
+    //        }
+    //    }
+    //    SetSymbol();
+    //    //DontDestroyOnLoad(this);
+    //}
 
-    }
-
-    public void Feed()
-    {
-
-    }
-
-    //Resets all values, add cur value to player gold
-    public void Sell()
-    {
-
-    }
+    //public IEnumerator C_SetStage(eMonsterStage newStage, Transform monsterSpawn)
+    //{
+    //    MonsterStage = newStage;
+    //    print(newStage);
+    //    if(MonsterStage == eMonsterStage.Egg)
+    //    {
+    //        //play effect for egg spawn
+    //        yield return new WaitForSeconds(WaitForHatch);
+    //        //CurMonster.CreaturePrefabs[(int)MonsterStage].GetComponentInChildren<Material>() = CurMonster.materials[(int)Rarity];
+    //        monsterBody = Instantiate(CurMonster.EggPrefab, monsterSpawn);
+    //    }
+    //    else if (MonsterStage != eMonsterStage.none)
+    //    {
+    //        //play effect for level up
+    //        Destroy(monsterBody, 0.25f);
+    //        yield return new WaitForSeconds(WaitforStageChange);
+    //        monsterBody = Instantiate(CurMonster.CreaturePrefabs[(int)Rarity, (int)MonsterStage], monsterSpawn);
+    //    }
+    //    else
+    //    {
+    //        //empty slot
+    //    }
+    //    CalculateValue();
+    //}
 }

@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 3608076}
   - component: {fileID: 3608075}
   m_Layer: 5
-  m_Name: ButtonExitShop
+  m_Name: ButtonSellMonster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -154,10 +154,10 @@ RectTransform:
   m_Father: {fileID: 1873644581}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 539.42847, y: -225}
-  m_SizeDelta: {x: 200, y: 200}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &3608075
 MonoBehaviour:
@@ -202,7 +202,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1635510325}
+      - m_Target: {fileID: 1635510326}
         m_MethodName: SellMonster
         m_Mode: 1
         m_Arguments:
@@ -391,7 +391,7 @@ GameObject:
   - component: {fileID: 21285426}
   - component: {fileID: 21285425}
   m_Layer: 5
-  m_Name: ButtonExitShop (1)
+  m_Name: ButtonExitDungeon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -412,10 +412,10 @@ RectTransform:
   m_Father: {fileID: 1873644581}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 859.42847, y: -225}
-  m_SizeDelta: {x: 200, y: 200}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &21285425
 MonoBehaviour:
@@ -460,7 +460,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1635510325}
+      - m_Target: {fileID: 1635510326}
         m_MethodName: ExitDungeonMenu
         m_Mode: 1
         m_Arguments:
@@ -736,7 +736,7 @@ GameObject:
   - component: {fileID: 49587385}
   - component: {fileID: 49587384}
   m_Layer: 5
-  m_Name: DialogueText
+  m_Name: DungeonDialogueText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1076,7 +1076,7 @@ GameObject:
   - component: {fileID: 176127705}
   - component: {fileID: 176127704}
   m_Layer: 0
-  m_Name: AddMonsterSymbol (1)
+  m_Name: AddMonsterSymbol(2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1162,7 +1162,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &201293277
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1365,7 +1365,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1635510325}
+      - m_Target: {fileID: 0}
         m_MethodName: ConfirmEggPurchase
         m_Mode: 6
         m_Arguments:
@@ -1493,7 +1493,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1635510325}
+      - m_Target: {fileID: 0}
         m_MethodName: TapEgg
         m_Mode: 1
         m_Arguments:
@@ -1632,7 +1632,7 @@ MonoBehaviour:
     m_FontStyle: 1
     m_BestFit: 1
     m_MinSize: 10
-    m_MaxSize: 100
+    m_MaxSize: 80
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -1865,7 +1865,7 @@ GameObject:
   - component: {fileID: 421380950}
   - component: {fileID: 421380949}
   m_Layer: 5
-  m_Name: ButtonFeed
+  m_Name: ButtonSell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1886,10 +1886,10 @@ RectTransform:
   m_Father: {fileID: 223719528}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 859.76447, y: -225}
+  m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &421380949
 MonoBehaviour:
@@ -1934,8 +1934,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1635510325}
-        m_MethodName: FeedButtonPressed
+      - m_Target: {fileID: 1635510326}
+        m_MethodName: GoToDungeonlord
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2058,7 +2058,7 @@ GameObject:
   - component: {fileID: 467545537}
   - component: {fileID: 467545538}
   m_Layer: 0
-  m_Name: BGMiddle
+  m_Name: BGMiddle(Shop)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2138,7 +2138,7 @@ GameObject:
   - component: {fileID: 514793742}
   - component: {fileID: 514793741}
   m_Layer: 0
-  m_Name: AddMonsterSymbol (2)
+  m_Name: AddMonsterSymbol(0)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2305,7 +2305,7 @@ MonoBehaviour:
     m_FontStyle: 1
     m_BestFit: 1
     m_MinSize: 10
-    m_MaxSize: 100
+    m_MaxSize: 80
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -2497,6 +2497,7 @@ RectTransform:
   - {fileID: 1930801844}
   - {fileID: 563785130}
   - {fileID: 201293277}
+  - {fileID: 1239451551}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2661,7 +2662,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1635510325}
+      - m_Target: {fileID: 1635510326}
         m_MethodName: ConfirmEggPurchase
         m_Mode: 6
         m_Arguments:
@@ -2866,14 +2867,14 @@ MonoBehaviour:
     m_FontStyle: 1
     m_BestFit: 1
     m_MinSize: 10
-    m_MaxSize: 100
+    m_MaxSize: 80
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Feed
+  m_Text: Sell
 --- !u!222 &719743300
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3007,7 +3008,7 @@ GameObject:
   - component: {fileID: 760873045}
   - component: {fileID: 760873044}
   m_Layer: 0
-  m_Name: LockedSymbol
+  m_Name: LockedSymbol(1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3159,7 +3160,7 @@ GameObject:
   - component: {fileID: 811618256}
   - component: {fileID: 811618255}
   m_Layer: 0
-  m_Name: LockedSymbol (1)
+  m_Name: LockedSymbol(2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3262,10 +3263,10 @@ RectTransform:
   m_Father: {fileID: 223719528}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 219.76465, y: -225}
+  m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &896407050
 MonoBehaviour:
@@ -3310,8 +3311,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1635510325}
-        m_MethodName: ShopButtonPressed
+      - m_Target: {fileID: 1635510326}
+        m_MethodName: GoToEggShop
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3459,7 +3460,7 @@ GameObject:
   - component: {fileID: 927530563}
   - component: {fileID: 927530562}
   m_Layer: 0
-  m_Name: AddMonsterSymbol
+  m_Name: AddMonsterSymbol(1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3609,7 +3610,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1635510325}
+      - m_Target: {fileID: 1635510326}
         m_MethodName: TapEgg
         m_Mode: 1
         m_Arguments:
@@ -3690,10 +3691,10 @@ RectTransform:
   m_Father: {fileID: 223719528}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 539.76447, y: -225}
+  m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &973389346
 MonoBehaviour:
@@ -3738,8 +3739,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1635510325}
-        m_MethodName: TrainButtonPressed
+      - m_Target: {fileID: 1635510326}
+        m_MethodName: GoToMinigames
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3784,6 +3785,83 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 973389344}
+  m_CullTransparentMesh: 0
+--- !u!1 &974101403
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 974101404}
+  - component: {fileID: 974101406}
+  - component: {fileID: 974101405}
+  m_Layer: 5
+  m_Name: Text
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &974101404
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 974101403}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1239451551}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &974101405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 974101403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 14
+    m_FontStyle: 1
+    m_BestFit: 1
+    m_MinSize: 10
+    m_MaxSize: 100
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: Button
+--- !u!222 &974101406
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 974101403}
   m_CullTransparentMesh: 0
 --- !u!1 &974570876
 GameObject:
@@ -4446,8 +4524,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1635510325}
-        m_MethodName: ExitShopButtonPressed
+      - m_Target: {fileID: 1635510326}
+        m_MethodName: ExitMinigameMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4750,6 +4828,135 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1239451550
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1239451551}
+  - component: {fileID: 1239451554}
+  - component: {fileID: 1239451553}
+  - component: {fileID: 1239451552}
+  m_Layer: 5
+  m_Name: TESTButton
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &1239451551
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1239451550}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 974101404}
+  m_Father: {fileID: 639520825}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 300, y: 300}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1239451552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1239451550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 1239451553}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1635510326}
+        m_MethodName: TestButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1239451553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1239451550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1239451554
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1239451550}
+  m_CullTransparentMesh: 0
 --- !u!1 &1293319093
 GameObject:
   m_ObjectHideFlags: 0
@@ -4799,7 +5006,7 @@ GameObject:
   - component: {fileID: 1304482321}
   - component: {fileID: 1304482322}
   m_Layer: 0
-  m_Name: LockedSymbol (2)
+  m_Name: LockedSymbol(0)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4986,7 +5193,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1635510325}
+      - m_Target: {fileID: 1635510326}
         m_MethodName: ConfirmEggPurchase
         m_Mode: 6
         m_Arguments:
@@ -5764,7 +5971,7 @@ GameObject:
   - component: {fileID: 1635510326}
   - component: {fileID: 1635510325}
   m_Layer: 0
-  m_Name: --HomeUI--
+  m_Name: --Home Scripts--
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5793,44 +6000,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 1635510323}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc6653582ad41f34ead7de9a917bacb9, type: 3}
+  m_Script: {fileID: 11500000, guid: 42c83b36be3614b499ce80548d8602b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   GM: {fileID: 0}
-  Menus:
-  - {fileID: 757077899}
-  - {fileID: 2051049567949854362}
-  - {fileID: 141963118}
-  - {fileID: 223719527}
-  - {fileID: 1344157608}
-  - {fileID: 1040969480}
-  - {fileID: 2051049569614816235}
-  - {fileID: 2060875250}
-  - {fileID: 397578930}
-  - {fileID: 796263256}
-  - {fileID: 563785129}
-  - {fileID: 980635395}
-  - {fileID: 1930801843}
-  - {fileID: 780664284}
-  - {fileID: 322404585}
-  Canvasgroups: []
-  Textfields:
-  - {fileID: 2051049568882258014}
-  - {fileID: 113047016}
-  - {fileID: 386704100}
-  - {fileID: 732809373}
-  - {fileID: 687400580}
-  Buttons:
-  - {fileID: 973389346}
-  - {fileID: 421380949}
-  - {fileID: 896407050}
-  - {fileID: 18132159}
-  - {fileID: 1488629588}
-  - {fileID: 2072255408}
-  - {fileID: 1311965184}
-  - {fileID: 670694420}
-  - {fileID: 670694420}
-  curEgg: {fileID: 0}
+  monsterBody:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  MonsterSpawn:
+  - {fileID: 1330728701}
+  - {fileID: 1177470000}
+  - {fileID: 37450955}
+  Lock:
+  - {fileID: 1304482320}
+  - {fileID: 760873043}
+  - {fileID: 811618254}
+  Plus:
+  - {fileID: 514793740}
+  - {fileID: 927530561}
+  - {fileID: 176127703}
+  EggSpawn: {fileID: 467545537}
 --- !u!114 &1635510326
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5840,9 +6030,45 @@ MonoBehaviour:
   m_GameObject: {fileID: 1635510323}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4991a612448a2245bbf309b61749c85, type: 3}
+  m_Script: {fileID: 11500000, guid: cc6653582ad41f34ead7de9a917bacb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GM: {fileID: 0}
+  Menus:
+  - {fileID: 563785129}
+  - {fileID: 980635395}
+  - {fileID: 2111068893}
+  - {fileID: 2051049567949854362}
+  - {fileID: 201293276}
+  - {fileID: 1930801843}
+  - {fileID: 2060875250}
+  - {fileID: 397578930}
+  - {fileID: 322404585}
+  - {fileID: 25814882}
+  - {fileID: 141963118}
+  - {fileID: 2029884908}
+  - {fileID: 1344157608}
+  - {fileID: 1040969480}
+  - {fileID: 2051049569614816235}
+  - {fileID: 796263256}
+  - {fileID: 1873644580}
+  Canvasgroups: []
+  Textfields:
+  - {fileID: 113047016}
+  - {fileID: 386704100}
+  - {fileID: 732809373}
+  - {fileID: 2051049568882258014}
+  - {fileID: 49587384}
+  Buttons:
+  - {fileID: 973389346}
+  - {fileID: 421380949}
+  - {fileID: 896407050}
+  - {fileID: 18132159}
+  - {fileID: 1488629588}
+  - {fileID: 2072255408}
+  - {fileID: 1311965184}
+  - {fileID: 670694420}
+  curEgg: {fileID: 0}
 --- !u!1 &1647596676
 GameObject:
   m_ObjectHideFlags: 0
@@ -6837,7 +7063,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1635510325}
+      - m_Target: {fileID: 0}
         m_MethodName: ConfirmEggPurchase
         m_Mode: 6
         m_Arguments:
@@ -7066,29 +7292,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8bbf071fb673354ab192999401a330d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SlotID: 2
   GM: {fileID: 0}
-  EggSpawn: {fileID: 467545537}
-  MonsterSpawn: {fileID: 37450955}
-  Lock: {fileID: 811618254}
-  Plus: {fileID: 176127703}
-  _CreatureValue: 0
-  CurMonster: {fileID: 0}
-  Unlocked: 0
-  LevelThreshold_current:
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  MonsterStage: 0
-  Rarity: 0
-  CreatureLevel: 0
-  CreatureXP: 0
+  monsterBody:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  MonsterSpawn:
+  - {fileID: 0}
 --- !u!114 &1940579846
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7101,29 +7311,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8bbf071fb673354ab192999401a330d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SlotID: 1
   GM: {fileID: 0}
-  EggSpawn: {fileID: 467545537}
-  MonsterSpawn: {fileID: 1177470000}
-  Lock: {fileID: 760873043}
-  Plus: {fileID: 927530561}
-  _CreatureValue: 0
-  CurMonster: {fileID: 0}
-  Unlocked: 1
-  LevelThreshold_current:
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  MonsterStage: 0
-  Rarity: 0
-  CreatureLevel: 0
-  CreatureXP: 0
+  monsterBody:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  MonsterSpawn:
+  - {fileID: 0}
 --- !u!114 &1940579847
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7136,29 +7330,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8bbf071fb673354ab192999401a330d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SlotID: 0
   GM: {fileID: 0}
-  EggSpawn: {fileID: 467545537}
-  MonsterSpawn: {fileID: 1330728701}
-  Lock: {fileID: 1304482320}
-  Plus: {fileID: 514793740}
-  _CreatureValue: 0
-  CurMonster: {fileID: 0}
-  Unlocked: 0
-  LevelThreshold_current:
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  MonsterStage: 0
-  Rarity: 0
-  CreatureLevel: 0
-  CreatureXP: 0
+  monsterBody:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  MonsterSpawn:
+  - {fileID: 0}
 --- !u!4 &1940579848
 Transform:
   m_ObjectHideFlags: 0
@@ -7401,8 +7579,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1635510325}
-        m_MethodName: ExitShopButtonPressed
+      - m_Target: {fileID: 1635510326}
+        m_MethodName: ExitEggShop
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7463,7 +7641,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2111068894
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7770,7 +7948,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2051049568516430397}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1635510326}
+        m_MethodName: ChooseEgg
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: Monster, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!224 &2051049568516430395
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8001,7 +8190,7 @@ GameObject:
   - component: {fileID: 2051049568882257985}
   - component: {fileID: 2051049568882258014}
   m_Layer: 5
-  m_Name: DialogueText
+  m_Name: ShopDialogueText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8177,7 +8366,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2051049569008101091}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1635510326}
+        m_MethodName: ChooseEgg
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: Monster, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!224 &2051049569008101089
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8436,7 +8636,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2051049569275788268}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1635510326}
+        m_MethodName: ChooseEgg
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: Monster, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!222 &2051049569275788271
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8992,7 +9203,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1635510325}
+      - m_Target: {fileID: 1635510326}
         m_MethodName: ChooseMinigame
         m_Mode: 3
         m_Arguments:
@@ -9272,6 +9483,17 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1635510326}
+        m_MethodName: ChooseEgg
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: Monster, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 0}
         m_MethodName: ChooseEgg
         m_Mode: 2
@@ -9400,7 +9622,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3303977584201053847}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1635510326}
+        m_MethodName: ChooseEgg
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: Monster, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!224 &3303977584201053845
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9596,7 +9829,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1635510325}
+      - m_Target: {fileID: 1635510326}
+        m_MethodName: ChooseEgg
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: d8339fdc75d2acf48838d442e090291d,
+            type: 2}
+          m_ObjectArgumentAssemblyTypeName: Monster, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
         m_MethodName: ChooseEgg
         m_Mode: 2
         m_Arguments:
@@ -9907,7 +10152,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3303977584656353268}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1635510326}
+        m_MethodName: ChooseEgg
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: Monster, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!222 &3303977584656353271
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10197,7 +10453,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3303977584935848594}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1635510326}
+        m_MethodName: ChooseEgg
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: Monster, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &3303977584972546964
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10240,7 +10507,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3303977584972546967}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1635510326}
+        m_MethodName: ChooseEgg
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: Monster, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!224 &3303977584972546965
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10736,7 +11014,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3303977585709089884}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1635510326}
+        m_MethodName: ChooseEgg
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: Monster, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!222 &3303977585709089887
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -11006,7 +11295,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1635510325}
+      - m_Target: {fileID: 1635510326}
+        m_MethodName: ChooseEgg
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: 94f3f45b4a57fd145b9855251d6c2760,
+            type: 2}
+          m_ObjectArgumentAssemblyTypeName: Monster, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
         m_MethodName: ChooseEgg
         m_Mode: 2
         m_Arguments:
@@ -11135,7 +11436,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3303977585921544176}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1635510326}
+        m_MethodName: ChooseEgg
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: Monster, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!222 &3303977585921544179
 CanvasRenderer:
   m_ObjectHideFlags: 0

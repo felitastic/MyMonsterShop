@@ -54,6 +54,7 @@ public class CameraMovement : MonoBehaviour
         if (GM.curMonsterSlot != ecurMonsterSlot.left && !lerping)
         {
             SetScreen(GM.curMonsterSlot -= 1);
+            GM.homeUI.SetMonsterTexts((int)GM.curMonsterSlot);
             GM.homeUI.SetMonsterValue();
         }
     }
@@ -63,6 +64,7 @@ public class CameraMovement : MonoBehaviour
         if (GM.curMonsterSlot != ecurMonsterSlot.right && !lerping)
         {
             SetScreen(GM.curMonsterSlot += 1);
+            GM.homeUI.SetMonsterTexts((int)GM.curMonsterSlot);
             GM.homeUI.SetMonsterValue();
         }
     }
