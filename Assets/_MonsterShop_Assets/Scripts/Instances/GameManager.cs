@@ -20,7 +20,7 @@ public class GameManager : Singleton<GameManager>
 
     //MonsterManager
     public MM_Home homeMonsterManager;
-    public MM_GameResult gameResultMonsterManager;
+    public MM_Runner runnerMonsterManager;
 
 
     [Header("Monster Values")]
@@ -34,6 +34,7 @@ public class GameManager : Singleton<GameManager>
 
     //left, middle, right -> used as (int) to get the right monsterslot ID
     public ecurMonsterSlot curMonsterSlot;
+    public Vector3 CurCamHomePos;
 
     //momentane unlocked slots and creatures, die der Spieler hat
     //public CurrentMonster[] CurMonsters = new CurrentMonster[3];
@@ -54,18 +55,19 @@ public class GameManager : Singleton<GameManager>
     public RunnerController runnerController;
 
     //private bool isLoading = false;
-    private AsyncOperation asyncOperation;
+    //private AsyncOperation asyncOperation;
 
     private void Awake()
     {
         Application.targetFrameRate = 60;        
+        WriteEmptySlots();
     }
+
     private void Start()
     {
-        WriteEmptySlots();
-        ChangePlayerGold(+100);
-        homeUI.SetUIStage(HomeUI.eHomeUIScene.Home);
-        homeMonsterManager.SetSlotSymbol();
+        //GetImportantScripts();
+        HomeCam.SetScreen(ecurMonsterSlot.middle);
+        CurCamHomePos = Camera.main.transform.position;
     }
 
     private void WriteEmptySlots()
@@ -87,79 +89,6 @@ public class GameManager : Singleton<GameManager>
         PlayerMoney += value;
         print("player gold: " + PlayerMoney);
         homeUI.SetGoldCounter();
-    }
-
-    //private void Update()
-    //{
-    //    //if (isLoading)
-    //    //{
-    //    //    //show loading screen
-
-    //    //    if (asyncOperation.isDone)
-    //    //    {
-    //    //        print("scene loaded");
-    //    //        isLoading = false;
-    //    //        homeUI.SetUIStage(HomeUI.eHomeUIScene.Home);
-    //    //        SpawnAllCurrentMonsters();
-    //    //        homeUI.SetGoldCounter();
-    //    //        homeMonsterManager.CalculateMonsterValue();
-    //    //    }
-    //    //}
-
-    //    //if (isLoading)
-    //    //{
-    //    //    if (asyncOperation.progress == 0.9f)
-    //    //    {
-    //    //        asyncOperation.allowSceneActivation = true;
-    //    //        //SceneManager.LoadScene(0);
-    //    //        homeUI.SetUIStage(HomeUI.eHomeUIScene.Home);
-    //    //        SpawnAllCurrentMonsters();
-    //    //        homeUI.SetGoldCounter();
-    //    //        homeMonsterManager.CalculateMonsterValue();
-    //    //        isLoading = false;
-    //    //    }
-    //    //}
-    //}
-
-
-
-
-    public IEnumerator TestLoad()
-    {
-        asyncOperation = SceneManager.LoadSceneAsync(0);
-        
-        //yield return new WaitUntil(asyncOperation.isDone);
-
-        while(!asyncOperation.isDone)
-        {
-            print("loading in progress");
-            //if (homeUI != null)
-            //{
-            //    print("home ui loaded");
-            //}            
-            
-            //if (homeMonsterManager != null)
-            //{
-            //    print("home mm loaded");
-            //}
-            yield return StartCoroutine(WaitForThing());
-        }
-
-        print("got em all");
-        //yield return null;
-    }    
-
-    public IEnumerator WaitForThing()
-    {
-        print("waiting for thing");
-        if (asyncOperation.isDone)
-        {
-            print("asyn has finished");
-            SpawnAllCurrentMonsters();
-            homeMonsterManager.CalculateMonsterValue();
-            homeUI.SetGoldCounter();
-        }
-        yield return null;
     }
 
     public IEnumerator cLoadHomeScene()
@@ -189,21 +118,59 @@ public class GameManager : Singleton<GameManager>
     }
 
 
+    //public IEnumerator TestLoad()
+    //{
+    //    AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(0);
+    //    //yield return new WaitUntil(asyncOperation.isDone);
+    //    while (!asyncOperation.isDone)
+    //    {
+    //        print("loading in progress");
+    //        //    //if (homeUI != null)
+    //        //    //{
+    //        //    //    print("home ui loaded");
+    //        //    //}            
+
+    //        //    //if (homeMonsterManager != null)
+    //        //    //{
+    //        //    //    print("home mm loaded");
+    //        //    //}
+
+    //        //    //SpawnAllCurrentMonsters();
+    //        //    //homeMonsterManager.CalculateMonsterValue();
+    //        //    //homeUI.SetGoldCounter();
+
+    //        yield return null;
+    //    }
+
+    //    print("loading done");
+    //    //GetImportantScripts();
 
 
+    //    //SceneManager.LoadScene(0);
+    //    //print("loading scene");
+    //    //yield return new WaitForSeconds(1.5f);
+    //    //GetImportantScripts();
+    //    //print("loading done");
+    //    //homeUI.DisableLoadingScreen();
+    //}    
 
-    public void SpawnAllCurrentMonsters()
+    private void GetImportantScripts()
     {
-        print("spawning monsters");
-        foreach(MonsterSlot slot in CurMonsters)
-        {
-            if (slot.Monster != null)
-            {
-                homeMonsterManager.SpawnAnyMonster(slot.Monster.CreaturePrefabs[(int)homeMonsterManager.CurMonster.Rarity, (int)homeMonsterManager.CurMonster.MonsterStage], homeMonsterManager.MonsterSpawn[slot.SlotID]);
-                print("slot " + slot.SlotID + " contains monster: " + slot.Monster.MonsterType);
-            }
-            else
-                print("slot " + slot.SlotID + " is empty");
-        }
+        //int loadedScene = SceneManager.GetActiveScene().buildIndex;
+
+        //if (loadedScene == SceneManager.GetSceneByName("Home").buildIndex)
+        //{
+        //    homeMonsterManager = FindObjectOfType<MM_Home>();
+        //    homeUI = FindObjectOfType<HomeUI>();
+        //    HomeCam = FindObjectOfType<CameraMovement>();            
+        //}
+        //else if (loadedScene == SceneManager.GetSceneByName("EndlessRunner_ButtonControls").buildIndex)
+        //{
+        //    runnerUI = FindObjectOfType<RunnerUI>();
+        //    gameResultMonsterManager = FindObjectOfType<MM_GameResult>();
+        //}
+
+        //print("got all scripts");
     }
+
 }

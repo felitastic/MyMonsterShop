@@ -21,10 +21,12 @@ public class Monster : SerializedScriptableObject
     [Header("--- VALUES FOR GD TO TWEAK ---")]
     [Tooltip("XP threshold for normal creature")]
     public float[] LevelThreshold_normal = new float[9];
-    [Tooltip("XP threshold for rare creature")]
-    public float[] LevelThreshold_rare = new float[9];
-    [Tooltip("XP threshold for legendary creature")]
-    public float[] LevelThreshold_legendary = new float[9];
+
+    [Tooltip("Multiplicator for rare Levelthresholds ")]
+    public float MultiplicatorRare;
+    [Tooltip("Multiplicator for legendary Levelthresholds ")]
+    public float MultiplicatorLegendary;
+
     [Tooltip("How much the egg BaseCosts in shop")]
     public int BaseCost;
     [Tooltip("Value modificator: gold = modificator * xp + base value")]

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MonsterSlot
 {
-    public int SlotID = 4;
+    public int SlotID;
     public Monster Monster = null;
     public bool Unlocked = false;
     public float[] LevelThreshold_current = new float[9];

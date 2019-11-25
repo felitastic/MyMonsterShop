@@ -21,12 +21,15 @@ public class CameraMovement : MonoBehaviour
     //public List<GameObject> CamTransforms;
     //public GameObject CamHolder;
 
+    public void Awake()
+    {
+        GM = GameManager.Instance;
+        GM.HomeCam = this;                
+    }
 
     private void Start()
     {
-        GM = GameManager.Instance;
-        GM.HomeCam = this;
-        SetScreen(ecurMonsterSlot.middle);
+        SetCameraPosition(GM.CurCamHomePos);
     }
 
     public void Update()
@@ -54,7 +57,7 @@ public class CameraMovement : MonoBehaviour
         if (GM.curMonsterSlot != ecurMonsterSlot.left && !lerping)
         {
             SetScreen(GM.curMonsterSlot -= 1);
-            GM.homeUI.SetMonsterTexts((int)GM.curMonsterSlot);
+            GM.homeUI.SetMonsterTexts();
             GM.homeUI.SetMonsterValue();
         }
     }
@@ -64,7 +67,7 @@ public class CameraMovement : MonoBehaviour
         if (GM.curMonsterSlot != ecurMonsterSlot.right && !lerping)
         {
             SetScreen(GM.curMonsterSlot += 1);
-            GM.homeUI.SetMonsterTexts((int)GM.curMonsterSlot);
+            GM.homeUI.SetMonsterTexts();
             GM.homeUI.SetMonsterValue();
         }
     }
@@ -91,7 +94,14 @@ public class CameraMovement : MonoBehaviour
             default:
                 break;
         }
+
+        GM.CurCamHomePos = EndPos;
         StartLerp(lerpTime);
+    }
+
+    public void SetCameraPosition(Vector3 CamPos)
+    {
+        Camera.main.transform.position = CamPos;
     }
 
 

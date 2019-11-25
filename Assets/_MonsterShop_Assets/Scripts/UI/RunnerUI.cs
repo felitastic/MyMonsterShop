@@ -23,7 +23,8 @@ public class RunnerUI : UIController
     private enum eButtons
     {
         LeftButton,
-        RightButton
+        RightButton,
+        StartButton
     }
 
     private enum eTextfields
@@ -37,10 +38,20 @@ public class RunnerUI : UIController
 
     private void Awake()
     {
-        GetGameManager();
-        GM.runnerUI = this;
         DisableButton((int)eButtons.LeftButton);
         DisableButton((int)eButtons.RightButton);
+    }
+    
+    private void Start()
+    {
+        GetGameManager();
+        GM.runnerUI = this;
+    }
+
+    public void StartPressed()
+    {
+        StartGame();
+        GM.runnerController.IsRunning = true;
     }
 
     public void TapResult()
@@ -63,37 +74,42 @@ public class RunnerUI : UIController
 
     public IEnumerator cShowResult()
     {
-        yield return new WaitForSeconds(0.2f);
-        //xpBar.fillAmount = GM.CurMonsters[(int)GM.curMonsterSlot].CreatureXP / GM.CurMonsters[(int)GM.curMonsterSlot].LevelThreshold_current[GM.CurMonsters[(int)GM.curMonsterSlot].CreatureLevel];
+        yield return new WaitForSeconds(0.5f);
+        xpBar.fillAmount = GM.CurMonsters[(int)GM.curMonsterSlot].CreatureXP / GM.CurMonsters[(int)GM.curMonsterSlot].LevelThreshold_current[GM.CurMonsters[(int)GM.curMonsterSlot].CreatureLevel];
 
-        //float curXP = GM.thisMonster.CreatureXP;
-        //float LevelUpAt = GM.thisMonster.LevelThreshold_current[GM.thisMonster.CreatureLevel];
+        float curXP = GM.CurMonsters[(int)GM.curMonsterSlot].CreatureXP;
+        float LevelUpAt = GM.CurMonsters[(int)GM.curMonsterSlot].LevelThreshold_current[GM.CurMonsters[(int)GM.curMonsterSlot].CreatureLevel];
 
-        //xpBar.fillAmount = curXP / LevelUpAt;
+        xpBar.fillAmount = curXP / LevelUpAt;
 
         DisableMenu((int)eMenus.InGameStuff);
         Camera.main.transform.position = GM.runnerController.ResultCamPos;
-        //GM.CurMonsters[(int)GM.curMonsterSlot].SpawnCurrentMonster(GM.runnerController.monsterSpawn);
 
-        //GM.CurMonsters[(int)GM.curMonsterSlot].SpawnCurrentMonster(GM.thisMonster.CurMonster.CreaturePrefabs[(int)GM.thisMonster.Rarity, (int)GM.thisMonster.MonsterStage], GM.runnerController.monsterSpawn);
+        GM.runnerMonsterManager.SpawnCurrentMonster(GM.runnerMonsterManager.ResultMonsterSpawn);
 
         SetText((int)eTextfields.CollectedNo, GM.runnerController.CollectedCount + " x");
         SetText((int)eTextfields.XPValue, GM.runnerController.CollectedXP + " XP");
         EnableMenu((int)eMenus.ResultScreen);
         yield return new WaitForSeconds(1f);
 
-        //GM.thisMonster.CreatureXP += GM.runnerController.CollectedXP;
-        //curXP = GM.thisMonster.CreatureXP; 
-        //xpBar.fillAmount = curXP / LevelUpAt;
+        GM.CurMonsters[(int)GM.curMonsterSlot].CreatureXP += GM.runnerController.CollectedXP;
+        curXP = GM.CurMonsters[(int)GM.curMonsterSlot].CreatureXP;
+        xpBar.fillAmount = curXP / LevelUpAt;
+        
 
-        //check if level up
+        //check if level up (change to do from the back?, highest first, then go down)
+        if (GM.CurMonsters[(int)GM.curMonsterSlot].CreatureXP > GM.CurMonsters[(int)GM.curMonsterSlot].LevelThreshold_current[GM.CurMonsters[(int)GM.curMonsterSlot].CreatureLevel])
+        {
+            GM.CurMonsters[(int)GM.curMonsterSlot].CreatureLevel += 1;
 
-        yield return new WaitForSeconds(0.5f);
+            //check for level up, which will happen at 3, 6 and 9
+            if (GM.CurMonsters[(int)GM.curMonsterSlot].CreatureLevel % 3 == 0)
+            {
+                StartCoroutine(GM.runnerMonsterManager.cLevelUpMonster(GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage + 1, GM.runnerMonsterManager.ResultMonsterSpawn));
+                yield return new WaitForSeconds(0.5f);
+            }
+        }
 
-        //GM.thisMonster.MonsterStage += 1;
-        //StartCoroutine(GM.CurMonsters[(int)GM.curMonsterSlot].C_SetStage(GM.thisMonster.MonsterStage, GM.runnerController.monsterSpawn));
-
-        //StartCoroutine(GM.CurMonsters[(int)GM.curMonsterSlot].C_SetStage(GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage + 1, GM.runnerController.monsterSpawn));      
         yield return new WaitForSeconds(0.5f);
         EnableMenu((int)eMenus.EndResultButton);
     }

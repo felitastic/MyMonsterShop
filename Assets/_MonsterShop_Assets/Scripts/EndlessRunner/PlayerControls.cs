@@ -7,6 +7,7 @@ public class PlayerControls : MonoBehaviour
     [Header("Drag n Drop")]
     public Camera Cam;
     public Rigidbody Monster;
+    //{ get { return GetComponentInChildren<Rigidbody>(GM.runnerMonsterManager.monsterBody[(int)GM.curMonsterSlot]); } }
 
     private GameManager GM;
     private float verticalSpeed { get { return GM.runnerController.RunnerValues.VerticalSpeed * GM.runnerController.curSpeedModifier; } }

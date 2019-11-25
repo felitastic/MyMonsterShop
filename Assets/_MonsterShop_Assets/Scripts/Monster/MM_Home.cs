@@ -8,12 +8,17 @@ public class MM_Home : MonsterManager
     public GameObject[] Plus;
     public Transform EggSpawn;
 
-    public void Start()
+    public void Awake()
     {
-        print("home mm has been started");
         GetGameManager();
         GM.homeMonsterManager = this;
-        //SetSlotSymbol();
+        //print("home mm has been started");
+    }
+    public void Start()
+    {
+        SetSlotSymbol();
+        SpawnAllCurrentMonsters();
+        CalculateMonsterValue();
     }
 
     public void SetSlotSymbol()
@@ -37,32 +42,63 @@ public class MM_Home : MonsterManager
             }
         }
     }
+    public void SpawnAllCurrentMonsters()
+    {
+        print("spawning monsters");
+
+        for (int i = 0; i< GM.CurMonsters.Length;i++)
+        {
+            if (GM.CurMonsters[i].Monster == null)
+            {
+                print("slot " + i + " is empty");
+                //print("rarity: " + (int)GM.CurMonsters[i].Rarity);
+                //print("stage: " + (int)GM.CurMonsters[i].MonsterStage);
+                //print("spawn: " + MonsterSpawn[i].name);
+            }
+            else
+            {
+                print("slot " + i + " is NOT empty");
+                //print("rarity: " + (int)GM.CurMonsters[i].Rarity);
+                //print("stage: " + (int)GM.CurMonsters[i].MonsterStage);
+                //print("spawn: " + MonsterSpawn[i].name);
+                SpawnAnyMonster(GM.CurMonsters[i].Monster.CreaturePrefabs[(int)GM.CurMonsters[i].Rarity, (int)GM.CurMonsters[i].MonsterStage], MonsterSpawn[i]);
+            }
+        }
+    }
 
     //For the egg hatching
     public void SetEggRarity()
     {
+        //TODO Rarity errechnen
         GM.CurMonsters[(int)GM.curMonsterSlot].Rarity = (eRarity)Random.Range(0, 3);
 
         switch (GM.CurMonsters[(int)GM.curMonsterSlot].Rarity)
         {
             case eRarity.normal:
-                GM.CurMonsters[(int)GM.curMonsterSlot].LevelThreshold_current = GM.CurMonsters[(int)GM.curMonsterSlot].Monster.LevelThreshold_normal;
-                //SetText((int)eTextfields.Hatch_Rarity, "Normal");
+                GM.CurMonsters[(int)GM.curMonsterSlot].LevelThreshold_current = newLevelThreshold();
                 break;
             case eRarity.rare:
-                GM.CurMonsters[(int)GM.curMonsterSlot].LevelThreshold_current = GM.CurMonsters[(int)GM.curMonsterSlot].Monster.LevelThreshold_rare;
-                //SetText((int)eTextfields.Hatch_Rarity, "Rare!");
-
+                GM.CurMonsters[(int)GM.curMonsterSlot].LevelThreshold_current = newLevelThreshold(GM.CurMonsters[(int)GM.curMonsterSlot].Monster.MultiplicatorRare);
+                
                 break;
             case eRarity.legendary:
-                GM.CurMonsters[(int)GM.curMonsterSlot].LevelThreshold_current = GM.CurMonsters[(int)GM.curMonsterSlot].Monster.LevelThreshold_legendary;
-                //SetText((int)eTextfields.Hatch_Rarity, "Legendary!");
+                GM.CurMonsters[(int)GM.curMonsterSlot].LevelThreshold_current = newLevelThreshold(GM.CurMonsters[(int)GM.curMonsterSlot].Monster.MultiplicatorLegendary);
 
                 break;
             default:
                 break;
         }
         print(GM.CurMonsters[(int)GM.curMonsterSlot].Rarity);
+    }
+
+    public float[] newLevelThreshold(float multiplicator = 1.00f)
+    {
+        for (int i = 0; i < GM.CurMonsters[(int)GM.curMonsterSlot].LevelThreshold_current.Length; i++)
+        {
+            GM.CurMonsters[(int)GM.curMonsterSlot].LevelThreshold_current[i] = GM.CurMonsters[(int)GM.curMonsterSlot].Monster.LevelThreshold_normal[i] * multiplicator;
+            print(i+" = "+GM.CurMonsters[(int)GM.curMonsterSlot].LevelThreshold_current[i]);
+        }
+        return GM.CurMonsters[(int)GM.curMonsterSlot].LevelThreshold_current;
     }
 
     public IEnumerator cSpawnEgg()

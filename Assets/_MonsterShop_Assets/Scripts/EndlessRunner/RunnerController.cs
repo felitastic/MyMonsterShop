@@ -9,7 +9,6 @@ public class RunnerController : MonoBehaviour
     public EndlessRunner_Values RunnerValues;
     public PlayerControls playerControls;
     public RunnerUI UI;
-    public Transform monsterSpawn;
 
     public GameManager GM;
 
@@ -35,34 +34,22 @@ public class RunnerController : MonoBehaviour
     public bool IsRunning;
     public bool win;
 
-    private void Start()
+    private void Awake()
     {
         IsRunning = false;
         ResultCamPos = new Vector3(-25.0f, 0.0f, -10.0f);
-
-        if (GameManager.Instance)
-        {
-            GM = GameManager.Instance;
-            GM.runnerController = this;
-        }
-        else
-        {
-            Debug.LogWarning("Could not find Game Manager!");
-        }
-
         curSpeedModifier = 1.00f;
         curCollectableValue = RunnerValues.CollectableValue;
-
         InstantiateNextTile(curTile);
         curTile += 1;
         InstantiateNextTile(curTile);
     }
 
-    public void StartPressed()
+    private void Start()
     {
-        UI.StartGame();
-        IsRunning = true;
-    }
+        GM = GameManager.Instance;
+        GM.runnerController = this;
+    }    
 
     public IEnumerator cOnCollectFeedback()
     {

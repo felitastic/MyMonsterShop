@@ -9,10 +9,11 @@ public class HomeUI : UIController
     [SerializeField]
     private Monster curEgg;
     private int hatchTaps;
+    //private Vector3 camHomePos { get { return GM.CurCamHomePos; } }
     private Vector3 camShopPos;
     private Vector3 camDungeonPos;
-    private Vector3 camHomePos;
     private eHomeUIScene curScene;
+    private int EggHatchCount;
 
     private enum eMenus
     {
@@ -64,23 +65,22 @@ public class HomeUI : UIController
         Dungeonlord
     }
 
-    private void Start()
+
+    public void Awake()
     {
-        print("home ui has been started");
         GetGameManager();
         GM.homeUI = this;
-        camHomePos = new Vector3(0.0f, 0.0f, -10.001f); ;
         camShopPos = new Vector3(0.0f, 20.0f, -10.001f);
         camDungeonPos = new Vector3(-10.801f, 20.0f, -10.001f);
+        EggHatchCount = 1;
+        //print("home ui has been started");
+    }
+
+    private void Start()
+    {
         SetUIStage(eHomeUIScene.Home);
         //SetGoldCounter();
     }
-
-    public void TestButton()
-    {
-        StartCoroutine(GM.TestLoad());
-    }
-
 
     // Changes UI menus according to scene 
     // Also camera position
@@ -93,12 +93,12 @@ public class HomeUI : UIController
         {
             case eHomeUIScene.Home:
                 UI_MonsterView();
-                Camera.main.transform.position = camHomePos;
+                Camera.main.transform.position = GM.CurCamHomePos;
 
                 break;
             case eHomeUIScene.Eggshop:
                 UI_EggShop();
-                camHomePos = Camera.main.transform.position;
+                GM.CurCamHomePos = Camera.main.transform.position;
                 Camera.main.transform.position = camShopPos;
 
                 break;
@@ -107,7 +107,7 @@ public class HomeUI : UIController
 
                 break;
             case eHomeUIScene.Dungeonlord:
-                camHomePos = Camera.main.transform.position;
+                GM.CurCamHomePos = Camera.main.transform.position;
                 Camera.main.transform.position = camDungeonPos;
                 UI_DungeonLord();
 
@@ -132,6 +132,10 @@ public class HomeUI : UIController
         EnableMenu((int)eMenus.HomeBG);
         EnableMenu((int)eMenus.H_SwipeButtons);
         EnableMenu((int)eMenus.H_BottomButtons);
+
+        SetMonsterTexts();
+        SetMonsterValue();
+        SetGoldCounter();
     }
 
     private void UI_EggShop()
@@ -164,20 +168,29 @@ public class HomeUI : UIController
 // Updating Monster and Player Values 
     public void SetMonsterValue()
     {
-        GM.homeUI.SetText((int)eTextfields.MonsterValue, "Value: " + GM.CurMonsters[(int)GM.curMonsterSlot].CreatureValue);
-        print("Value: " + GM.CurMonsters[(int)GM.curMonsterSlot].CreatureValue);
+        GM.homeMonsterManager.CalculateMonsterValue();
+
+        if (GM.CurMonsters[(int)GM.curMonsterSlot].Monster == null)
+        {
+            GM.homeUI.SetText((int)eTextfields.MonsterValue, "");
+        }
+        else
+        {
+            GM.homeUI.SetText((int)eTextfields.MonsterValue, "Value: " + GM.CurMonsters[(int)GM.curMonsterSlot].CreatureValue);
+            print("Value: " + GM.CurMonsters[(int)GM.curMonsterSlot].CreatureValue);
+        }
     }
 
-    public void SetMonsterTexts(int thisSlot)
+    public void SetMonsterTexts()
     {
-        if (GM.CurMonsters[thisSlot].Monster == null)
+        if (GM.CurMonsters[(int)GM.curMonsterSlot].Monster == null)
         {
             SetText((int)eTextfields.MonsterTypeandStage, "");
             SetMonsterValue();
         }
         else
         {
-            SetText((int)eTextfields.MonsterTypeandStage, GM.CurMonsters[thisSlot].MonsterStage + " " + GM.CurMonsters[thisSlot].Monster.CreatureName);
+            SetText((int)eTextfields.MonsterTypeandStage, GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage + " " + GM.CurMonsters[(int)GM.curMonsterSlot].Monster.CreatureName);
             SetMonsterValue();
         }
     }
@@ -286,6 +299,9 @@ public class HomeUI : UIController
         {
             //put egg in empty slot position
             GM.CurMonsters[(int)GM.curMonsterSlot].Monster = curEgg;
+            GM.CurMonsters[(int)GM.curMonsterSlot].BaseValue = GM.CurMonsters[(int)GM.curMonsterSlot].Monster.BaseValue;
+            SetMonsterTexts();
+            SetMonsterValue();
             GM.homeMonsterManager.SetSlotSymbol();
             DisableMenu((int)eMenus.S_EggMenu);
             DisableMenu((int)eMenus.S_BottomButtons);
@@ -317,7 +333,7 @@ public class HomeUI : UIController
     {
         hatchTaps += 1;
         //print("tapped " + hatchTaps);
-        if (hatchTaps == 5)
+        if (hatchTaps == EggHatchCount)
         {
             GM.homeMonsterManager.SetEggRarity();
             StartCoroutine(GM.homeMonsterManager.cHatchEgg(GM.homeMonsterManager.EggSpawn));
@@ -350,6 +366,12 @@ public class HomeUI : UIController
     public void SellMonster()
     {
 
+    }
+
+    //Testing
+    public void TestButton()
+    {
+        StartCoroutine(GM.cLoadHomeScene());
     }
 
 }
