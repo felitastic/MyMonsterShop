@@ -74,6 +74,7 @@ public class RunnerController : MonoBehaviour
 
     public void InstantiateNextTile(int whichTile)
     {
+        //Vector3 position = new Vector3()
         Instantiate(LevelTiles[whichTile]);
         //Instantiate(vars.LevelTiles[curTile+1], LevelSpawn.transform);
     }

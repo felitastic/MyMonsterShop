@@ -12,16 +12,20 @@ public class MM_Runner : MonsterManager
     {
         GetGameManager();
         GM.runnerMonsterManager = this;
-        SpawnMonsterinRunner();
+        StartCoroutine(cSpawnMonsterinRunner());
     }
 
-    public void SpawnMonsterinRunner()
-    {
+    public IEnumerator cSpawnMonsterinRunner()
+    {        
+        //change local scale and rotation to fit
         SpawnCurrentMonster(IngameMonsterSpawn);
-        //change local scale to fit
-        //change rotation
-        //monsterBody[(int)GM.curMonsterSlot].transform.localScale = 
-        GM.runnerController.playerControls.Monster = GetComponentInChildren<Rigidbody>(GM.runnerMonsterManager.monsterBody[(int)GM.curMonsterSlot]);
+               
+        //while ( == null)
+        //    yield return null;
+
+        GM.runnerController.playerControls.Monster = GM.runnerMonsterManager.monsterRigid[SlotID];
         //enable start button after setup is done
+        yield return new WaitForSeconds(0.5f);
+        GM.runnerUI.EnableStartButton();
     }
 }

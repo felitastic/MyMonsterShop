@@ -33,13 +33,16 @@ public class RunnerUI : UIController
         OnCollectFeedback,
         GameOverFeedback,
         CollectedNo,
-        XPValue
+        XPValue,
+        StartText
     }
 
     private void Awake()
     {
         DisableButton((int)eButtons.LeftButton);
         DisableButton((int)eButtons.RightButton);
+        DisableButton((int)eButtons.StartButton);
+        SetText((int)eTextfields.StartText, "");
     }
     
     private void Start()
@@ -48,17 +51,16 @@ public class RunnerUI : UIController
         GM.runnerUI = this;
     }
 
+    // Called by StartButton
     public void StartPressed()
     {
-        StartGame();
+        DisableMenu((int)eMenus.StartButton);
+        EnableButton((int)eButtons.LeftButton);
+        EnableButton((int)eButtons.RightButton);
         GM.runnerController.IsRunning = true;
     }
 
-    public void TapResult()
-    {
-        StartCoroutine(GM.cLoadHomeScene());
-    }
-
+    // Called after monster hits an obstacle
     public void GameOver()
     {
         if (GM.runnerController.win)
@@ -72,6 +74,7 @@ public class RunnerUI : UIController
         StartCoroutine(cShowResult());
     }
 
+    // called after game over or win 
     public IEnumerator cShowResult()
     {
         yield return new WaitForSeconds(0.5f);
@@ -97,12 +100,12 @@ public class RunnerUI : UIController
         xpBar.fillAmount = curXP / LevelUpAt;
         
 
-        //check if level up (change to do from the back?, highest first, then go down)
+        // check if level up (change to do from the back?, highest first, then go down)
         if (GM.CurMonsters[(int)GM.curMonsterSlot].CreatureXP > GM.CurMonsters[(int)GM.curMonsterSlot].LevelThreshold_current[GM.CurMonsters[(int)GM.curMonsterSlot].CreatureLevel])
         {
             GM.CurMonsters[(int)GM.curMonsterSlot].CreatureLevel += 1;
 
-            //check for level up, which will happen at 3, 6 and 9
+            // check for level up, which will happen at 3, 6 and 9
             if (GM.CurMonsters[(int)GM.curMonsterSlot].CreatureLevel % 3 == 0)
             {
                 StartCoroutine(GM.runnerMonsterManager.cLevelUpMonster(GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage + 1, GM.runnerMonsterManager.ResultMonsterSpawn));
@@ -114,10 +117,17 @@ public class RunnerUI : UIController
         EnableMenu((int)eMenus.EndResultButton);
     }
 
-    public void StartGame()
+    // EndResultButtons function
+    public void TapResult()
     {
-        DisableMenu((int)eMenus.StartButton);
-        EnableButton((int)eButtons.LeftButton);
-        EnableButton((int)eButtons.RightButton);
+        StartCoroutine(GM.cLoadHomeScene());
+    }
+
+    // Endabling Startbutton after a short wait to make sure everything has loaded
+    public void EnableStartButton()
+    {
+        //print("enabling start button");
+        SetText((int)eTextfields.StartText, "Tap to start");
+        EnableButton((int)eButtons.StartButton);
     }
 }

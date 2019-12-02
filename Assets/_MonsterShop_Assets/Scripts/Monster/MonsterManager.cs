@@ -14,6 +14,8 @@ public class MonsterManager : MonoBehaviour
 
     //currently spawned monster model prefabs
     public GameObject[] monsterBody = new GameObject[3];
+    public Rigidbody[] monsterRigid = new Rigidbody[3];
+    public Animator[] monsterAnim = new Animator[3];
 
     //Pos to spawn creature 
     public Transform[] MonsterSpawn = new Transform[3];
@@ -51,17 +53,20 @@ public class MonsterManager : MonoBehaviour
         CurMonster.CreatureValue = (CurMonster.GoldModificator * CurMonster.CreatureXP) + (float)CurMonster.BaseValue;
     }
 
-
     public void SpawnCurrentMonster(Transform monsterSpawn)
     {
         monsterBody[SlotID] = Instantiate(CurMonster.Monster.CreaturePrefabs[(int)CurMonster.Rarity, (int)CurMonster.MonsterStage], monsterSpawn);
         monsterBody[SlotID].transform.SetParent(monsterSpawn);
+        monsterAnim[SlotID] = monsterBody[SlotID].GetComponentInChildren<Animator>();
+        monsterRigid[SlotID] = monsterBody[SlotID].GetComponentInChildren<Rigidbody>();
     }
 
     public void SpawnAnyMonster(GameObject monster, Transform monsterSpawn)
     {
         monsterBody[SlotID] = Instantiate(monster, monsterSpawn);
         monsterBody[SlotID].transform.SetParent(monsterSpawn);
+        monsterAnim[SlotID] = monsterBody[SlotID].GetComponentInChildren<Animator>();
+        monsterRigid[SlotID] = monsterBody[SlotID].GetComponentInChildren<Rigidbody>();
     }
 
     public IEnumerator cLevelUpMonster(eMonsterStage newStage, Transform monsterSpawn)

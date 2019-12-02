@@ -1,13 +1,17 @@
-﻿using System.Collections;
+﻿using core;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
 /// Instanz that controlls SFX and BGM
 /// </summary>
-public class SoundController : MonoBehaviour
+public class SoundController : Singleton<SoundController>
 {
-    public static SoundController inst;
+    protected SoundController() { }
+
+    public AudioClip[] SFXclips;
+    public AudioClip[] BGMclips;
 
     /* Steal from previous Soundmanager */
     //array for the SFX clips
@@ -18,13 +22,7 @@ public class SoundController : MonoBehaviour
 
     void Start()
     {
-        if (inst == null)
-            inst = this;
-        else
-            Destroy(this);
-
-        DontDestroyOnLoad(this);
-
+        print("started sound manager");
     }
 
     public void StartBGM()

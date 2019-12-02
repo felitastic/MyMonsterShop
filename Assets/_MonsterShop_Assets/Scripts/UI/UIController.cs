@@ -22,14 +22,6 @@ public abstract class UIController : MonoBehaviour
     public virtual void GetGameManager()
     {
         GM = GameManager.Instance;
-
-        //GM.CurUI = this;
-
-        //if (GM.CurUI != null)
-        //    print("current UI: " + GM.CurUI.name);
-        //else
-        //    print("current UI controller script not set");
-
     }
 
     public virtual void DisableMenu(int menu)
@@ -54,7 +46,11 @@ public abstract class UIController : MonoBehaviour
         Buttons[thisButton].interactable = false;
     }
     public virtual void InfoPopup()
-    { }
+    {
+
+    }
+
+
 }
 
 

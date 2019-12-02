@@ -36,6 +36,9 @@ public class GameManager : Singleton<GameManager>
     public ecurMonsterSlot curMonsterSlot;
     public Vector3 CurCamHomePos;
 
+    public Rigidbody[] curMonsterRigid;
+    public Animator[] curMonsterAnim;
+
     //momentane unlocked slots and creatures, die der Spieler hat
     //public CurrentMonster[] CurMonsters = new CurrentMonster[3];
     public MonsterSlot[] CurMonsters;
@@ -43,8 +46,9 @@ public class GameManager : Singleton<GameManager>
     //public CurrentMonster thisMonster = new CurrentMonster();
 
     //Lautstärke vom Spieler eingestellt
-    public float BGMVolume;
-    public float SFXVolume;
+
+    //public float BGMVolume;
+    //public float SFXVolume;
 
     //private bool isLoading;
     //private AsyncOperation asyncOperation;
@@ -69,6 +73,12 @@ public class GameManager : Singleton<GameManager>
         HomeCam.SetScreen(ecurMonsterSlot.middle);
         CurCamHomePos = Camera.main.transform.position;
     }
+
+    //public void GetCurMonsterComponents(Animator anim, Rigidbody rigid)
+    //{
+    //    curMonsterAnim = anim;
+    //    curMonsterRigid = rigid;
+    //}
 
     private void WriteEmptySlots()
     {

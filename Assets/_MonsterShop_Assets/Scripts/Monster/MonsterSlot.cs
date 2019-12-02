@@ -14,5 +14,5 @@ public class MonsterSlot
     public float CreatureXP = 0;
     public float CreatureValue = 0;
     public float GoldModificator;
-    public int BaseValue;
+    public int BaseValue;    
 }

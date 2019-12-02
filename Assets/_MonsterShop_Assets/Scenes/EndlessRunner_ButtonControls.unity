@@ -697,7 +697,7 @@ GameObject:
   - component: {fileID: 538112267}
   - component: {fileID: 538112266}
   m_Layer: 5
-  m_Name: Text (2)
+  m_Name: StartText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1540,7 +1540,7 @@ GameObject:
   - component: {fileID: 764024540}
   - component: {fileID: 764024539}
   m_Layer: 5
-  m_Name: Image
+  m_Name: BG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2064,9 +2064,11 @@ MonoBehaviour:
   - {fileID: 63739410}
   - {fileID: 678385942}
   - {fileID: 782840714}
+  - {fileID: 538112266}
   Buttons:
   - {fileID: 1340019671}
   - {fileID: 1512551912}
+  - {fileID: 1608441543}
   xpBar: {fileID: 1155453278}
 --- !u!114 &1280781712
 MonoBehaviour:
@@ -2082,6 +2084,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GM: {fileID: 0}
   monsterBody:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  monsterRigid:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  monsterAnim:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -2635,7 +2645,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1280781709}
+      - m_Target: {fileID: 1280781711}
         m_MethodName: StartPressed
         m_Mode: 1
         m_Arguments:
@@ -2694,7 +2704,7 @@ GameObject:
   - component: {fileID: 1625472075}
   - component: {fileID: 1625472074}
   m_Layer: 5
-  m_Name: Text
+  m_Name: GameInfo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2772,7 +2782,7 @@ GameObject:
   - component: {fileID: 1641636217}
   - component: {fileID: 1641636216}
   m_Layer: 5
-  m_Name: Text (1)
+  m_Name: GameInfo2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

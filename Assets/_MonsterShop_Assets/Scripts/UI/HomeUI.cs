@@ -369,9 +369,15 @@ public class HomeUI : UIController
     }
 
     //Testing
-    public void TestButton()
+    public void TestButton(Monster monster)
     {
-        StartCoroutine(GM.cLoadHomeScene());
+        GM.CurMonsters[(int)GM.curMonsterSlot].Monster = monster;
+        GM.homeMonsterManager.SetEggRarity();
+        GM.CurMonsters[(int)GM.curMonsterSlot].BaseValue = GM.CurMonsters[(int)GM.curMonsterSlot].Monster.BaseValue;
+        SetMonsterTexts();
+        SetMonsterValue();
+        GM.homeMonsterManager.SetSlotSymbol();
+        GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage = eMonsterStage.Baby;
+        GM.homeMonsterManager.SpawnCurrentMonster(GM.homeMonsterManager.MonsterSpawn[(int)GM.curMonsterSlot]);
     }
-
 }
