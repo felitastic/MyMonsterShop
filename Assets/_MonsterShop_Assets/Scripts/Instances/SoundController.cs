@@ -3,9 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// Instanz that controlls SFX and BGM
-/// </summary>
 public class SoundController : Singleton<SoundController>
 {
     protected SoundController() { }

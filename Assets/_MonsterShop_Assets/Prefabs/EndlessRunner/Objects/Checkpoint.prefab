@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2932892097064668070}
   - component: {fileID: 2932892097064668073}
   m_Layer: 0
-  m_Name: Checkpoint (1)
+  m_Name: Checkpoint
   m_TagString: Checkpoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -93,7 +93,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.14378922, y: 0.13614468, z: 0.2}
+  m_Size: {x: 0.14378922, y: 0.13614468, z: 1}
   m_Center: {x: -0.00090061425, y: -0.0029632093, z: 0}
 --- !u!114 &2932892097064668073
 MonoBehaviour:
@@ -107,4 +107,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ceaaf50ef8706240908977950d513cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vars: {fileID: 11400000, guid: cdcd0b7d91a8f3c4f860cf3c0a90d826, type: 2}

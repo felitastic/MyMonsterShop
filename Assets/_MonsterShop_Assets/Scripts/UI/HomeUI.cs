@@ -175,7 +175,6 @@ public class HomeUI : UIController
         if (GM.CurMonsters[(int)GM.curMonsterSlot].Monster == null)
         {
             GM.homeUI.SetText((int)eTextfields.MonsterValue, "");
-            //GM.homeUI.SetText((int)eTextfields.MonsterLevel, "");
         }
         else
         {
@@ -189,8 +188,7 @@ public class HomeUI : UIController
     {
         if (GM.CurMonsters[(int)GM.curMonsterSlot].Monster == null)
         {
-            GM.homeUI.SetText((int)eTextfields.MonsterValue, "");
-            //GM.homeUI.SetText((int)eTextfields.MonsterLevel, "");
+            GM.homeUI.SetText((int)eTextfields.MonsterTypeandStage, "");
         }
         else
         {
@@ -202,14 +200,15 @@ public class HomeUI : UIController
 
     public void SetXPBarUndLevel()
     {
-        if (GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage >= eMonsterStage.Egg)
+        if (GM.CurMonsters[(int)GM.curMonsterSlot].Monster == null || GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage >= eMonsterStage.Egg)
         {
             DisableMenu((int)eMenus.XPBar);
+            GM.homeUI.SetText((int)eTextfields.MonsterLevel, "");
         }
         else
         {
             EnableMenu((int)eMenus.XPBar);
-            SetText((int)eTextfields.MonsterLevel, "" + GM.CurMonsters[(int)GM.curMonsterSlot].CreatureLevel);
+            SetText((int)eTextfields.MonsterLevel, "Lvl " + GM.CurMonsters[(int)GM.curMonsterSlot].CreatureLevel);
             XPbar.fillAmount = GM.CurMonsters[(int)GM.curMonsterSlot].CreatureXP / GM.CurMonsters[(int)GM.curMonsterSlot].LevelThreshold_current[GM.CurMonsters[(int)GM.curMonsterSlot].CreatureLevel];                       
         }
     }    
