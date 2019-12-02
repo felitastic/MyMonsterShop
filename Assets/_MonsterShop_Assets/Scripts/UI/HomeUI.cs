@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class HomeUI : UIController
 {
-    [SerializeField]
+    public Image XPbar;
     private Monster curEgg;
     private int hatchTaps;
     //private Vector3 camHomePos { get { return GM.CurCamHomePos; } }
@@ -18,7 +18,7 @@ public class HomeUI : UIController
     private enum eMenus
     {
         PlayerInfo,
-        MonsterStats,
+        XPBar,
         Home,
         Shop,
         Dungeon,
@@ -33,7 +33,7 @@ public class HomeUI : UIController
         S_PurchaseConfirm,
         S_EggMenu,
         S_TappEggButton,
-        D_BottomButtons
+        D_BottomButtons,
     }
 
     private enum  eButtons
@@ -52,9 +52,10 @@ public class HomeUI : UIController
     {
         GoldCount,
         MonsterTypeandStage,
-        MonsterValue,
+        MonsterValue,        
+        MonsterLevel,
         ShopDialogue,
-        DungeonDialogue
+        DungeonDialogue        
     }
 
     public enum eHomeUIScene
@@ -79,6 +80,7 @@ public class HomeUI : UIController
     private void Start()
     {
         SetUIStage(eHomeUIScene.Home);
+        SetXPBarUndLevel();
         //SetGoldCounter();
     }
 
@@ -173,10 +175,12 @@ public class HomeUI : UIController
         if (GM.CurMonsters[(int)GM.curMonsterSlot].Monster == null)
         {
             GM.homeUI.SetText((int)eTextfields.MonsterValue, "");
+            //GM.homeUI.SetText((int)eTextfields.MonsterLevel, "");
         }
         else
         {
             GM.homeUI.SetText((int)eTextfields.MonsterValue, "Value: " + GM.CurMonsters[(int)GM.curMonsterSlot].CreatureValue);
+            //GM.homeUI.SetText((int)eTextfields.MonsterLevel, "" + GM.CurMonsters[(int)GM.curMonsterSlot].CreatureLevel);
             print("Value: " + GM.CurMonsters[(int)GM.curMonsterSlot].CreatureValue);
         }
     }
@@ -185,15 +189,30 @@ public class HomeUI : UIController
     {
         if (GM.CurMonsters[(int)GM.curMonsterSlot].Monster == null)
         {
-            SetText((int)eTextfields.MonsterTypeandStage, "");
-            SetMonsterValue();
+            GM.homeUI.SetText((int)eTextfields.MonsterValue, "");
+            //GM.homeUI.SetText((int)eTextfields.MonsterLevel, "");
         }
         else
         {
             SetText((int)eTextfields.MonsterTypeandStage, GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage + " " + GM.CurMonsters[(int)GM.curMonsterSlot].Monster.CreatureName);
             SetMonsterValue();
+            SetXPBarUndLevel();
         }
     }
+
+    public void SetXPBarUndLevel()
+    {
+        if (GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage >= eMonsterStage.Egg)
+        {
+            DisableMenu((int)eMenus.XPBar);
+        }
+        else
+        {
+            EnableMenu((int)eMenus.XPBar);
+            SetText((int)eTextfields.MonsterLevel, "" + GM.CurMonsters[(int)GM.curMonsterSlot].CreatureLevel);
+            XPbar.fillAmount = GM.CurMonsters[(int)GM.curMonsterSlot].CreatureXP / GM.CurMonsters[(int)GM.curMonsterSlot].LevelThreshold_current[GM.CurMonsters[(int)GM.curMonsterSlot].CreatureLevel];                       
+        }
+    }    
 
     public void SetGoldCounter()
     {
@@ -335,6 +354,7 @@ public class HomeUI : UIController
         //print("tapped " + hatchTaps);
         if (hatchTaps == EggHatchCount)
         {
+            GM.CurMonsters[(int)GM.curMonsterSlot].CreatureLevel = 1;
             GM.homeMonsterManager.SetEggRarity();
             StartCoroutine(GM.homeMonsterManager.cHatchEgg(GM.homeMonsterManager.EggSpawn));
             DisableMenu((int)eMenus.S_TappEggButton);
@@ -374,10 +394,10 @@ public class HomeUI : UIController
         GM.CurMonsters[(int)GM.curMonsterSlot].Monster = monster;
         GM.homeMonsterManager.SetEggRarity();
         GM.CurMonsters[(int)GM.curMonsterSlot].BaseValue = GM.CurMonsters[(int)GM.curMonsterSlot].Monster.BaseValue;
-        SetMonsterTexts();
-        SetMonsterValue();
         GM.homeMonsterManager.SetSlotSymbol();
         GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage = eMonsterStage.Baby;
+        SetMonsterTexts();
+        SetMonsterValue();
         GM.homeMonsterManager.SpawnCurrentMonster(GM.homeMonsterManager.MonsterSpawn[(int)GM.curMonsterSlot]);
     }
 }

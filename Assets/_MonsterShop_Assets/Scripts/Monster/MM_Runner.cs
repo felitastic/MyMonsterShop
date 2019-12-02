@@ -28,4 +28,11 @@ public class MM_Runner : MonsterManager
         yield return new WaitForSeconds(0.5f);
         GM.runnerUI.EnableStartButton();
     }
+
+    
+
+    public void CalculateMonsterLevel()
+    {
+
+    }
 }

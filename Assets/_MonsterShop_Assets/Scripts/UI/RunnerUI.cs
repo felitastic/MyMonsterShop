@@ -83,7 +83,7 @@ public class RunnerUI : UIController
         float curXP = GM.CurMonsters[(int)GM.curMonsterSlot].CreatureXP;
         float LevelUpAt = GM.CurMonsters[(int)GM.curMonsterSlot].LevelThreshold_current[GM.CurMonsters[(int)GM.curMonsterSlot].CreatureLevel];
 
-        xpBar.fillAmount = curXP / LevelUpAt;
+        xpBar.fillAmount = curXP / LevelUpAt;        
 
         DisableMenu((int)eMenus.InGameStuff);
         Camera.main.transform.position = GM.runnerController.ResultCamPos;
@@ -99,11 +99,20 @@ public class RunnerUI : UIController
         curXP = GM.CurMonsters[(int)GM.curMonsterSlot].CreatureXP;
         xpBar.fillAmount = curXP / LevelUpAt;
         
-
-        // check if level up (change to do from the back?, highest first, then go down)
-        if (GM.CurMonsters[(int)GM.curMonsterSlot].CreatureXP > GM.CurMonsters[(int)GM.curMonsterSlot].LevelThreshold_current[GM.CurMonsters[(int)GM.curMonsterSlot].CreatureLevel])
+        // check if level up
+        if (xpBar.fillAmount >= 1.0f)
         {
+            //level erhöht sich um 1
             GM.CurMonsters[(int)GM.curMonsterSlot].CreatureLevel += 1;
+            //check for level up
+            curXP = GM.CurMonsters[(int)GM.curMonsterSlot].CreatureXP;
+            LevelUpAt = GM.CurMonsters[(int)GM.curMonsterSlot].LevelThreshold_current[GM.CurMonsters[(int)GM.curMonsterSlot].CreatureLevel];
+            xpBar.fillAmount = curXP / LevelUpAt;
+        }
+
+        //if (GM.CurMonsters[(int)GM.curMonsterSlot].CreatureXP > GM.CurMonsters[(int)GM.curMonsterSlot].LevelThreshold_current[GM.CurMonsters[(int)GM.curMonsterSlot].CreatureLevel])
+        //{
+        //    GM.CurMonsters[(int)GM.curMonsterSlot].CreatureLevel += 1;
 
             // check for level up, which will happen at 3, 6 and 9
             if (GM.CurMonsters[(int)GM.curMonsterSlot].CreatureLevel % 3 == 0)
@@ -111,7 +120,7 @@ public class RunnerUI : UIController
                 StartCoroutine(GM.runnerMonsterManager.cLevelUpMonster(GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage + 1, GM.runnerMonsterManager.ResultMonsterSpawn));
                 yield return new WaitForSeconds(0.5f);
             }
-        }
+        //}
 
         yield return new WaitForSeconds(0.5f);
         EnableMenu((int)eMenus.EndResultButton);

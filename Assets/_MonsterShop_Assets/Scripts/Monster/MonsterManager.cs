@@ -19,7 +19,6 @@ public class MonsterManager : MonoBehaviour
 
     //Pos to spawn creature 
     public Transform[] MonsterSpawn = new Transform[3];
-    
 
     //public Transform EggSpawn;
     //private float WaitForHatch = 0.01f;
