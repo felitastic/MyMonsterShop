@@ -89,5 +89,5 @@ MonoBehaviour:
   BaseValue: 50
   MonsterType: 0
   MonsterName: Pumpkin
-  EggSprite: {fileID: 0}
+  EggSprite: {fileID: 21300000, guid: 6b893814efaba4cb196da4fcb9cb10ca, type: 3}
   EggPrefab: {fileID: 74603032622791611, guid: e4f1d0972e5b19a469f7de1e6df9cc30, type: 3}
