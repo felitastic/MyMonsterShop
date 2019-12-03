@@ -10,9 +10,9 @@ public class MonsterSlot
     public float[] LevelThreshold_current = new float[9];
     public eMonsterStage MonsterStage = eMonsterStage.none;
     public eRarity Rarity;
-    public int CreatureLevel = 0;
-    public float CreatureXP = 0;
-    public float CreatureValue = 0;
+    public int MonsterLevel = 0;
+    public float MonsterXP = 0;
+    public float MonsterValue = 0;
     public float GoldModificator;
     public int BaseValue;    
 }

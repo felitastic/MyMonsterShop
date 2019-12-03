@@ -37,14 +37,14 @@ public class Monster : SerializedScriptableObject
     [Header("--- FOR PROGRAMMERS GENTLE TOUCH ONLY ---")]
     public eMonsterType MonsterType;
     [Tooltip("Name of the creature")]
-    public string CreatureName;
+    public string MonsterName;
     [Tooltip("Sprite to use in Shop?")]
     public Sprite EggSprite;
     public GameObject EggPrefab;
     [Tooltip("Creature model prefabs by Rarity and Age")]
     [SerializeField]
-    private GameObject[,] m_CreaturePrefabs = new GameObject[3, 3];
-    public GameObject[,] CreaturePrefabs { get { return m_CreaturePrefabs; } }
+    private GameObject[,] m_MonsterPrefabs = new GameObject[3, 3];
+    public GameObject[,] MonsterPrefabs { get { return m_MonsterPrefabs; } }
     //drag n drop ? not sure if works cause prefab
     private Animator anim;
     private Rigidbody rigid;

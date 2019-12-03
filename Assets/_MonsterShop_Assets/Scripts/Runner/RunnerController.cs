@@ -28,7 +28,7 @@ public class RunnerController : MonoBehaviour
     public Text CollectedFeedbackText;
          
     //level spawn stuff, maybe second controller dafür
-    public int curTile;
+    public int curTile = 0;
     [Tooltip("Prefabs of the tiles of this level")]
     public GameObject[] LevelTiles;
     public bool IsRunning;
@@ -74,8 +74,9 @@ public class RunnerController : MonoBehaviour
 
     public void InstantiateNextTile(int whichTile)
     {
-        //Vector3 position = new Vector3()
-        Instantiate(LevelTiles[whichTile]);
+        float newYPos = 19 * whichTile;
+        GameObject newTile = Instantiate(LevelTiles[whichTile]);
+        newTile.transform.position = new Vector3(0f, newYPos, 0f);
         //Instantiate(vars.LevelTiles[curTile+1], LevelSpawn.transform);
     }
 

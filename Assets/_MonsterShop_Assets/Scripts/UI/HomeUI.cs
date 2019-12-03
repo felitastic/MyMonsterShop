@@ -80,7 +80,7 @@ public class HomeUI : UIController
     private void Start()
     {
         SetUIStage(eHomeUIScene.Home);
-        SetXPBarUndLevel();
+        SetMonsterXPBarUndLevel();
         //SetGoldCounter();
     }
 
@@ -178,9 +178,9 @@ public class HomeUI : UIController
         }
         else
         {
-            GM.homeUI.SetText((int)eTextfields.MonsterValue, "Value: " + GM.CurMonsters[(int)GM.curMonsterSlot].CreatureValue);
-            //GM.homeUI.SetText((int)eTextfields.MonsterLevel, "" + GM.CurMonsters[(int)GM.curMonsterSlot].CreatureLevel);
-            print("Value: " + GM.CurMonsters[(int)GM.curMonsterSlot].CreatureValue);
+            GM.homeUI.SetText((int)eTextfields.MonsterValue, "Value: " + GM.CurMonsters[(int)GM.curMonsterSlot].MonsterValue);
+            //GM.homeUI.SetText((int)eTextfields.MonsterLevel, "" + GM.CurMonsters[(int)GM.curMonsterSlot].MonsterLevel);
+            print("Value: " + GM.CurMonsters[(int)GM.curMonsterSlot].MonsterValue);
         }
     }
 
@@ -192,13 +192,13 @@ public class HomeUI : UIController
         }
         else
         {
-            SetText((int)eTextfields.MonsterTypeandStage, GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage + " " + GM.CurMonsters[(int)GM.curMonsterSlot].Monster.CreatureName);
+            SetText((int)eTextfields.MonsterTypeandStage, GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage + " " + GM.CurMonsters[(int)GM.curMonsterSlot].Monster.MonsterName);
             SetMonsterValue();
-            SetXPBarUndLevel();
+            SetMonsterXPBarUndLevel();
         }
     }
 
-    public void SetXPBarUndLevel()
+    public void SetMonsterXPBarUndLevel()
     {
         if (GM.CurMonsters[(int)GM.curMonsterSlot].Monster == null || GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage >= eMonsterStage.Egg)
         {
@@ -208,8 +208,8 @@ public class HomeUI : UIController
         else
         {
             EnableMenu((int)eMenus.XPBar);
-            SetText((int)eTextfields.MonsterLevel, "Lvl " + GM.CurMonsters[(int)GM.curMonsterSlot].CreatureLevel);
-            XPbar.fillAmount = GM.CurMonsters[(int)GM.curMonsterSlot].CreatureXP / GM.CurMonsters[(int)GM.curMonsterSlot].LevelThreshold_current[GM.CurMonsters[(int)GM.curMonsterSlot].CreatureLevel];                       
+            SetText((int)eTextfields.MonsterLevel, "Lvl " + GM.CurMonsters[(int)GM.curMonsterSlot].MonsterLevel);
+            XPbar.fillAmount = GM.CurMonsters[(int)GM.curMonsterSlot].MonsterXP / GM.CurMonsters[(int)GM.curMonsterSlot].LevelThreshold_current[GM.CurMonsters[(int)GM.curMonsterSlot].MonsterLevel];                       
         }
     }    
 
@@ -353,7 +353,7 @@ public class HomeUI : UIController
         //print("tapped " + hatchTaps);
         if (hatchTaps == EggHatchCount)
         {
-            GM.CurMonsters[(int)GM.curMonsterSlot].CreatureLevel = 1;
+            GM.CurMonsters[(int)GM.curMonsterSlot].MonsterLevel = 1;
             GM.homeMonsterManager.SetEggRarity();
             StartCoroutine(GM.homeMonsterManager.cHatchEgg(GM.homeMonsterManager.EggSpawn));
             DisableMenu((int)eMenus.S_TappEggButton);
@@ -397,6 +397,7 @@ public class HomeUI : UIController
         GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage = eMonsterStage.Baby;
         SetMonsterTexts();
         SetMonsterValue();
+        SetMonsterXPBarUndLevel();
         GM.homeMonsterManager.SpawnCurrentMonster(GM.homeMonsterManager.MonsterSpawn[(int)GM.curMonsterSlot]);
     }
 }

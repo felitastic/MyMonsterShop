@@ -9,8 +9,8 @@ public class MonsterManager : MonoBehaviour
 {
     public GameManager GM;
     public MonsterSlot CurMonster { get { return GM.CurMonsters[SlotID]; } }
-    public int CreatureValue { get { return Mathf.RoundToInt(CurMonster.CreatureValue); } }
     public int SlotID { get { return (int)GM.curMonsterSlot; } }
+    public int MonsterValue { get { return Mathf.RoundToInt(CurMonster.MonsterValue); } }
 
     //currently spawned monster model prefabs
     public GameObject[] monsterBody = new GameObject[3];
@@ -26,7 +26,7 @@ public class MonsterManager : MonoBehaviour
 
     //put this in UI manager!
 
-    //private float _CreatureValue = 0;
+    //private float _MonsterValue = 0;
        
     //Scriptable Objekt der Creature einlesen
     //has player unlocked this slot?
@@ -39,22 +39,70 @@ public class MonsterManager : MonoBehaviour
     //public eRarity Rarity;
 
     //current values, starting with zero/base
-    //public int CreatureLevel = 0;
-    //public float CreatureXP = 0;
+    //public int MonsterLevel = 0;
+    //public float MonsterXP = 0;
     
     public void GetGameManager()
     {
         GM = GameManager.Instance;
     }
 
+    // calculates the monsters selling value
     public void CalculateMonsterValue()
     {
-        CurMonster.CreatureValue = (CurMonster.GoldModificator * CurMonster.CreatureXP) + (float)CurMonster.BaseValue;
+        CurMonster.MonsterValue = (CurMonster.GoldModificator * CurMonster.MonsterXP) + (float)CurMonster.BaseValue;
+    }
+
+    // calculates the monsters level on xp gain
+    public bool CheckForMonsterLevelUp()
+    {
+        if (CurMonster.MonsterLevel > 9)
+        {
+            // if xp is same or higher as required for levelup
+            if (CurMonster.MonsterXP > LevelUpXpValue() || Mathf.Approximately(CurMonster.MonsterXP, LevelUpXpValue()))
+            {
+
+                CurMonster.MonsterLevel += 1;
+                return true;
+            }
+        }
+        return false;        
+    }
+
+    public bool CheckForStageChange()
+    {
+        if (CurMonster.MonsterStage != eMonsterStage.Adult)
+        {
+            if (CurMonster.MonsterLevel % 3 == 0)
+            {
+                CurMonster.MonsterStage += 1;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Changes the monsters xp
+    public void SetMonsterXP(float gainValue)
+    {
+        CurMonster.MonsterXP += gainValue;
+        print("xp: " + CurMonster.MonsterXP);
+    }
+
+    // at which XP a level up occurs
+    public float LevelUpXpValue()
+    {
+        return (CurMonster.LevelThreshold_current[GM.CurMonsters[(int)GM.curMonsterSlot].MonsterLevel]);
+    }
+
+    public int RoundedXPValue()
+    {
+        return Mathf.RoundToInt(CurMonster.MonsterXP);
     }
 
     public void SpawnCurrentMonster(Transform monsterSpawn)
     {
-        monsterBody[SlotID] = Instantiate(CurMonster.Monster.CreaturePrefabs[(int)CurMonster.Rarity, (int)CurMonster.MonsterStage], monsterSpawn);
+        monsterBody[SlotID] = Instantiate(CurMonster.Monster.MonsterPrefabs[(int)CurMonster.Rarity, (int)CurMonster.MonsterStage], monsterSpawn);
         monsterBody[SlotID].transform.SetParent(monsterSpawn);
         monsterAnim[SlotID] = monsterBody[SlotID].GetComponentInChildren<Animator>();
         monsterRigid[SlotID] = monsterBody[SlotID].GetComponentInChildren<Rigidbody>();

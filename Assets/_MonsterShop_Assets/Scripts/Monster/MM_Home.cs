@@ -21,6 +21,7 @@ public class MM_Home : MonsterManager
         CalculateMonsterValue();
     }
 
+    // sets monster slot symbols if slot is locked or empty
     public void SetSlotSymbol()
     {
         for (int i = 0; i < 3; i++)
@@ -42,6 +43,8 @@ public class MM_Home : MonsterManager
             }
         }
     }
+
+    // Spawns all currently owned monsters in home scene each start
     public void SpawnAllCurrentMonsters()
     {
         print("spawning monsters");
@@ -61,12 +64,13 @@ public class MM_Home : MonsterManager
                 //print("rarity: " + (int)GM.CurMonsters[i].Rarity);
                 //print("stage: " + (int)GM.CurMonsters[i].MonsterStage);
                 //print("spawn: " + MonsterSpawn[i].name);
-                SpawnAnyMonster(GM.CurMonsters[i].Monster.CreaturePrefabs[(int)GM.CurMonsters[i].Rarity, (int)GM.CurMonsters[i].MonsterStage], MonsterSpawn[i]);
+                SpawnAnyMonster(GM.CurMonsters[i].Monster.MonsterPrefabs[(int)GM.CurMonsters[i].Rarity, (int)GM.CurMonsters[i].MonsterStage], MonsterSpawn[i]);
             }
         }
     }
 
-    //For the egg hatching
+    // Sets rarity of the hatching monster via chance
+    //TODO: calculate random chance for monster rarity right
     public void SetEggRarity()
     {
         //TODO Rarity errechnen
@@ -91,16 +95,18 @@ public class MM_Home : MonsterManager
         print(GM.CurMonsters[(int)GM.curMonsterSlot].Rarity);
     }
 
-    public float[] newLevelThreshold(float multiplicator = 1.00f)
+    // calculates level threshold of the monster according to its rarity (with rarity multiplier)
+    public float[] newLevelThreshold(float multiplier = 1.00f)
     {
         for (int i = 0; i < GM.CurMonsters[(int)GM.curMonsterSlot].LevelThreshold_current.Length; i++)
         {
-            GM.CurMonsters[(int)GM.curMonsterSlot].LevelThreshold_current[i] = GM.CurMonsters[(int)GM.curMonsterSlot].Monster.LevelThreshold_normal[i] * multiplicator;
+            GM.CurMonsters[(int)GM.curMonsterSlot].LevelThreshold_current[i] = GM.CurMonsters[(int)GM.curMonsterSlot].Monster.LevelThreshold_normal[i] * multiplier;
             print(i+" = "+GM.CurMonsters[(int)GM.curMonsterSlot].LevelThreshold_current[i]);
         }
         return GM.CurMonsters[(int)GM.curMonsterSlot].LevelThreshold_current;
     }
 
+    // Spawns the egg model in egg hatching scene
     public IEnumerator cSpawnEgg()
     {
         //effect for spawning
@@ -110,6 +116,7 @@ public class MM_Home : MonsterManager
         yield return null;
     }
 
+    // Hatching egg animation
     public IEnumerator cHatchEgg(Transform monsterSpawn)
     {
         CurMonster.MonsterStage = eMonsterStage.Baby;

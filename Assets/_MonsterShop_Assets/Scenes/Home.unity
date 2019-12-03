@@ -2302,7 +2302,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &561796595
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2370,7 +2370,7 @@ MonoBehaviour:
         m_MethodName: TestButton
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: d8339fdc75d2acf48838d442e090291d,
+          m_ObjectArgument: {fileID: 11400000, guid: 4378401ffa44bcc47920d1b61ad2dc2a,
             type: 2}
           m_ObjectArgumentAssemblyTypeName: Monster, Assembly-CSharp
           m_IntArgument: 0

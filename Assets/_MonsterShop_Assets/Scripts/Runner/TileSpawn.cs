@@ -10,10 +10,7 @@ public class TileSpawn : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            GameManager.Instance.runnerController.InstantiateNextTile(GameManager.Instance.runnerController.curTile +1);
-            //if (RunnerController.inst.curTile == RunnerController.inst.LevelTiles.Length-2)
-            //    RunnerController.inst.curTile = 1;
-            //else
+            GameManager.Instance.runnerController.InstantiateNextTile(GameManager.Instance.runnerController.curTile + 1);
             GameManager.Instance.runnerController.curTile += 1;
         }
     }

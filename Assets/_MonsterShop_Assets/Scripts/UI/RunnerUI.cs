@@ -34,7 +34,8 @@ public class RunnerUI : UIController
         GameOverFeedback,
         CollectedNo,
         XPValue,
-        StartText
+        StartText,
+        MonsterLevel
     }
 
     private void Awake()
@@ -78,51 +79,45 @@ public class RunnerUI : UIController
     public IEnumerator cShowResult()
     {
         yield return new WaitForSeconds(0.5f);
-        xpBar.fillAmount = GM.CurMonsters[(int)GM.curMonsterSlot].CreatureXP / GM.CurMonsters[(int)GM.curMonsterSlot].LevelThreshold_current[GM.CurMonsters[(int)GM.curMonsterSlot].CreatureLevel];
 
-        float curXP = GM.CurMonsters[(int)GM.curMonsterSlot].CreatureXP;
-        float LevelUpAt = GM.CurMonsters[(int)GM.curMonsterSlot].LevelThreshold_current[GM.CurMonsters[(int)GM.curMonsterSlot].CreatureLevel];
-
+        // set lvl bar    
+        float curXP = GM.CurMonsters[(int)GM.curMonsterSlot].MonsterXP;
+        float LevelUpAt = GM.runnerMonsterManager.LevelUpXpValue();
         xpBar.fillAmount = curXP / LevelUpAt;        
 
+        // set result scene menus and values
         DisableMenu((int)eMenus.InGameStuff);
-        Camera.main.transform.position = GM.runnerController.ResultCamPos;
-
         GM.runnerMonsterManager.SpawnCurrentMonster(GM.runnerMonsterManager.ResultMonsterSpawn);
-
         SetText((int)eTextfields.CollectedNo, GM.runnerController.CollectedCount + " x");
         SetText((int)eTextfields.XPValue, GM.runnerController.CollectedXP + " XP");
         EnableMenu((int)eMenus.ResultScreen);
+        // move camera on result scene
+        Camera.main.transform.position = GM.runnerController.ResultCamPos;
+
         yield return new WaitForSeconds(1f);
 
-        GM.CurMonsters[(int)GM.curMonsterSlot].CreatureXP += GM.runnerController.CollectedXP;
-        curXP = GM.CurMonsters[(int)GM.curMonsterSlot].CreatureXP;
+        // gain xp and update level bar
+        GM.runnerMonsterManager.SetMonsterXP(GM.runnerController.CollectedXP);
+        curXP = GM.CurMonsters[(int)GM.curMonsterSlot].MonsterXP;
         xpBar.fillAmount = curXP / LevelUpAt;
-        
-        // check if level up
+
+        // if xpbar is full, check for level up
         if (xpBar.fillAmount >= 1.0f)
         {
-            //level erhöht sich um 1
-            GM.CurMonsters[(int)GM.curMonsterSlot].CreatureLevel += 1;
-            //check for level up
-            curXP = GM.CurMonsters[(int)GM.curMonsterSlot].CreatureXP;
-            LevelUpAt = GM.CurMonsters[(int)GM.curMonsterSlot].LevelThreshold_current[GM.CurMonsters[(int)GM.curMonsterSlot].CreatureLevel];
-            xpBar.fillAmount = curXP / LevelUpAt;
+            if (GM.runnerMonsterManager.CheckForMonsterLevelUp())
+            {
+                //update level text
+                
+                if (GM.runnerMonsterManager.CheckForStageChange())
+                {
+                    StartCoroutine(GM.runnerMonsterManager.cLevelUpMonster(GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage, GM.runnerMonsterManager.ResultMonsterSpawn));
+                }
+            }    
         }
 
-        //if (GM.CurMonsters[(int)GM.curMonsterSlot].CreatureXP > GM.CurMonsters[(int)GM.curMonsterSlot].LevelThreshold_current[GM.CurMonsters[(int)GM.curMonsterSlot].CreatureLevel])
-        //{
-        //    GM.CurMonsters[(int)GM.curMonsterSlot].CreatureLevel += 1;
-
-            // check for level up, which will happen at 3, 6 and 9
-            if (GM.CurMonsters[(int)GM.curMonsterSlot].CreatureLevel % 3 == 0)
-            {
-                StartCoroutine(GM.runnerMonsterManager.cLevelUpMonster(GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage + 1, GM.runnerMonsterManager.ResultMonsterSpawn));
-                yield return new WaitForSeconds(0.5f);
-            }
-        //}
-
         yield return new WaitForSeconds(0.5f);
+
+        // Enable EndResultButton for player to tap and go back to home scene
         EnableMenu((int)eMenus.EndResultButton);
     }
 

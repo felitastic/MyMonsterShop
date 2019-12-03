@@ -59,7 +59,7 @@ public class CameraMovement : MonoBehaviour
             SetScreen(GM.curMonsterSlot -= 1);
             GM.homeUI.SetMonsterTexts();
             GM.homeUI.SetMonsterValue();
-            GM.homeUI.SetXPBarUndLevel();
+            GM.homeUI.SetMonsterXPBarUndLevel();
         }
     }
 
@@ -70,7 +70,7 @@ public class CameraMovement : MonoBehaviour
             SetScreen(GM.curMonsterSlot += 1);
             GM.homeUI.SetMonsterTexts();
             GM.homeUI.SetMonsterValue();
-            GM.homeUI.SetXPBarUndLevel();
+            GM.homeUI.SetMonsterXPBarUndLevel();
         }
     }
 

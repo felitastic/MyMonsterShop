@@ -30,7 +30,7 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: m_CreaturePrefabs
+    - Name: m_MonsterPrefabs
       Entry: 7
       Data: 0|UnityEngine.GameObject[,], UnityEngine.CoreModule
     - Name: 
@@ -88,7 +88,7 @@ MonoBehaviour:
   GoldModificator: 0
   BaseValue: 50
   MonsterType: 0
-  CreatureName: Pumpkin
+  MonsterName: Pumpkin
   EggSprite: {fileID: 0}
   EggPrefab: {fileID: 1127267322663477947, guid: 7fb889c31bcc2344dacb1cac3231d074,
     type: 3}
