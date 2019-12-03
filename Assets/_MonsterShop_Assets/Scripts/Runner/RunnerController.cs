@@ -75,9 +75,13 @@ public class RunnerController : MonoBehaviour
     public void InstantiateNextTile(int whichTile)
     {
         float newYPos = 19 * whichTile;
-        GameObject newTile = Instantiate(LevelTiles[whichTile]);
-        newTile.transform.position = new Vector3(0f, newYPos, 0f);
-        //Instantiate(vars.LevelTiles[curTile+1], LevelSpawn.transform);
+
+        if (whichTile < LevelTiles.Length)
+        {
+            GameObject newTile = Instantiate(LevelTiles[whichTile]);
+            newTile.transform.position = new Vector3(0f, newYPos, 0f);
+        }
+        print("last tile spawned");
     }
 
 }

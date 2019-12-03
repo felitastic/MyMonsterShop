@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TileSpawn : MonoBehaviour
 {
-    public float TimeTilDestroy = 0.5f;
+    public float TimeTilDestroy = 0.75f;
 
     private void OnTriggerEnter(Collider other)
     {

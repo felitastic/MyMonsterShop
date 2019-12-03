@@ -244,6 +244,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6947783891184800367}
   - component: {fileID: -2520494776691172642}
+  - component: {fileID: 5430289217444028228}
   m_Layer: 0
   m_Name: p_teen_R1
   m_TagString: Player
@@ -260,7 +261,7 @@ Transform:
   m_GameObject: {fileID: 6210505099405860988}
   m_LocalRotation: {x: 0, y: 0.9961947, z: -0.08715578, w: 0}
   m_LocalPosition: {x: 0, y: -6.5, z: -4}
-  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_Children:
   - {fileID: 6284716919889398118}
   - {fileID: 3011047207404212290}
@@ -285,6 +286,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 120
   m_CollisionDetection: 0
+--- !u!136 &5430289217444028228
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6210505099405860988}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 12
+  m_Height: 42
+  m_Direction: 1
+  m_Center: {x: -0.5, y: 18.5, z: -0.5}
 --- !u!1 &7635176807728584886
 GameObject:
   m_ObjectHideFlags: 0

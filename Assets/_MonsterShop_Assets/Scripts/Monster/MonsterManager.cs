@@ -56,7 +56,7 @@ public class MonsterManager : MonoBehaviour
     // calculates the monsters level on xp gain
     public bool CheckForMonsterLevelUp()
     {
-        if (CurMonster.MonsterLevel > 9)
+        if (CurMonster.MonsterLevel < 9)
         {
             // if xp is same or higher as required for levelup
             if (CurMonster.MonsterXP > LevelUpXpValue() || Mathf.Approximately(CurMonster.MonsterXP, LevelUpXpValue()))

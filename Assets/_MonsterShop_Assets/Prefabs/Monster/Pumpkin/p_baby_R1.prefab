@@ -1415,6 +1415,7 @@ GameObject:
   - component: {fileID: 5557602400075539441}
   - component: {fileID: 2570027265065275019}
   - component: {fileID: 8137725020542792703}
+  - component: {fileID: 7570533112220370893}
   m_Layer: 0
   m_Name: p_baby_R1
   m_TagString: Player
@@ -1431,7 +1432,7 @@ Transform:
   m_GameObject: {fileID: 8897925627698123234}
   m_LocalRotation: {x: 0, y: 0.9961947, z: -0.08715578, w: 0}
   m_LocalPosition: {x: 0.1, y: -6.5, z: -4}
-  m_LocalScale: {x: 0.25000006, y: 0.25, z: 0.25000006}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_Children:
   - {fileID: 324978494266057180}
   - {fileID: 3176167672889328253}
@@ -1477,6 +1478,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 120
   m_CollisionDetection: 0
+--- !u!136 &7570533112220370893
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8897925627698123234}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 9.5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 7.8, z: 0}
 --- !u!1 &8957339048164867585
 GameObject:
   m_ObjectHideFlags: 0

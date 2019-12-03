@@ -283,13 +283,13 @@ public class HomeUI : UIController
     }
 
     //Button Inputs EggShop
-    public void ChooseEgg(Monster EggPrefab)
+    public void ChooseEgg(Monster thisMonster)
     {
-        if (GM.CurMonsters[(int)GM.curMonsterSlot].Monster != null && GM.PlayerMoney >= EggPrefab.BaseCost)
+        if (GM.CurMonsters[(int)GM.curMonsterSlot].Monster != null && GM.PlayerMoney >= thisMonster.BaseCost)
         {
             SetText((int)eTextfields.ShopDialogue, "There is already a monster in this spot!");
         }
-        else if (GM.PlayerMoney < EggPrefab.BaseCost)
+        else if (GM.PlayerMoney < thisMonster.BaseCost)
         {
             SetText((int)eTextfields.ShopDialogue, "It seems you cannot afford this egg!");
         }
@@ -297,7 +297,7 @@ public class HomeUI : UIController
         {
             if (GM.CurMonsters[(int)GM.curMonsterSlot].Unlocked)
             {
-                curEgg = EggPrefab;
+                curEgg = thisMonster;
                 SetText((int)eTextfields.ShopDialogue, "You really wanna buy this egg?");
                 // Make Button "selected"
                 //DisableMenu(Menus[(int)eMenus.S_EggMenu]);
