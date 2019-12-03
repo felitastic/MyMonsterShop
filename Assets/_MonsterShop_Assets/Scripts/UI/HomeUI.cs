@@ -209,7 +209,7 @@ public class HomeUI : UIController
         {
             EnableMenu((int)eMenus.XPBar);
             SetText((int)eTextfields.MonsterLevel, "Lvl " + GM.CurMonsters[(int)GM.curMonsterSlot].MonsterLevel);
-            XPbar.fillAmount = GM.CurMonsters[(int)GM.curMonsterSlot].MonsterXP / GM.CurMonsters[(int)GM.curMonsterSlot].LevelThreshold_current[GM.CurMonsters[(int)GM.curMonsterSlot].MonsterLevel];                       
+            XPbar.fillAmount = GM.CurMonsters[(int)GM.curMonsterSlot].MonsterXP / GM.homeMonsterManager.LevelUpXpValue();                       
         }
     }    
 

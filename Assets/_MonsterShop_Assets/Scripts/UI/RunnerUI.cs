@@ -106,8 +106,12 @@ public class RunnerUI : UIController
         {
             if (GM.runnerMonsterManager.CheckForMonsterLevelUp())
             {
-                //update level text
-                
+                //TODO update level text
+
+                // update xp bar for new level values
+                LevelUpAt = GM.runnerMonsterManager.LevelUpXpValue();
+                xpBar.fillAmount = curXP / LevelUpAt;
+
                 if (GM.runnerMonsterManager.CheckForStageChange())
                 {
                     StartCoroutine(GM.runnerMonsterManager.cLevelUpMonster(GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage, GM.runnerMonsterManager.ResultMonsterSpawn));
