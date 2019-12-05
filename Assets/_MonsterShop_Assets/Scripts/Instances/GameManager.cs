@@ -22,7 +22,6 @@ public class GameManager : Singleton<GameManager>
     public MM_Home homeMonsterManager;
     public MM_Runner runnerMonsterManager;
 
-
     [Header("Monster Values")]
     public CameraMovement HomeCam;
 
@@ -96,6 +95,8 @@ public class GameManager : Singleton<GameManager>
         }
 
         CurMonsters[1].Unlocked = true;
+        CurMonsters[0].UnlockPrice = 50;
+        CurMonsters[2].UnlockPrice = 100;
     }
 
     public void ChangePlayerGold(int value)

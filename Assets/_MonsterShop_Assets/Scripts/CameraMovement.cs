@@ -32,7 +32,7 @@ public class CameraMovement : MonoBehaviour
         SetCameraPosition(GM.CurCamHomePos);
     }
 
-    public void Update()
+    private void Update()
     {
         if (lerping)
         {
@@ -52,25 +52,66 @@ public class CameraMovement : MonoBehaviour
         }
     }
 
+    private void SetNewScreen(int PlusMinus)
+    {
+        SetScreen(GM.curMonsterSlot += 1*PlusMinus);
+        GM.homeUI.SetMonsterTexts();
+        GM.homeUI.SetMonsterValue();
+        GM.homeUI.SetMonsterXPBarUndLevel();
+        GM.homeUI.SetSlotSymbol();
+    }
+
     public void PressLeftButton()
     {
-        if (GM.curMonsterSlot != ecurMonsterSlot.left && !lerping)
+        if (GM.homeUI.curScene == HomeUI.eHomeUIScene.Dungeonlord)
         {
-            SetScreen(GM.curMonsterSlot -= 1);
-            GM.homeUI.SetMonsterTexts();
-            GM.homeUI.SetMonsterValue();
-            GM.homeUI.SetMonsterXPBarUndLevel();
+            if (GM.curMonsterSlot != ecurMonsterSlot.left && !lerping)
+            {
+                SetNewScreen(-1);
+            }
+        }
+        else
+        {
+            if (GM.curMonsterSlot != ecurMonsterSlot.left && !lerping)
+            {
+                SetNewScreen(-1);
+            }
+        }
+
+        if (GM.curMonsterSlot == ecurMonsterSlot.left)
+        {
+            GM.homeUI.DisableSwipeButtun(true);
+        }
+        if (GM.curMonsterSlot == ecurMonsterSlot.middle)
+        {
+            GM.homeUI.EnableSwipeButton(false);
         }
     }
 
     public void PressRightButton()
     {
-        if (GM.curMonsterSlot != ecurMonsterSlot.right && !lerping)
+        if (GM.homeUI.curScene == HomeUI.eHomeUIScene.Dungeonlord)
         {
-            SetScreen(GM.curMonsterSlot += 1);
-            GM.homeUI.SetMonsterTexts();
-            GM.homeUI.SetMonsterValue();
-            GM.homeUI.SetMonsterXPBarUndLevel();
+            if (GM.curMonsterSlot != ecurMonsterSlot.right && !lerping)
+            {
+                SetNewScreen(+1);
+            }
+        }
+        else
+        {
+            if (GM.curMonsterSlot != ecurMonsterSlot.right && !lerping)
+            {
+                SetNewScreen(+1);
+            }
+        }
+
+        if (GM.curMonsterSlot == ecurMonsterSlot.right)
+        {
+            GM.homeUI.DisableSwipeButtun(false);
+        }
+        if (GM.curMonsterSlot == ecurMonsterSlot.middle)
+        {
+            GM.homeUI.EnableSwipeButton(true);
         }
     }
 

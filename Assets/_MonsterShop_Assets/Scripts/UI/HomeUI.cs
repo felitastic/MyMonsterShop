@@ -6,12 +6,13 @@ using UnityEngine.SceneManagement;
 
 public class HomeUI : UIController
 {
+    [HideInInspector]
+    public eHomeUIScene curScene;
     private Monster curEgg;
     private int hatchTaps;
     //private Vector3 camHomePos { get { return GM.CurCamHomePos; } }
     private Vector3 camShopPos;
     //private Vector3 camDungeonPos;
-    private eHomeUIScene curScene;
     private int EggHatchCount;
 
     // called via (int)GM.curMonsterSlot
@@ -45,7 +46,12 @@ public class HomeUI : UIController
         S_TappEggButton,
         D_BottomButtons,
         SwipeButtons,
-        LoadingScreen
+        LoadingScreen,
+        LockedButton,
+        AddButton,
+        PopupInfoWindow,
+        UnlockYNButtons,
+        ClosePopupButton
     }
 
     private enum  eButtons
@@ -67,7 +73,8 @@ public class HomeUI : UIController
         MonsterValue,        
         MonsterLevel,
         ShopDialogue,
-        DungeonDialogue        
+        DungeonDialogue,
+        PopupInfoText
     }
 
     public enum eHomeUIScene
@@ -93,8 +100,34 @@ public class HomeUI : UIController
     {
         SetUIStage(eHomeUIScene.Home);
         SetMonsterXPBarUndLevel();
+        SetSlotSymbol();
         //SetGoldCounter();
     }
+
+    public void DisableSwipeButtun(bool IsLeft)
+    {
+        if (IsLeft)
+        {
+            DisableButton((int)eButtons.SwipeLeft);
+        }
+        else
+        {
+            DisableButton((int)eButtons.SwipeRight);
+        }
+    }
+
+    public void EnableSwipeButton(bool IsLeft)
+    {
+        if (IsLeft)
+        {
+            EnableButton((int)eButtons.SwipeLeft);
+        }
+        else
+        {
+            EnableButton((int)eButtons.SwipeRight);
+        }
+    }
+
 
     // Changes UI menus according to scene 
     // Also camera position
@@ -197,7 +230,66 @@ public class HomeUI : UIController
         EnableMenu((int)eMenus.MiniGameWindow);
     }
 
-// Updating Monster and Player Values 
+// sets monster slot symbols if slot is locked or empty
+    public void SetSlotSymbol()
+    {
+        if (GM.CurMonsters[(int)GM.curMonsterSlot].Monster == null && !GM.CurMonsters[(int)GM.curMonsterSlot].Unlocked)
+        {
+            EnableMenu((int)eMenus.LockedButton);
+            DisableMenu((int)eMenus.AddButton);
+        }
+        else if (GM.CurMonsters[(int)GM.curMonsterSlot].Monster == null && GM.CurMonsters[(int)GM.curMonsterSlot].Unlocked)
+        {
+            EnableMenu((int)eMenus.AddButton);
+            DisableMenu((int)eMenus.LockedButton);
+        }
+        else
+        {
+            DisableMenu((int)eMenus.LockedButton);
+            DisableMenu((int)eMenus.AddButton);
+        }
+    }
+
+    public void AddMonster()
+    {
+        GoToEggShop();
+    }
+
+    // opens the lock-info-window if player pressed on padlock symbol
+    public void PressedPadlockSymbol()
+    {
+        DisableMenu((int)eMenus.H_BottomButtons);
+        EnableMenu((int)eMenus.PopupInfoWindow);
+        if (GM.PlayerMoney >= GM.CurMonsters[(int)GM.curMonsterSlot].UnlockPrice)
+        {
+            SetText((int)eTextfields.PopupInfoText, "This slot is locked.\nUnlock it for " + GM.CurMonsters[(int)GM.curMonsterSlot].UnlockPrice + " Money?");
+            EnableMenu((int)eMenus.UnlockYNButtons);
+        }
+        else
+        {
+            SetText((int)eTextfields.PopupInfoText, "This slot is locked.\nUnlocking costs" + GM.CurMonsters[(int)GM.curMonsterSlot].UnlockPrice + " Money.");
+            EnableMenu((int)eMenus.ClosePopupButton);            
+        }
+    }
+
+    // Unlocks a slot after player pressed yes
+    public void UnlockSlot()
+    {
+        GM.ChangePlayerGold(-GM.CurMonsters[(int)GM.curMonsterSlot].UnlockPrice);
+        SetSlotSymbol();
+        CloseUnlockInfo();
+    }
+
+    // If player doesnt want or cant unlock the slot
+    public void CloseUnlockInfo()
+    {
+        DisableMenu((int)eMenus.ClosePopupButton);
+        DisableMenu((int)eMenus.UnlockYNButtons);
+        EnableMenu((int)eMenus.H_BottomButtons);
+        DisableMenu((int)eMenus.PopupInfoWindow);
+    }
+
+    // Updating Monster and Player Values 
     public void SetMonsterValue()
     {
         GM.homeMonsterManager.CalculateMonsterValue();
@@ -269,10 +361,10 @@ public class HomeUI : UIController
                 textline = "I'm not buying this!";
                 break;
             case eMonsterStage.none:
-                textline = "Eh?!";
+                textline = "What've you got for me?";
                 break;
             default:
-                textline = "What've you got for me?";
+                textline = "Eh?!";
                 break;
         }
         SetText((int)eTextfields.DungeonDialogue, textline);
@@ -351,7 +443,7 @@ public class HomeUI : UIController
             GM.CurMonsters[(int)GM.curMonsterSlot].BaseValue = GM.CurMonsters[(int)GM.curMonsterSlot].Monster.BaseValue;
             SetMonsterTexts();
             SetMonsterValue();
-            GM.homeMonsterManager.SetSlotSymbol();
+            GM.homeUI.SetSlotSymbol();
             DisableMenu((int)eMenus.S_EggMenu);
             DisableMenu((int)eMenus.S_BottomButtons);
             SetText((int)eTextfields.ShopDialogue, "Alright, one egg to go!");
@@ -412,10 +504,12 @@ public class HomeUI : UIController
 
 
     //Button Inputs Dungeonlord
-
     public void SellMonster()
     {
-
+        if (GM.CurMonsters[(int)GM.curMonsterSlot].Monster == null)
+        {
+            //
+        }
     }
 
     //Testing
@@ -424,7 +518,7 @@ public class HomeUI : UIController
         GM.CurMonsters[(int)GM.curMonsterSlot].Monster = monster;
         GM.homeMonsterManager.SetEggRarity();
         GM.CurMonsters[(int)GM.curMonsterSlot].BaseValue = GM.CurMonsters[(int)GM.curMonsterSlot].Monster.BaseValue;
-        GM.homeMonsterManager.SetSlotSymbol();
+        GM.homeUI.SetSlotSymbol();
         GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage = eMonsterStage.Baby;
         SetMonsterTexts();
         SetMonsterValue();

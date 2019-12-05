@@ -7,6 +7,7 @@ public class MonsterSlot
     public int SlotID;
     public Monster Monster = null;
     public bool Unlocked = false;
+    public int UnlockPrice;
     public float[] LevelThreshold_current = new float[6];
     public eMonsterStage MonsterStage = eMonsterStage.none;
     public eRarity Rarity;

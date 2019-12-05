@@ -16,33 +16,33 @@ public class MM_Home : MonsterManager
     }
     public void Start()
     {
-        SetSlotSymbol();
+        //SetSlotSymbol();
         SpawnAllCurrentMonsters();
         CalculateMonsterValue();
     }
 
-    // sets monster slot symbols if slot is locked or empty
-    public void SetSlotSymbol()
-    {
-        for (int i = 0; i < 3; i++)
-        {
-            if (GM.CurMonsters[i].Monster == null && !GM.CurMonsters[i].Unlocked)
-            {
-                Lock[i].SetActive(true);
-                Plus[i].SetActive(false);
-            }
-            else if (GM.CurMonsters[i].Monster == null && GM.CurMonsters[i].Unlocked)
-            {
-                Plus[i].SetActive(true);
-                Lock[i].SetActive(false);
-            }
-            else
-            {
-                Plus[i].SetActive(false);
-                Lock[i].SetActive(false);
-            }
-        }
-    }
+    //// sets monster slot symbols if slot is locked or empty
+    //public void SetSlotSymbol()
+    //{
+    //    for (int i = 0; i < 3; i++)
+    //    {
+    //        if (GM.CurMonsters[i].Monster == null && !GM.CurMonsters[i].Unlocked)
+    //        {
+    //            Lock[i].SetActive(true);
+    //            Plus[i].SetActive(false);
+    //        }
+    //        else if (GM.CurMonsters[i].Monster == null && GM.CurMonsters[i].Unlocked)
+    //        {
+    //            Plus[i].SetActive(true);
+    //            Lock[i].SetActive(false);
+    //        }
+    //        else
+    //        {
+    //            Plus[i].SetActive(false);
+    //            Lock[i].SetActive(false);
+    //        }
+    //    }
+    //}
 
     // Spawns all currently owned monsters in home scene each start
     public void SpawnAllCurrentMonsters()
