@@ -502,7 +502,6 @@ public class HomeUI : UIController
         print("Feeding time");
     }
 
-
     //Button Inputs Dungeonlord
     public void SellMonster()
     {
