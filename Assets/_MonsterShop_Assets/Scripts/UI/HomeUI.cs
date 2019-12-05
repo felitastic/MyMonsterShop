@@ -509,6 +509,7 @@ public class HomeUI : UIController
         if (GM.CurMonsters[(int)GM.curMonsterSlot].Monster == null)
         {
             //
+            SetText((int)eTextfields.DungeonDialogue, "Lazy progger hasn't implemented that feature yet");
         }
     }
 

@@ -96,7 +96,7 @@ public class GameManager : Singleton<GameManager>
 
         CurMonsters[1].Unlocked = true;
         CurMonsters[0].UnlockPrice = 50;
-        CurMonsters[2].UnlockPrice = 100;
+        CurMonsters[2].UnlockPrice = 150;
     }
 
     public void ChangePlayerGold(int value)
