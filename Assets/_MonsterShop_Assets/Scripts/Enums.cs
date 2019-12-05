@@ -22,10 +22,9 @@ public enum eRarity
 
 public enum eScene
 {
-    home,
-    shop,
-    minigames,
-    endlessRunner
+    home,    
+    runner,
+    slidingpicture
 }
 
 public enum ecurMonsterSlot 

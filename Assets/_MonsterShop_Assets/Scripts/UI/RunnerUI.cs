@@ -10,8 +10,6 @@ public class RunnerUI : UIController
     //public Text GameEndText;
     //public Text CollectedFeedbackText;
 
-    public Image xpBar;
-
     private enum eMenus
     {
         StartButton,
@@ -80,10 +78,8 @@ public class RunnerUI : UIController
     {
         yield return new WaitForSeconds(0.5f);
 
-        // set lvl bar    
-        float curXP = GM.CurMonsters[(int)GM.curMonsterSlot].MonsterXP;
-        float LevelUpAt = GM.runnerMonsterManager.LevelUpXpValue();
-        xpBar.fillAmount = curXP / LevelUpAt;        
+        // set xp bars from inherited function
+        SetXPBars();   
 
         // set result scene menus and values
         DisableMenu((int)eMenus.InGameStuff);
@@ -96,30 +92,25 @@ public class RunnerUI : UIController
 
         yield return new WaitForSeconds(1f);
 
-        // gain xp and update level bar
+        // gain xp and update xp bar
         GM.runnerMonsterManager.SetMonsterXP(GM.runnerController.CollectedXP);
-        curXP = GM.CurMonsters[(int)GM.curMonsterSlot].MonsterXP;
-        xpBar.fillAmount = curXP / LevelUpAt;
-
-        // if xpbar is full, check for level up
-        if (xpBar.fillAmount >= 1.0f)
-        {
-            if (GM.runnerMonsterManager.CheckForMonsterLevelUp())
-            {
-                //TODO update level text
-
-                // update xp bar for new level values
-                LevelUpAt = GM.runnerMonsterManager.LevelUpXpValue();
-                xpBar.fillAmount = curXP / LevelUpAt;
-
-                if (GM.runnerMonsterManager.CheckForStageChange())
-                {
-                    StartCoroutine(GM.runnerMonsterManager.cLevelUpMonster(GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage, GM.runnerMonsterManager.ResultMonsterSpawn));
-                }
-            }    
-        }
+        SetXPBars();
 
         yield return new WaitForSeconds(0.5f);
+
+        // as long as there is a lvl up
+        while (GM.runnerMonsterManager.CheckForMonsterLevelUp())
+        {
+            if (GM.runnerMonsterManager.CheckForStageChange())
+            {
+                StartCoroutine(GM.runnerMonsterManager.cLevelUpMonster(GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage, GM.runnerMonsterManager.ResultMonsterSpawn));
+                yield return new WaitForSeconds(0.5f);
+            }
+            SetXPBars();
+            yield return new WaitForSeconds(0.5f); 
+        }
+
+        yield return new WaitForSeconds(0.25f);
 
         // Enable EndResultButton for player to tap and go back to home scene
         EnableMenu((int)eMenus.EndResultButton);

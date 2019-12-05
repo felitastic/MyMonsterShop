@@ -20,7 +20,7 @@ public class Monster : SerializedScriptableObject
 
     [Header("--- VALUES FOR GD TO TWEAK ---")]
     [Tooltip("XP threshold for normal creature")]
-    public float[] LevelThreshold_normal = new float[9];
+    public float[] LevelThreshold_normal = new float[6];
 
     [Tooltip("Multiplicator for rare Levelthresholds ")]
     public float MultiplicatorRare;

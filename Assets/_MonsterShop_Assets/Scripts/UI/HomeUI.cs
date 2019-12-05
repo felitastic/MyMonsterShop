@@ -6,34 +6,46 @@ using UnityEngine.SceneManagement;
 
 public class HomeUI : UIController
 {
-    public Image XPbar;
     private Monster curEgg;
     private int hatchTaps;
     //private Vector3 camHomePos { get { return GM.CurCamHomePos; } }
     private Vector3 camShopPos;
-    private Vector3 camDungeonPos;
+    //private Vector3 camDungeonPos;
     private eHomeUIScene curScene;
     private int EggHatchCount;
+
+    // called via (int)GM.curMonsterSlot
+    public SpriteRenderer[] HomeBGs;
+
+    public Sprite[] BGsprites;
+
+    private enum BGsprite
+    {
+        homeLeft,
+        homeMiddle,
+        homeRight,
+        dungeonLeft,
+        dungeonMiddle,
+        dungeonRight,
+    }
 
     private enum eMenus
     {
         PlayerInfo,
+        MonsterStats,
         XPBar,
         Home,
         Shop,
         Dungeon,
-        MiniGames,
-        HomeBG,
-        ShopBG,
-        DungeonBG,
-        MinigameBG,
-        H_SwipeButtons,
+        MiniGameWindow,
         H_BottomButtons,
         S_BottomButtons,
         S_PurchaseConfirm,
         S_EggMenu,
         S_TappEggButton,
         D_BottomButtons,
+        SwipeButtons,
+        LoadingScreen
     }
 
     private enum  eButtons
@@ -41,11 +53,11 @@ public class HomeUI : UIController
         H_Train,
         H_Feed,
         H_Shop,
-        H_Left,
-        H_Right,
         S_ExitShop,
         S_PurchaseYes,
-        S_PurchaseNo
+        S_PurchaseNo,
+        SwipeLeft,
+        SwipeRight
     }
 
     private enum eTextfields
@@ -72,7 +84,7 @@ public class HomeUI : UIController
         GetGameManager();
         GM.homeUI = this;
         camShopPos = new Vector3(0.0f, 20.0f, -10.001f);
-        camDungeonPos = new Vector3(-10.801f, 20.0f, -10.001f);
+        //camDungeonPos = new Vector3(-10.801f, 20.0f, -10.001f);
         EggHatchCount = 1;
         //print("home ui has been started");
     }
@@ -110,7 +122,7 @@ public class HomeUI : UIController
                 break;
             case eHomeUIScene.Dungeonlord:
                 GM.CurCamHomePos = Camera.main.transform.position;
-                Camera.main.transform.position = camDungeonPos;
+                //Camera.main.transform.position = camDungeonPos;
                 UI_DungeonLord();
 
                 break;
@@ -121,19 +133,26 @@ public class HomeUI : UIController
 
     private void UI_MonsterView()
     {
+        for(int i = 0; i < 3; i++)
+        {
+            HomeBGs[i].sprite = BGsprites[i];
+        }
+        
         DisableMenu((int)eMenus.Dungeon);
-        DisableMenu((int)eMenus.DungeonBG);
+        //DisableMenu((int)eMenus.DungeonBG);
         DisableMenu((int)eMenus.D_BottomButtons);
-        DisableMenu((int)eMenus.ShopBG);
+        //DisableMenu((int)eMenus.ShopBG);
         DisableMenu((int)eMenus.Shop);
         DisableMenu((int)eMenus.S_EggMenu);
         DisableMenu((int)eMenus.S_BottomButtons);
-        DisableMenu((int)eMenus.MiniGames);
+        DisableMenu((int)eMenus.MiniGameWindow);
 
-        EnableMenu((int)eMenus.Home);
-        EnableMenu((int)eMenus.HomeBG);
-        EnableMenu((int)eMenus.H_SwipeButtons);
+        EnableMenu((int)eMenus.Home);        
+
+        //EnableMenu((int)eMenus.HomeBG);
+        //EnableMenu((int)eMenus.H_SwipeButtons);
         EnableMenu((int)eMenus.H_BottomButtons);
+        EnableMenu((int)eMenus.SwipeButtons);
 
         SetMonsterTexts();
         SetMonsterValue();
@@ -143,9 +162,12 @@ public class HomeUI : UIController
     private void UI_EggShop()
     {
         DisableMenu((int)eMenus.Home);
-        DisableMenu((int)eMenus.HomeBG);
+        DisableMenu((int)eMenus.MonsterStats);
+        DisableMenu((int)eMenus.XPBar);
+        DisableMenu((int)eMenus.SwipeButtons);
+        //DisableMenu((int)eMenus.HomeBG);
 
-        EnableMenu((int)eMenus.ShopBG);
+        //EnableMenu((int)eMenus.ShopBG);
         EnableMenu((int)eMenus.Shop);
         EnableMenu((int)eMenus.S_EggMenu);
         EnableMenu((int)eMenus.S_BottomButtons);
@@ -153,18 +175,26 @@ public class HomeUI : UIController
 
     private void UI_DungeonLord()
     {
-        DisableMenu((int)eMenus.HomeBG);
+        for (int i = 0; i < 3; i++)
+        {
+            HomeBGs[i].sprite = BGsprites[i+3];
+        }
+
+        //TODO: do not show lock/plus symbol in this scene
+
+        //DisableMenu((int)eMenus.HomeBG);
         DisableMenu((int)eMenus.Home);
 
-        EnableMenu((int)eMenus.DungeonBG);
+        //EnableMenu((int)eMenus.DungeonBG);
         EnableMenu((int)eMenus.Dungeon);
         EnableMenu((int)eMenus.D_BottomButtons);
+        EnableMenu((int)eMenus.SwipeButtons);
     }
 
     private void UI_Minigame()
     {
         DisableMenu((int)eMenus.Home);
-        EnableMenu((int)eMenus.MiniGames);
+        EnableMenu((int)eMenus.MiniGameWindow);
     }
 
 // Updating Monster and Player Values 
@@ -209,7 +239,7 @@ public class HomeUI : UIController
         {
             EnableMenu((int)eMenus.XPBar);
             SetText((int)eTextfields.MonsterLevel, "Lvl " + GM.CurMonsters[(int)GM.curMonsterSlot].MonsterLevel);
-            XPbar.fillAmount = GM.CurMonsters[(int)GM.curMonsterSlot].MonsterXP / GM.homeMonsterManager.LevelUpXpValue();                       
+            SetXPBars();           
         }
     }    
 
@@ -317,6 +347,7 @@ public class HomeUI : UIController
         {
             //put egg in empty slot position
             GM.CurMonsters[(int)GM.curMonsterSlot].Monster = curEgg;
+            SetText((int)eTextfields.MonsterTypeandStage, "Egg");
             GM.CurMonsters[(int)GM.curMonsterSlot].BaseValue = GM.CurMonsters[(int)GM.curMonsterSlot].Monster.BaseValue;
             SetMonsterTexts();
             SetMonsterValue();
@@ -370,7 +401,7 @@ public class HomeUI : UIController
     //Button Inputs extra menus in home (Minigame, Pet, Feed?)
     public void ChooseMinigame(int scene)
     {
-        //GM.SaveCurrentMonsters();
+        GM.curScreen = (eScene)scene;
         SceneManager.LoadScene(scene);
     }
 

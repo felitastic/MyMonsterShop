@@ -9,6 +9,6 @@ EditorBuildSettings:
     path: Assets/_MonsterShop_Assets/Scenes/Home.unity
     guid: c2d606dc5c34be54f88a01202b9ba649
   - enabled: 1
-    path: Assets/_MonsterShop_Assets/Scenes/EndlessRunner_ButtonControls.unity
+    path: Assets/_MonsterShop_Assets/Scenes/Runner.unity
     guid: ec42c642c49f0024090ba21a1cba0584
   m_configObjects: {}

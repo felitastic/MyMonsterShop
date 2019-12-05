@@ -124,7 +124,8 @@ public class MM_Home : MonsterManager
         Destroy(monsterBody[SlotID], 0.25f);
         yield return new WaitForSeconds(0.3f);
         GM.homeMonsterManager.SpawnCurrentMonster(monsterSpawn);
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.5f);
+        Destroy(monsterBody[SlotID], 0.1f);
         GM.homeUI.SetUIStage(HomeUI.eHomeUIScene.Home);
         GM.homeMonsterManager.SpawnCurrentMonster(MonsterSpawn[SlotID]);
         yield return null;

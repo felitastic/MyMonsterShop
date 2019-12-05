@@ -32,6 +32,8 @@ public class GameManager : Singleton<GameManager>
     //wie oft spieler schon minigames gespielt hat (für unlocks)
     public int MinigamesPlayed;
 
+    public eScene curScreen;
+
     //left, middle, right -> used as (int) to get the right monsterslot ID
     public ecurMonsterSlot curMonsterSlot;
     public Vector3 CurCamHomePos;
@@ -65,6 +67,7 @@ public class GameManager : Singleton<GameManager>
     {
         Application.targetFrameRate = 60;        
         WriteEmptySlots();
+        curScreen = eScene.home;
     }
 
     private void Start()
@@ -72,6 +75,7 @@ public class GameManager : Singleton<GameManager>
         //GetImportantScripts();
         HomeCam.SetScreen(ecurMonsterSlot.middle);
         CurCamHomePos = Camera.main.transform.position;
+        ChangePlayerGold(+100);
     }
 
     //public void GetCurMonsterComponents(Animator anim, Rigidbody rigid)
