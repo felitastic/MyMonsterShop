@@ -33,7 +33,7 @@ public class HomeUI : UIController
     private enum eMenus
     {
         PlayerInfo,
-        MonsterStats,
+        H_MonsterStats,
         XPBar,
         Home,
         Shop,
@@ -51,7 +51,9 @@ public class HomeUI : UIController
         AddButton,
         PopupInfoWindow,
         UnlockYNButtons,
-        ClosePopupButton
+        ClosePopupButton,
+        D_MonsterStats,
+        D_SaleConfirm
     }
 
     private enum  eButtons
@@ -63,18 +65,22 @@ public class HomeUI : UIController
         S_PurchaseYes,
         S_PurchaseNo,
         SwipeLeft,
-        SwipeRight
+        SwipeRight,
+        DungeonSellButton
     }
 
     private enum eTextfields
     {
         GoldCount,
-        MonsterTypeandStage,
-        MonsterValue,        
-        MonsterLevel,
+        H_MonsterTypeandStage,
+        H_MonsterValue,        
+        H_MonsterLevel,
         ShopDialogue,
         DungeonDialogue,
-        PopupInfoText
+        PopupInfoText,
+        D_MonsterTypeandStage,
+        D_MonsterValue,
+        D_MonsterLevel
     }
 
     public enum eHomeUIScene
@@ -99,8 +105,10 @@ public class HomeUI : UIController
     private void Start()
     {
         SetUIStage(eHomeUIScene.Home);
+        ShowMonsterStats();
         SetMonsterXPBarUndLevel();
         SetSlotSymbol();
+        SetMonsterValue();
         //SetGoldCounter();
     }
 
@@ -170,7 +178,7 @@ public class HomeUI : UIController
         {
             HomeBGs[i].sprite = BGsprites[i];
         }
-        
+                
         DisableMenu((int)eMenus.Dungeon);
         //DisableMenu((int)eMenus.DungeonBG);
         DisableMenu((int)eMenus.D_BottomButtons);
@@ -179,11 +187,13 @@ public class HomeUI : UIController
         DisableMenu((int)eMenus.S_EggMenu);
         DisableMenu((int)eMenus.S_BottomButtons);
         DisableMenu((int)eMenus.MiniGameWindow);
-
-        EnableMenu((int)eMenus.Home);        
+        DisableMenu((int)eMenus.D_MonsterStats);
+        EnableMenu((int)eMenus.Home);
 
         //EnableMenu((int)eMenus.HomeBG);
         //EnableMenu((int)eMenus.H_SwipeButtons);
+        //EnableMenu((int)eMenus.XPBar);
+        EnableMenu((int)eMenus.H_MonsterStats);
         EnableMenu((int)eMenus.H_BottomButtons);
         EnableMenu((int)eMenus.SwipeButtons);
 
@@ -195,9 +205,10 @@ public class HomeUI : UIController
     private void UI_EggShop()
     {
         DisableMenu((int)eMenus.Home);
-        DisableMenu((int)eMenus.MonsterStats);
+        DisableMenu((int)eMenus.H_MonsterStats);
         DisableMenu((int)eMenus.XPBar);
         DisableMenu((int)eMenus.SwipeButtons);
+        DisableMenu((int)eMenus.H_MonsterStats);
         //DisableMenu((int)eMenus.HomeBG);
 
         //EnableMenu((int)eMenus.ShopBG);
@@ -217,6 +228,9 @@ public class HomeUI : UIController
 
         //DisableMenu((int)eMenus.HomeBG);
         DisableMenu((int)eMenus.Home);
+
+        DisableMenu((int)eMenus.H_MonsterStats);
+        EnableMenu((int)eMenus.D_MonsterStats);
 
         //EnableMenu((int)eMenus.DungeonBG);
         EnableMenu((int)eMenus.Dungeon);
@@ -250,6 +264,18 @@ public class HomeUI : UIController
         }
     }
 
+    public void ShowMonsterStats()
+    {
+        if (GM.CurMonsters[(int)GM.curMonsterSlot].Monster != null)
+        {
+            EnableMenu((int)eMenus.H_MonsterStats);
+        }
+        else
+        {
+            DisableMenu((int)eMenus.H_MonsterStats);
+        }
+    }
+
     public void AddMonster()
     {
         GoToEggShop();
@@ -276,6 +302,7 @@ public class HomeUI : UIController
     public void UnlockSlot()
     {
         GM.ChangePlayerGold(-GM.CurMonsters[(int)GM.curMonsterSlot].UnlockPrice);
+        GM.CurMonsters[(int)GM.curMonsterSlot].Unlocked = true;
         SetSlotSymbol();
         CloseUnlockInfo();
     }
@@ -295,26 +322,30 @@ public class HomeUI : UIController
         GM.homeMonsterManager.CalculateMonsterValue();
 
         if (GM.CurMonsters[(int)GM.curMonsterSlot].Monster == null)
-        {
-            GM.homeUI.SetText((int)eTextfields.MonsterValue, "");
+        {            
+            GM.homeUI.SetText((int)eTextfields.H_MonsterValue, "");
+            GM.homeUI.SetText((int)eTextfields.D_MonsterValue, "");
         }
         else
         {
-            GM.homeUI.SetText((int)eTextfields.MonsterValue, "Value: " + GM.CurMonsters[(int)GM.curMonsterSlot].MonsterValue);
+            GM.homeUI.SetText((int)eTextfields.H_MonsterValue, "Value: " + GM.CurMonsters[(int)GM.curMonsterSlot].MonsterValue);
+            GM.homeUI.SetText((int)eTextfields.D_MonsterValue, "Value: " + GM.CurMonsters[(int)GM.curMonsterSlot].MonsterValue);
             //GM.homeUI.SetText((int)eTextfields.MonsterLevel, "" + GM.CurMonsters[(int)GM.curMonsterSlot].MonsterLevel);
-            print("Value: " + GM.CurMonsters[(int)GM.curMonsterSlot].MonsterValue);
+            //print("Value: " + GM.CurMonsters[(int)GM.curMonsterSlot].MonsterValue);
         }
     }
 
     public void SetMonsterTexts()
     {
         if (GM.CurMonsters[(int)GM.curMonsterSlot].Monster == null)
-        {
-            GM.homeUI.SetText((int)eTextfields.MonsterTypeandStage, "");
+        {          
+            GM.homeUI.SetText((int)eTextfields.H_MonsterTypeandStage, "");
+            GM.homeUI.SetText((int)eTextfields.D_MonsterTypeandStage, "");
         }
         else
-        {
-            SetText((int)eTextfields.MonsterTypeandStage, GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage + " " + GM.CurMonsters[(int)GM.curMonsterSlot].Monster.MonsterName);
+        {           
+            SetText((int)eTextfields.H_MonsterTypeandStage, GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage + " " + GM.CurMonsters[(int)GM.curMonsterSlot].Monster.MonsterName);
+            SetText((int)eTextfields.D_MonsterTypeandStage, GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage + " " + GM.CurMonsters[(int)GM.curMonsterSlot].Monster.MonsterName);
             SetMonsterValue();
             SetMonsterXPBarUndLevel();
         }
@@ -325,15 +356,27 @@ public class HomeUI : UIController
         if (GM.CurMonsters[(int)GM.curMonsterSlot].Monster == null || GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage >= eMonsterStage.Egg)
         {
             DisableMenu((int)eMenus.XPBar);
-            GM.homeUI.SetText((int)eTextfields.MonsterLevel, "");
+            GM.homeUI.SetText((int)eTextfields.H_MonsterLevel, "");
         }
         else
         {
             EnableMenu((int)eMenus.XPBar);
-            SetText((int)eTextfields.MonsterLevel, "Lvl " + GM.CurMonsters[(int)GM.curMonsterSlot].MonsterLevel);
+            SetText((int)eTextfields.H_MonsterLevel, "Lvl " + GM.CurMonsters[(int)GM.curMonsterSlot].MonsterLevel);
             SetXPBars();           
         }
     }    
+
+    public void SetMonsterlevel_Dungeon()
+    {
+        if (GM.CurMonsters[(int)GM.curMonsterSlot].Monster == null)
+        {
+            GM.homeUI.SetText((int)eTextfields.D_MonsterLevel, "");
+        }
+        else
+        {
+            SetText((int)eTextfields.D_MonsterLevel, "Lvl " + GM.CurMonsters[(int)GM.curMonsterSlot].MonsterLevel);
+        }
+    }
 
     public void SetGoldCounter()
     {
@@ -387,6 +430,19 @@ public class HomeUI : UIController
     {
         SetUIStage(eHomeUIScene.Dungeonlord);
         SetDungeonDialogue();
+      
+        GM.homeUI.SetMonsterTexts();
+        GM.homeUI.SetMonsterValue();
+        GM.homeUI.SetMonsterlevel_Dungeon();
+
+        if (GM.CurMonsters[(int)GM.curMonsterSlot].Monster == null)
+        {
+            GM.homeUI.SellButtonActive(false);
+        }
+        else
+        {
+            GM.homeUI.SellButtonActive(true);
+        }
     }
 
     public void ExitDungeonMenu()
@@ -439,7 +495,9 @@ public class HomeUI : UIController
         {
             //put egg in empty slot position
             GM.CurMonsters[(int)GM.curMonsterSlot].Monster = curEgg;
-            SetText((int)eTextfields.MonsterTypeandStage, "Egg");
+            GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage = eMonsterStage.Egg;
+            SetText((int)eTextfields.H_MonsterTypeandStage, GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage + " " + GM.CurMonsters[(int)GM.curMonsterSlot].Monster.MonsterName);
+            SetText((int)eTextfields.D_MonsterTypeandStage, GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage + " " + GM.CurMonsters[(int)GM.curMonsterSlot].Monster.MonsterName);
             GM.CurMonsters[(int)GM.curMonsterSlot].BaseValue = GM.CurMonsters[(int)GM.curMonsterSlot].Monster.BaseValue;
             SetMonsterTexts();
             SetMonsterValue();
@@ -470,16 +528,30 @@ public class HomeUI : UIController
         EnableMenu((int)eMenus.S_TappEggButton);
     }
 
+    public void TrainButtonActive(bool isActive)
+    {
+        if (isActive)
+            EnableButton((int)eButtons.H_Train);
+        else
+            DisableButton((int)eButtons.H_Train);
+    }
+
     public void TapEgg()
     {
         hatchTaps += 1;
-        //print("tapped " + hatchTaps);
+
         if (hatchTaps == EggHatchCount)
         {
             GM.CurMonsters[(int)GM.curMonsterSlot].MonsterLevel = 1;
+            GM.CurMonsters[(int)GM.curMonsterSlot].GoldModificator = GM.CurMonsters[(int)GM.curMonsterSlot].Monster.GoldModificator;
             GM.homeMonsterManager.SetEggRarity();
             StartCoroutine(GM.homeMonsterManager.cHatchEgg(GM.homeMonsterManager.EggSpawn));
             DisableMenu((int)eMenus.S_TappEggButton);
+            GM.homeUI.SetMonsterTexts();
+            GM.homeUI.SetMonsterValue();
+            GM.homeUI.SetMonsterXPBarUndLevel();
+            GM.homeUI.SetSlotSymbol();
+            hatchTaps = 0;
         }
     }
 
@@ -502,17 +574,71 @@ public class HomeUI : UIController
         print("Feeding time");
     }
 
-    //Button Inputs Dungeonlord
-    public void SellMonster()
+    public void SellButtonActive(bool isActive)
     {
-        if (GM.CurMonsters[(int)GM.curMonsterSlot].Monster == null)
+        if (isActive)
         {
-            //
-            SetText((int)eTextfields.DungeonDialogue, "Lazy progger hasn't implemented that feature yet");
+            EnableButton((int)eButtons.DungeonSellButton);
+        }
+        else
+        {
+            DisableButton((int)eButtons.DungeonSellButton);
         }
     }
 
-    //Testing
+    //Button Inputs Dungeonlord
+    
+   /// <summary>
+   /// Player pressed Sell monster Button in Dungeon screen
+   /// </summary>
+    public void SellMonsterButton()
+    {
+        //disable swipe buttons
+        DisableButton((int)eButtons.SwipeLeft);
+        DisableButton((int)eButtons.SwipeRight);
+        DisableMenu((int)eMenus.D_BottomButtons);
+        //enable y/n menu        
+        EnableMenu((int)eMenus.D_SaleConfirm);
+    }
+
+    /// <summary>
+    /// Player confirms/cancels sale of monster in dungeon screen
+    /// </summary>
+    public void ConfirmMonsterSale(bool yes)
+    {
+        if (yes)
+        {
+            GM.CurMonsters[(int)GM.curMonsterSlot].Sold = true;
+            StartCoroutine(cMonsterCage());
+        }
+        else
+        {
+            //enable swipe buttons
+            EnableButton((int)eButtons.SwipeLeft);
+            EnableButton((int)eButtons.SwipeRight);
+            EnableMenu((int)eMenus.D_BottomButtons);
+            //close dis y/n shit
+            DisableMenu((int)eMenus.D_SaleConfirm);
+        }
+    }
+    
+    /// <summary>
+    /// Cage is put over monsters to show they are sold
+    /// </summary>
+    private IEnumerator cMonsterCage()
+    {
+        SetText((int)eTextfields.DungeonDialogue, "Very busy progger hasn't implemented that feature yet");
+        yield return new WaitForSeconds(0.5f);
+        DisableMenu((int)eMenus.D_SaleConfirm);
+        EnableButton((int)eButtons.SwipeLeft);
+        EnableButton((int)eButtons.SwipeRight);
+        EnableMenu((int)eMenus.D_BottomButtons);
+    }
+
+    /// <summary>
+    /// This is for testing bullshit; spawns a monster atm
+    /// </summary>
+    /// <param name="monster"></param>
     public void TestButton(Monster monster)
     {
         GM.CurMonsters[(int)GM.curMonsterSlot].Monster = monster;

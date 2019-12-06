@@ -110,6 +110,7 @@ public class RunnerUI : UIController
             yield return new WaitForSeconds(0.5f); 
         }
 
+        GM.runnerMonsterManager.CalculateMonsterValue();
         yield return new WaitForSeconds(0.25f);
 
         // Enable EndResultButton for player to tap and go back to home scene
@@ -118,7 +119,7 @@ public class RunnerUI : UIController
 
     // EndResultButtons function
     public void TapResult()
-    {
+    {        
         StartCoroutine(GM.cLoadHomeScene());
     }
 

@@ -52,13 +52,40 @@ public class CameraMovement : MonoBehaviour
         }
     }
 
-    private void SetNewScreen(int PlusMinus)
+    private void SetNewScreenHome(int PlusMinus)
     {
-        SetScreen(GM.curMonsterSlot += 1*PlusMinus);
+        SetScreen(GM.curMonsterSlot += 1 * PlusMinus);
         GM.homeUI.SetMonsterTexts();
         GM.homeUI.SetMonsterValue();
         GM.homeUI.SetMonsterXPBarUndLevel();
         GM.homeUI.SetSlotSymbol();
+        GM.homeUI.ShowMonsterStats();
+
+        if (GM.CurMonsters[(int)GM.curMonsterSlot].Monster == null)
+        {
+            GM.homeUI.TrainButtonActive(false);
+        }
+        else
+        {
+            GM.homeUI.TrainButtonActive(true);
+        }
+    }
+
+    private void SetNewScreenDungeon(int PlusMinus)
+    {
+        SetScreen(GM.curMonsterSlot += 1 * PlusMinus);
+        GM.homeUI.SetMonsterTexts();
+        GM.homeUI.SetMonsterValue();
+        GM.homeUI.SetMonsterlevel_Dungeon();
+
+        if (GM.CurMonsters[(int)GM.curMonsterSlot].Monster == null || GM.CurMonsters[(int)GM.curMonsterSlot].Sold)
+        {
+            GM.homeUI.SellButtonActive(false);
+        }
+        else
+        {
+            GM.homeUI.SellButtonActive(true);
+        }
     }
 
     public void PressLeftButton()
@@ -67,14 +94,14 @@ public class CameraMovement : MonoBehaviour
         {
             if (GM.curMonsterSlot != ecurMonsterSlot.left && !lerping)
             {
-                SetNewScreen(-1);
+                SetNewScreenDungeon(-1);
             }
         }
         else
         {
             if (GM.curMonsterSlot != ecurMonsterSlot.left && !lerping)
             {
-                SetNewScreen(-1);
+                SetNewScreenHome(-1);
             }
         }
 
@@ -94,14 +121,14 @@ public class CameraMovement : MonoBehaviour
         {
             if (GM.curMonsterSlot != ecurMonsterSlot.right && !lerping)
             {
-                SetNewScreen(+1);
+                SetNewScreenDungeon(+1);
             }
         }
         else
         {
             if (GM.curMonsterSlot != ecurMonsterSlot.right && !lerping)
             {
-                SetNewScreen(+1);
+                SetNewScreenHome(+1);
             }
         }
 

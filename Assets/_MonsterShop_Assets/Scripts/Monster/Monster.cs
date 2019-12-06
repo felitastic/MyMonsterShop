@@ -38,8 +38,6 @@ public class Monster : SerializedScriptableObject
     public eMonsterType MonsterType;
     [Tooltip("Name of the creature")]
     public string MonsterName;
-    [Tooltip("Sprite to use in Shop?")]
-    public Sprite EggSprite;
     public GameObject EggPrefab;
     [Tooltip("Creature model prefabs by Rarity and Age")]
     [SerializeField]

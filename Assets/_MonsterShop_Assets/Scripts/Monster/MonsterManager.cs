@@ -51,6 +51,8 @@ public class MonsterManager : MonoBehaviour
     public void CalculateMonsterValue()
     {
         CurMonster.MonsterValue = (CurMonster.GoldModificator * CurMonster.MonsterXP) + (float)CurMonster.BaseValue;
+        print(CurMonster.GoldModificator + " x " + CurMonster.MonsterXP + " + " + CurMonster.BaseValue);
+        print("result: " + CurMonster.MonsterValue);
     }
 
     // calculates the monsters level on xp gain
@@ -114,7 +116,14 @@ public class MonsterManager : MonoBehaviour
             case 3:
                 xpBar1 = 1.0f;
                 xpBar2 = 1.0f;
-                xpBar3 = (CurMonster.MonsterXP - CurMonster.MonsterLevel) / CurMonster.LevelThreshold_current[CurMonster.MonsterLevel - 1];
+                if (Mathf.Approximately(CurMonster.MonsterXP, CurMonster.LevelThreshold_current[CurMonster.MonsterLevel - 1]))
+                {
+                    xpBar3 = 1.0f;
+                }
+                else
+                {
+                    xpBar3 = (CurMonster.MonsterXP - CurMonster.MonsterLevel) / CurMonster.LevelThreshold_current[CurMonster.MonsterLevel - 1];
+                }
                 break;
             case 4:
                 xpBar1 = (CurMonster.MonsterXP - CurMonster.MonsterLevel) / CurMonster.LevelThreshold_current[CurMonster.MonsterLevel - 1];

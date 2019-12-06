@@ -18,7 +18,7 @@ public class MM_Home : MonsterManager
     {
         //SetSlotSymbol();
         SpawnAllCurrentMonsters();
-        CalculateMonsterValue();
+        //CalculateMonsterValue();
     }
 
     //// sets monster slot symbols if slot is locked or empty
@@ -128,6 +128,8 @@ public class MM_Home : MonsterManager
         Destroy(monsterBody[SlotID], 0.1f);
         GM.homeUI.SetUIStage(HomeUI.eHomeUIScene.Home);
         GM.homeMonsterManager.SpawnCurrentMonster(MonsterSpawn[SlotID]);
+        GM.homeUI.ShowMonsterStats();
+        GM.homeUI.TrainButtonActive(true);
         yield return null;
     }
 }

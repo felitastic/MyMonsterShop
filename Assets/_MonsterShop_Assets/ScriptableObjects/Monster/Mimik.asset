@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fcb2da6d4402cdf47b668a6ba841bf43, type: 3}
-  m_Name: Pumpkin
+  m_Name: Mimik
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -81,10 +81,10 @@ MonoBehaviour:
   - 180
   MultiplicatorRare: 2
   MultiplicatorLegendary: 3
-  BaseCost: 100
+  BaseCost: 600
   GoldModificator: 1
   BaseValue: 50
   MonsterType: 0
   MonsterName: Pumpkin
-  EggSprite: {fileID: 21300000, guid: 6b893814efaba4cb196da4fcb9cb10ca, type: 3}
-  EggPrefab: {fileID: 74603032622791611, guid: e4f1d0972e5b19a469f7de1e6df9cc30, type: 3}
+  EggPrefab: {fileID: 4718825962684987210, guid: 5829bb730b3ff2b419f2eea1ad22fe29,
+    type: 3}

@@ -74,7 +74,8 @@ public class GameManager : Singleton<GameManager>
         //GetImportantScripts();
         HomeCam.SetScreen(ecurMonsterSlot.middle);
         CurCamHomePos = Camera.main.transform.position;
-        ChangePlayerGold(+100);
+        homeUI.TrainButtonActive(false);
+        ChangePlayerGold(+500);
     }
 
     //public void GetCurMonsterComponents(Animator anim, Rigidbody rigid)
