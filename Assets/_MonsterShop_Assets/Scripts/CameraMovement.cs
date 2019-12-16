@@ -79,6 +79,7 @@ public class CameraMovement : MonoBehaviour
         GM.homeUI.SetMonsterTexts();
         GM.homeUI.SetMonsterValue();
         GM.homeUI.SetMonsterlevel_Dungeon();
+        GM.homeUI.SetDungeonDialogue();
 
         if (GM.CurMonsters[(int)GM.curMonsterSlot].Monster == null || GM.CurMonsters[(int)GM.curMonsterSlot].Sold)
         {

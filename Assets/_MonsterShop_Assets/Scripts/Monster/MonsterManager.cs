@@ -71,6 +71,14 @@ public class MonsterManager : MonoBehaviour
         return false;
     }
 
+    public void DeleteMonsterBody(int slotID)
+    {
+        Destroy(monsterBody[slotID]);
+        monsterBody[slotID] = null;
+        monsterAnim[slotID] = null;
+        monsterRigid[slotID] = null;
+    }
+
     public bool CheckForStageChange()
     {
         if (CurMonster.MonsterStage != eMonsterStage.Adult)

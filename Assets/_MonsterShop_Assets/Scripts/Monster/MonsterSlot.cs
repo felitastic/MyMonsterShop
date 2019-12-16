@@ -16,5 +16,19 @@ public class MonsterSlot
     public float MonsterXP = 0;
     public float MonsterValue = 0;
     public float GoldModificator;
-    public int BaseValue;    
+    public int BaseValue;
+
+    public void ResetValues()
+    {
+        Monster = null;
+        Sold = false;
+        LevelThreshold_current = new float[6];
+        MonsterStage = eMonsterStage.none;
+        Rarity = eRarity.normal;
+        MonsterLevel = 0;
+        MonsterXP = 0;
+        MonsterValue = 0;
+        GoldModificator = 0;
+        BaseValue = 0;
+    }
 }

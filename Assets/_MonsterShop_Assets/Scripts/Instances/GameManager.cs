@@ -30,7 +30,7 @@ public class GameManager : Singleton<GameManager>
 
     //wie oft spieler schon minigames gespielt hat (für unlocks)
     public int MinigamesPlayed;
-
+    public bool DungeonlordWaiting;
     public eScene curScreen;
 
     //left, middle, right -> used as (int) to get the right monsterslot ID
@@ -67,6 +67,7 @@ public class GameManager : Singleton<GameManager>
         Application.targetFrameRate = 60;        
         WriteEmptySlots();
         curScreen = eScene.home;
+        DungeonlordWaiting = true;
     }
 
     private void Start()

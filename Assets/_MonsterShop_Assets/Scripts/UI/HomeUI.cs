@@ -15,11 +15,15 @@ public class HomeUI : UIController
     //private Vector3 camDungeonPos;
     private int EggHatchCount;
 
-    private bool swipeEnabled;
+    private bool swipeDisabled;
+
     // called via (int)GM.curMonsterSlot
     public SpriteRenderer[] HomeBGs;
 
     public Sprite[] BGsprites;
+
+    public Image D_Signature;
+    private int totalValue;
 
     private enum BGsprite
     {
@@ -56,7 +60,10 @@ public class HomeUI : UIController
         D_MonsterStats,
         D_SaleConfirm,
         SwipeLeftInput,
-        SwipeRightInput
+        SwipeRightInput,
+        D_SaleConfirmButton,
+        D_LeaveConfirmButton,
+        D_SalesContract
     }
 
     private enum  eButtons
@@ -83,7 +90,10 @@ public class HomeUI : UIController
         PopupInfoText,
         D_MonsterTypeandStage,
         D_MonsterValue,
-        D_MonsterLevel
+        D_MonsterLevel,
+        D_SoldMonster1,
+        D_SoldMonster2,
+        D_SoldMonster3
     }
 
     public enum eHomeUIScene
@@ -112,12 +122,12 @@ public class HomeUI : UIController
         SetMonsterXPBarUndLevel();
         SetSlotSymbol();
         SetMonsterValue();
-        swipeEnabled = true;
+        DisableSwiping(false);
         //SetGoldCounter();
     }
 
     /// <summary>
-    /// Controls enable/disable status of swipe buttons and controls
+    /// Called by CameraMovement: Controls enable/disable status of swipe buttons and controls
     /// </summary>
     public void SetSwipeButtonStatus()
     {
@@ -142,13 +152,13 @@ public class HomeUI : UIController
     }
 
     /// <summary>
-    /// Dis/Enables all swiping controls and buttons using bool swipeEnabled
+    /// Disables/Enables all swiping controls and buttons using bool swipeEnabled
     /// </summary>
-    public void DisableSwiping(bool enable)
+    public void DisableSwiping(bool disable)
     {
-        swipeEnabled = enable;
+        swipeDisabled = disable;
 
-        if (!swipeEnabled)
+        if (swipeDisabled)
         {
             DisableButton((int)eButtons.SwipeRight);
             DisableMenu((int)eMenus.SwipeRightInput);
@@ -223,6 +233,7 @@ public class HomeUI : UIController
         EnableMenu((int)eMenus.H_MonsterStats);
         EnableMenu((int)eMenus.H_BottomButtons);
         EnableMenu((int)eMenus.SwipeButtons);
+        DisableSwiping(false);
 
         SetMonsterTexts();
         SetMonsterValue();
@@ -308,21 +319,37 @@ public class HomeUI : UIController
     {
         GoToEggShop();
     }
+    public void SetPopInfoWindowStatus(bool open, string message = "")
+    {
+        if (open)
+        {
+            EnableMenu((int)eMenus.PopupInfoWindow);
+            SetText((int)eTextfields.PopupInfoText, message);
+        }
+        else
+        {
+            DisableMenu((int)eMenus.PopupInfoWindow);
+        }
+    }
 
     // opens the lock-info-window if player pressed on padlock symbol
     public void PressedPadlockSymbol()
     {
-        DisableSwiping(false);
+        DisableSwiping(true);
         DisableMenu((int)eMenus.H_BottomButtons);
-        EnableMenu((int)eMenus.PopupInfoWindow);
+        //EnableMenu((int)eMenus.PopupInfoWindow);
         if (GM.PlayerMoney >= GM.CurMonsters[(int)GM.curMonsterSlot].UnlockPrice)
         {
-            SetText((int)eTextfields.PopupInfoText, "This slot is locked.\nUnlock it for " + GM.CurMonsters[(int)GM.curMonsterSlot].UnlockPrice + " Money?");
+            SetPopInfoWindowStatus(true, 
+                "This slot is locked." +
+                "\nUnlock it for " + GM.CurMonsters[(int)GM.curMonsterSlot].UnlockPrice + " Money?");
             EnableMenu((int)eMenus.UnlockYNButtons);
         }
         else
         {
-            SetText((int)eTextfields.PopupInfoText, "This slot is locked.\nUnlocking costs" + GM.CurMonsters[(int)GM.curMonsterSlot].UnlockPrice + " Money.");
+            SetPopInfoWindowStatus(true, 
+                "This slot is locked." +
+                "\nUnlocking costs" + GM.CurMonsters[(int)GM.curMonsterSlot].UnlockPrice + " Money.");
             EnableMenu((int)eMenus.ClosePopupButton);            
         }
     }
@@ -343,7 +370,7 @@ public class HomeUI : UIController
         DisableMenu((int)eMenus.UnlockYNButtons);
         EnableMenu((int)eMenus.H_BottomButtons);
         DisableMenu((int)eMenus.PopupInfoWindow);
-        DisableSwiping(true);
+        DisableSwiping(false);
     }
 
     // Updating Monster and Player Values 
@@ -355,6 +382,10 @@ public class HomeUI : UIController
         {            
             GM.homeUI.SetText((int)eTextfields.H_MonsterValue, "");
             GM.homeUI.SetText((int)eTextfields.D_MonsterValue, "");
+        }
+        else if (GM.CurMonsters[(int)GM.curMonsterSlot].Sold)
+        {
+            GM.homeUI.SetText((int)eTextfields.D_MonsterValue, "Sold for " + GM.CurMonsters[(int)GM.curMonsterSlot].MonsterValue);
         }
         else
         {
@@ -414,31 +445,47 @@ public class HomeUI : UIController
     }
 
 
-    //Dialogue of the Dungeonlord
+    /// <summary>
+    /// Sets the dungeonlords dialogue depending on the offered monsters stage
+    /// </summary>
     public void SetDungeonDialogue()
     {
-        string textline = "";
+        string textline;
 
-        switch (GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage)
+        if (GM.CurMonsters[(int)GM.curMonsterSlot].Sold)
         {
-            case eMonsterStage.Baby:
-                textline = "Eh, canon fodder.";
-                break;
-            case eMonsterStage.Teen:
-                textline = "Moody lil guy.";
-                break;
-            case eMonsterStage.Adult:
-                textline = "Ah, a useful one!";
-                break;
-            case eMonsterStage.Egg:
-                textline = "I'm not buying this!";
-                break;
-            case eMonsterStage.none:
-                textline = "What've you got for me?";
-                break;
-            default:
-                textline = "Eh?!";
-                break;
+            textline =
+            "Can't wait to put this one to work.";
+        }
+        else
+        {
+            switch (GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage)
+            {
+                case eMonsterStage.Baby:
+                    textline =
+                        "Eh, canon fodder.";
+                    break;
+                case eMonsterStage.Teen:
+                    textline =
+                        "Moody lil guy.";
+                    break;
+                case eMonsterStage.Adult:
+                    textline =
+                        "Ah, a useful one!";
+                    break;
+                case eMonsterStage.Egg:
+                    textline =
+                        "I'm not buying this!";
+                    break;
+                case eMonsterStage.none:
+                    textline =
+                        "What've you got for me?";
+                    break;
+                default:
+                    textline =
+                        "Eh?!";
+                    break;
+            }
         }
         SetText((int)eTextfields.DungeonDialogue, textline);
     }
@@ -448,7 +495,8 @@ public class HomeUI : UIController
     public void GoToEggShop()
     {
         SetUIStage(eHomeUIScene.Eggshop);
-        SetText((int)eTextfields.ShopDialogue, "What can I do for you?");
+        SetText((int)eTextfields.ShopDialogue, 
+            "What can I do for you?");
     }
 
     public void GoToMinigames()
@@ -475,11 +523,6 @@ public class HomeUI : UIController
         }
     }
 
-    public void ExitDungeonMenu()
-    {
-        SetUIStage(eHomeUIScene.Home);
-    }
-
     public void ExitMinigameMenu()
     {
         SetUIStage(eHomeUIScene.Home);
@@ -495,18 +538,21 @@ public class HomeUI : UIController
     {
         if (GM.CurMonsters[(int)GM.curMonsterSlot].Monster != null && GM.PlayerMoney >= thisMonster.BaseCost)
         {
-            SetText((int)eTextfields.ShopDialogue, "There is already a monster in this spot!");
+            SetText((int)eTextfields.ShopDialogue, 
+                "There is already a monster in this spot!");
         }
         else if (GM.PlayerMoney < thisMonster.BaseCost)
         {
-            SetText((int)eTextfields.ShopDialogue, "It seems you cannot afford this egg!");
+            SetText((int)eTextfields.ShopDialogue, 
+                "It seems you cannot afford this egg!");
         }
         else
         {
             if (GM.CurMonsters[(int)GM.curMonsterSlot].Unlocked)
             {
                 curEgg = thisMonster;
-                SetText((int)eTextfields.ShopDialogue, "You really wanna buy this egg?");
+                SetText((int)eTextfields.ShopDialogue, 
+                    "You really wanna buy this egg?");
                 // Make Button "selected"
                 //DisableMenu(Menus[(int)eMenus.S_EggMenu]);
                 DisableMenu((int)eMenus.S_BottomButtons);
@@ -514,7 +560,8 @@ public class HomeUI : UIController
             }
             else
             {
-                SetText((int)eTextfields.ShopDialogue, "You haven't unlocked this spot yet!");
+                SetText((int)eTextfields.ShopDialogue, 
+                    "You haven't unlocked this spot yet!");
             }
         }
     }
@@ -526,15 +573,22 @@ public class HomeUI : UIController
             //put egg in empty slot position
             GM.CurMonsters[(int)GM.curMonsterSlot].Monster = curEgg;
             GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage = eMonsterStage.Egg;
-            SetText((int)eTextfields.H_MonsterTypeandStage, GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage + " " + GM.CurMonsters[(int)GM.curMonsterSlot].Monster.MonsterName);
-            SetText((int)eTextfields.D_MonsterTypeandStage, GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage + " " + GM.CurMonsters[(int)GM.curMonsterSlot].Monster.MonsterName);
+
+            SetText((int)eTextfields.H_MonsterTypeandStage, 
+                GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage + " " + 
+                GM.CurMonsters[(int)GM.curMonsterSlot].Monster.MonsterName);
+            SetText((int)eTextfields.D_MonsterTypeandStage, 
+                GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage + " " + 
+                GM.CurMonsters[(int)GM.curMonsterSlot].Monster.MonsterName);
+
             GM.CurMonsters[(int)GM.curMonsterSlot].BaseValue = GM.CurMonsters[(int)GM.curMonsterSlot].Monster.BaseValue;
             SetMonsterTexts();
             SetMonsterValue();
             GM.homeUI.SetSlotSymbol();
             DisableMenu((int)eMenus.S_EggMenu);
             DisableMenu((int)eMenus.S_BottomButtons);
-            SetText((int)eTextfields.ShopDialogue, "Alright, one egg to go!");
+            SetText((int)eTextfields.ShopDialogue, 
+                "Alright, one egg to go!");
             GM.ChangePlayerGold(-GM.CurMonsters[(int)GM.curMonsterSlot].Monster.BaseCost);
 
             StartCoroutine(GM.homeMonsterManager.cSpawnEgg());
@@ -554,7 +608,8 @@ public class HomeUI : UIController
     {
         //wait until egg is spawned
         yield return new WaitForSeconds(0.35f);
-        SetText((int)eTextfields.ShopDialogue, "Tap egg to hatch it!");
+        SetText((int)eTextfields.ShopDialogue, 
+            "Tap egg to hatch it!");
         EnableMenu((int)eMenus.S_TappEggButton);
     }
 
@@ -588,7 +643,8 @@ public class HomeUI : UIController
     public IEnumerator cCancelEggPurchas()
     {
         EnableMenu((int)eMenus.S_BottomButtons);
-        SetText((int)eTextfields.ShopDialogue, "Can I get you another one?");
+        SetText((int)eTextfields.ShopDialogue, 
+            "Can I get you another one?");
         yield return new WaitForSeconds(0.5f);
     }
 
@@ -604,6 +660,10 @@ public class HomeUI : UIController
         print("Feeding time");
     }
 
+    /// <summary>
+    /// Set Sell button active if there is a monster to sell in the current slot
+    /// </summary>
+    /// <param name="isActive"></param>
     public void SellButtonActive(bool isActive)
     {
         if (isActive)
@@ -624,10 +684,12 @@ public class HomeUI : UIController
     public void SellMonsterButton()
     {
         //disable swipe buttons
-        DisableButton((int)eButtons.SwipeLeft);
-        DisableButton((int)eButtons.SwipeRight);
+        DisableSwiping(true);
         DisableMenu((int)eMenus.D_BottomButtons);
         //enable y/n menu        
+        SetPopInfoWindowStatus(true, 
+            "Are you sure you want to sell this critter to the dungeonlord?\n" +
+            "You cannot undo this decision.");
         EnableMenu((int)eMenus.D_SaleConfirm);
     }
 
@@ -638,18 +700,20 @@ public class HomeUI : UIController
     {
         if (yes)
         {
+            GM.DungeonlordWaiting = false;
             GM.CurMonsters[(int)GM.curMonsterSlot].Sold = true;
             StartCoroutine(cMonsterCage());
         }
         else
         {
             //enable swipe buttons
-            EnableButton((int)eButtons.SwipeLeft);
-            EnableButton((int)eButtons.SwipeRight);
+            DisableSwiping(false);
             EnableMenu((int)eMenus.D_BottomButtons);
             //close dis y/n shit
-            DisableMenu((int)eMenus.D_SaleConfirm);
         }
+
+        DisableMenu((int)eMenus.D_SaleConfirm);
+        SetPopInfoWindowStatus(false);
     }
     
     /// <summary>
@@ -657,12 +721,100 @@ public class HomeUI : UIController
     /// </summary>
     private IEnumerator cMonsterCage()
     {
-        SetText((int)eTextfields.DungeonDialogue, "Very busy progger hasn't implemented that feature yet");
+        SetText((int)eTextfields.DungeonDialogue, "Deal!");
+
+        SetText((int)eTextfields.D_MonsterValue,
+            "Sold for " + GM.CurMonsters[(int)GM.curMonsterSlot].MonsterValue);
+
         yield return new WaitForSeconds(0.5f);
         DisableMenu((int)eMenus.D_SaleConfirm);
-        EnableButton((int)eButtons.SwipeLeft);
-        EnableButton((int)eButtons.SwipeRight);
+        DisableSwiping(false);
         EnableMenu((int)eMenus.D_BottomButtons);
+        SellButtonActive(false);
+    }
+
+    /// <summary>
+    /// Player pressed Go Home button in Dungeonlord menu
+    /// </summary>
+    public void ExitDungeonMenu()
+    {
+        // nothing has been sold to the dungeon lord
+        if (GM.DungeonlordWaiting)
+        {
+            SetUIStage(eHomeUIScene.Home);
+        }
+        else
+        {
+            // Y/N popup
+            string msg = 
+                "If you leave now, you have to wait x hours before the dungeonlord needs new monsters." +
+                "\nReally leave and sell?";
+            SetPopInfoWindowStatus(true, msg);
+            DisableMenu((int)eMenus.D_BottomButtons);
+            EnableMenu((int)eMenus.D_LeaveConfirmButton);                         
+        }
+    }
+
+    /// <summary>
+    /// Y/N choice when leaving the dungeonlords menu after marking monsters as sold
+    /// </summary>
+    /// <param name="goHome"></param>
+    public void SellMonsterAndGoHome(bool goHome)
+    {
+        if (goHome)
+        {
+            DisableSwiping(true);
+            DisableMenu((int)eMenus.SwipeButtons);
+
+            string msg = "";
+
+            foreach (MonsterSlot slot in GM.CurMonsters)
+            {
+                if (slot.Sold)
+                {
+                    msg += slot.Monster.MonsterName + "\n" +
+                        "Selling Price" + Mathf.RoundToInt(slot.MonsterValue) + "\n";
+
+                    totalValue += Mathf.RoundToInt(slot.MonsterValue);
+                    GM.homeMonsterManager.DeleteMonsterBody(slot.SlotID);
+                    slot.ResetValues();
+                }
+            }
+
+            SetText((int)eTextfields.D_SoldMonster1, msg);
+
+            EnableMenu((int)eMenus.D_SalesContract);           
+        }
+        else
+        {
+            EnableMenu((int)eMenus.D_BottomButtons);
+            SetPopInfoWindowStatus(false);
+            DisableMenu((int)eMenus.D_LeaveConfirmButton);
+        }
+    }
+
+    /// <summary>
+    /// Player taps the contract to "sign"
+    /// </summary>
+    public void SignContract()
+    {
+        StartCoroutine(cSignMonsterSaleContract());
+    }
+
+    /// <summary>
+    /// Called by SignContract()
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerator cSignMonsterSaleContract()
+    {
+        D_Signature.color = new Color(D_Signature.color.r, D_Signature.color.g, D_Signature.color.b, 1.0f);
+
+        yield return new WaitForSeconds(0.5f);
+        GM.ChangePlayerGold(+totalValue);
+        yield return new WaitForSeconds(2f);
+        totalValue = 0;
+        DisableMenu((int)eMenus.D_SalesContract);
+        SetUIStage(eHomeUIScene.Home);
     }
 
     /// <summary>
