@@ -577,10 +577,10 @@ public class HomeUI : UIController
             GM.homeMonsterManager.SetEggRarity();
             StartCoroutine(GM.homeMonsterManager.cHatchEgg(GM.homeMonsterManager.EggSpawn));
             DisableMenu((int)eMenus.S_TappEggButton);
-            GM.homeUI.SetMonsterTexts();
-            GM.homeUI.SetMonsterValue();
-            GM.homeUI.SetMonsterXPBarUndLevel();
-            GM.homeUI.SetSlotSymbol();
+            SetMonsterTexts();
+            SetMonsterValue();
+            SetMonsterXPBarUndLevel();
+            SetSlotSymbol();
             hatchTaps = 0;
         }
     }
@@ -671,14 +671,20 @@ public class HomeUI : UIController
     /// <param name="monster"></param>
     public void TestButton(Monster monster)
     {
-        GM.CurMonsters[(int)GM.curMonsterSlot].Monster = monster;
-        GM.homeMonsterManager.SetEggRarity();
-        GM.CurMonsters[(int)GM.curMonsterSlot].BaseValue = GM.CurMonsters[(int)GM.curMonsterSlot].Monster.BaseValue;
-        GM.homeUI.SetSlotSymbol();
-        GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage = eMonsterStage.Baby;
-        SetMonsterTexts();
-        SetMonsterValue();
-        SetMonsterXPBarUndLevel();
-        GM.homeMonsterManager.SpawnCurrentMonster(GM.homeMonsterManager.MonsterSpawn[(int)GM.curMonsterSlot]);
+        if (GM.CurMonsters[(int)GM.curMonsterSlot].Unlocked && GM.CurMonsters[(int)GM.curMonsterSlot].Monster == null)
+        {
+            GM.CurMonsters[(int)GM.curMonsterSlot].Monster = monster;
+            GM.CurMonsters[(int)GM.curMonsterSlot].MonsterLevel = 1;
+            GM.CurMonsters[(int)GM.curMonsterSlot].GoldModificator = GM.CurMonsters[(int)GM.curMonsterSlot].Monster.GoldModificator;
+            GM.homeMonsterManager.SetEggRarity();
+            GM.CurMonsters[(int)GM.curMonsterSlot].BaseValue = GM.CurMonsters[(int)GM.curMonsterSlot].Monster.BaseValue;
+            GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage = eMonsterStage.Baby;
+            SetMonsterTexts();
+            SetMonsterValue();
+            SetMonsterXPBarUndLevel();
+            SetSlotSymbol();
+            GM.homeMonsterManager.SpawnCurrentMonster(GM.homeMonsterManager.MonsterSpawn[(int)GM.curMonsterSlot]);
+            TrainButtonActive(true);
+        }
     }
 }
