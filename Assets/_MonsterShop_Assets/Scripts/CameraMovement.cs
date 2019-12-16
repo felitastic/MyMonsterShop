@@ -127,19 +127,7 @@ public class CameraMovement : MonoBehaviour
             }
         }
     }
-
-    //void CheckIfButtonDisable()
-    //{
-    //    if (GM.curMonsterSlot == ecurMonsterSlot.right)
-    //    {
-    //        GM.homeUI.DisableSwipeButtun(false);
-    //    }
-    //    if (GM.curMonsterSlot == ecurMonsterSlot.middle)
-    //    {
-    //        GM.homeUI.EnableSwipeButton(true);
-    //    }
-    //}
-
+    
     public void SetScreen(ecurMonsterSlot curScreen)
     {
         GM.curMonsterSlot = curScreen;
