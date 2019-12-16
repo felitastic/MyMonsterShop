@@ -15,6 +15,7 @@ public class HomeUI : UIController
     //private Vector3 camDungeonPos;
     private int EggHatchCount;
 
+    private bool swipeEnabled;
     // called via (int)GM.curMonsterSlot
     public SpriteRenderer[] HomeBGs;
 
@@ -53,7 +54,9 @@ public class HomeUI : UIController
         UnlockYNButtons,
         ClosePopupButton,
         D_MonsterStats,
-        D_SaleConfirm
+        D_SaleConfirm,
+        SwipeLeftInput,
+        SwipeRightInput
     }
 
     private enum  eButtons
@@ -109,33 +112,57 @@ public class HomeUI : UIController
         SetMonsterXPBarUndLevel();
         SetSlotSymbol();
         SetMonsterValue();
+        swipeEnabled = true;
         //SetGoldCounter();
     }
 
-    public void DisableSwipeButtun(bool IsLeft)
+    /// <summary>
+    /// Controls enable/disable status of swipe buttons and controls
+    /// </summary>
+    public void SetSwipeButtonStatus()
     {
-        if (IsLeft)
+        if (GM.curMonsterSlot == ecurMonsterSlot.left)
         {
             DisableButton((int)eButtons.SwipeLeft);
+            DisableMenu((int)eMenus.SwipeLeftInput);
+        }
+        else if (GM.curMonsterSlot == ecurMonsterSlot.right)
+        {
+            DisableButton((int)eButtons.SwipeRight);
+            DisableMenu((int)eMenus.SwipeRightInput);
         }
         else
         {
-            DisableButton((int)eButtons.SwipeRight);
+            EnableButton((int)eButtons.SwipeLeft);
+            EnableMenu((int)eMenus.SwipeLeftInput);
+
+            EnableButton((int)eButtons.SwipeRight);
+            EnableMenu((int)eMenus.SwipeRightInput);
         }
     }
 
-    public void EnableSwipeButton(bool IsLeft)
+    /// <summary>
+    /// Dis/Enables all swiping controls and buttons using bool swipeEnabled
+    /// </summary>
+    public void DisableSwiping(bool enable)
     {
-        if (IsLeft)
+        swipeEnabled = enable;
+
+        if (!swipeEnabled)
         {
-            EnableButton((int)eButtons.SwipeLeft);
+            DisableButton((int)eButtons.SwipeRight);
+            DisableMenu((int)eMenus.SwipeRightInput);
+            DisableButton((int)eButtons.SwipeLeft);
+            DisableMenu((int)eMenus.SwipeLeftInput);
         }
         else
         {
             EnableButton((int)eButtons.SwipeRight);
+            EnableMenu((int)eMenus.SwipeRightInput);
+            EnableButton((int)eButtons.SwipeLeft);
+            EnableMenu((int)eMenus.SwipeLeftInput);
         }
     }
-
 
     // Changes UI menus according to scene 
     // Also camera position
@@ -230,6 +257,7 @@ public class HomeUI : UIController
         DisableMenu((int)eMenus.Home);
 
         DisableMenu((int)eMenus.H_MonsterStats);
+        DisableMenu((int)eMenus.XPBar);
         EnableMenu((int)eMenus.D_MonsterStats);
 
         //EnableMenu((int)eMenus.DungeonBG);
@@ -284,6 +312,7 @@ public class HomeUI : UIController
     // opens the lock-info-window if player pressed on padlock symbol
     public void PressedPadlockSymbol()
     {
+        DisableSwiping(false);
         DisableMenu((int)eMenus.H_BottomButtons);
         EnableMenu((int)eMenus.PopupInfoWindow);
         if (GM.PlayerMoney >= GM.CurMonsters[(int)GM.curMonsterSlot].UnlockPrice)
@@ -314,6 +343,7 @@ public class HomeUI : UIController
         DisableMenu((int)eMenus.UnlockYNButtons);
         EnableMenu((int)eMenus.H_BottomButtons);
         DisableMenu((int)eMenus.PopupInfoWindow);
+        DisableSwiping(true);
     }
 
     // Updating Monster and Player Values 

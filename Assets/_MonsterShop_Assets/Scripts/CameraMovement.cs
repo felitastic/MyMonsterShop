@@ -24,7 +24,7 @@ public class CameraMovement : MonoBehaviour
     public void Awake()
     {
         GM = GameManager.Instance;
-        GM.HomeCam = this;                
+        GM.HomeCam = this;
     }
 
     private void Start()
@@ -69,6 +69,8 @@ public class CameraMovement : MonoBehaviour
         {
             GM.homeUI.TrainButtonActive(true);
         }
+
+        GM.homeUI.SetSwipeButtonStatus();
     }
 
     private void SetNewScreenDungeon(int PlusMinus)
@@ -86,6 +88,8 @@ public class CameraMovement : MonoBehaviour
         {
             GM.homeUI.SellButtonActive(true);
         }
+
+        GM.homeUI.SetSwipeButtonStatus();
     }
 
     public void PressLeftButton()
@@ -103,15 +107,6 @@ public class CameraMovement : MonoBehaviour
             {
                 SetNewScreenHome(-1);
             }
-        }
-
-        if (GM.curMonsterSlot == ecurMonsterSlot.left)
-        {
-            GM.homeUI.DisableSwipeButtun(true);
-        }
-        if (GM.curMonsterSlot == ecurMonsterSlot.middle)
-        {
-            GM.homeUI.EnableSwipeButton(false);
         }
     }
 
@@ -131,16 +126,19 @@ public class CameraMovement : MonoBehaviour
                 SetNewScreenHome(+1);
             }
         }
-
-        if (GM.curMonsterSlot == ecurMonsterSlot.right)
-        {
-            GM.homeUI.DisableSwipeButtun(false);
-        }
-        if (GM.curMonsterSlot == ecurMonsterSlot.middle)
-        {
-            GM.homeUI.EnableSwipeButton(true);
-        }
     }
+
+    //void CheckIfButtonDisable()
+    //{
+    //    if (GM.curMonsterSlot == ecurMonsterSlot.right)
+    //    {
+    //        GM.homeUI.DisableSwipeButtun(false);
+    //    }
+    //    if (GM.curMonsterSlot == ecurMonsterSlot.middle)
+    //    {
+    //        GM.homeUI.EnableSwipeButton(true);
+    //    }
+    //}
 
     public void SetScreen(ecurMonsterSlot curScreen)
     {

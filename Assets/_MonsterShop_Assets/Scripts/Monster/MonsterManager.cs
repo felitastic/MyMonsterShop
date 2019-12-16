@@ -63,6 +63,7 @@ public class MonsterManager : MonoBehaviour
             // if xp is same or higher as required for levelup
             if (CurMonster.MonsterXP > NextLvlUpAt() || Mathf.Approximately(CurMonster.MonsterXP, NextLvlUpAt()))
             {
+                print("curXp" + CurMonster.MonsterXP + ", LVLup requires: " + NextLvlUpAt());
                 CurMonster.MonsterLevel += 1;
                 return true;
             }
