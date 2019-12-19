@@ -91,7 +91,7 @@ public class MonsterManager : MonoBehaviour
     {
         if (CurMonster.MonsterStage != eMonsterStage.Adult)
         {
-            if (GM.CurMonsters[(int)GM.curMonsterSlot].MonsterLevel == 3 || GM.CurMonsters[(int)GM.curMonsterSlot].MonsterLevel == 6)
+            if (GM.CurMonsters[(int)GM.curMonsterSlot].MonsterLevel == 4 || GM.CurMonsters[(int)GM.curMonsterSlot].MonsterLevel == 7)
             {
                 CurMonster.MonsterStage += 1;
                 return true;
@@ -169,8 +169,9 @@ public class MonsterManager : MonoBehaviour
 
     public void SpawnCurrentMonster(Transform monsterSpawn)
     {
-        monsterBody[SlotID] = Instantiate(CurMonster.Monster.MonsterPrefabs[(int)CurMonster.Rarity, (int)CurMonster.MonsterStage], monsterSpawn);
-        monsterBody[SlotID].transform.SetParent(monsterSpawn);
+        GameObject newMonster = Instantiate(CurMonster.Monster.MonsterPrefabs[(int)CurMonster.Rarity, (int)CurMonster.MonsterStage], monsterSpawn);
+        newMonster.transform.SetParent(monsterSpawn);
+        monsterBody[SlotID] = newMonster;
         monsterAnim[SlotID] = monsterBody[SlotID].GetComponentInChildren<Animator>();
         monsterRigid[SlotID] = monsterBody[SlotID].GetComponentInChildren<Rigidbody>();
     }
@@ -189,15 +190,17 @@ public class MonsterManager : MonoBehaviour
         print(newStage);
 
         if (CurMonster.MonsterStage != eMonsterStage.none)
-        {
+        {            
             //play effect for level up            
-            Destroy(monsterBody[SlotID], 0.25f);
             yield return new WaitForSeconds(0.25f);
+            Destroy(monsterBody[SlotID]);
+            yield return new WaitForSeconds(0.1f);
             SpawnCurrentMonster(monsterSpawn);
             yield return null;
         }
         else
         {
+            Destroy(monsterBody[SlotID]);
             yield return null;
             //empty slot, monster sold? 
         }

@@ -180,6 +180,7 @@ public class HomeUI : UIController
     // Changes UI menus according to scene 
     // Also camera position
     // Later including animations
+    //TODO transfer to game manager when home ui screens are split up
     public void SetUIStage(eHomeUIScene newScene)
     {
         curScene = newScene;
@@ -276,7 +277,7 @@ public class HomeUI : UIController
         DisableMenu((int)eMenus.Home);
 
         DisableMenu((int)eMenus.H_MonsterStats);
-        DisableMenu((int)eMenus.XPBar);
+        //DisableMenu((int)eMenus.XPBar);
         EnableMenu((int)eMenus.D_MonsterStats);
 
         //EnableMenu((int)eMenus.DungeonBG);
