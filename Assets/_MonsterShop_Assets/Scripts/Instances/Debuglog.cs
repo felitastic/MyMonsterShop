@@ -18,7 +18,7 @@ public class Debuglog : Singleton<Debuglog>
 
     public void OnEnable()
     {
-        BuildInfo.text = "Development Build \nNo final assets";
+        //BuildInfo.text = "Development Build \nNo final assets";
     }
 
     public void Update()

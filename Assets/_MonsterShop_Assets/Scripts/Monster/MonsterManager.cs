@@ -10,7 +10,6 @@ public class MonsterManager : MonoBehaviour
     public GameManager GM;
     public MonsterSlot CurMonster { get { return GM.CurMonsters[SlotID]; } }
     public int SlotID { get { return (int)GM.curMonsterSlot; } }
-    public int MonsterValue { get { return Mathf.RoundToInt(CurMonster.MonsterValue); } }
 
     //currently spawned monster model prefabs
     public GameObject[] monsterBody = new GameObject[3];
@@ -48,11 +47,11 @@ public class MonsterManager : MonoBehaviour
     }
 
     // calculates the monsters selling value
-    public void CalculateMonsterValue()
+    public int CalculateMonsterValue()
     {
         CurMonster.MonsterValue = (CurMonster.GoldModificator * CurMonster.MonsterXP) + (float)CurMonster.BaseValue;
-        print(CurMonster.GoldModificator + " x " + CurMonster.MonsterXP + " + " + CurMonster.BaseValue);
-        print("result: " + CurMonster.MonsterValue);
+        print("cur monster value: " + CurMonster.MonsterValue);
+        return Mathf.RoundToInt(CurMonster.MonsterValue);
     }
 
     // calculates the monsters level on xp gain
@@ -77,6 +76,15 @@ public class MonsterManager : MonoBehaviour
         monsterBody[slotID] = null;
         monsterAnim[slotID] = null;
         monsterRigid[slotID] = null;
+    }
+
+    public void ScaleMonsterBody(float scale)
+    {
+        foreach(GameObject monster in monsterBody)
+        {
+            if(monster != null)
+                monster.transform.localScale = new Vector3(scale, scale, scale);
+        }
     }
 
     public bool CheckForStageChange()

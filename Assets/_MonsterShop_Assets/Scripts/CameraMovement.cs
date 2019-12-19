@@ -52,27 +52,36 @@ public class CameraMovement : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Changes home screen UI values of the monster on swipe
+    /// </summary>
+    /// <param name="PlusMinus"></param>
     private void SetNewScreenHome(int PlusMinus)
     {
         SetScreen(GM.curMonsterSlot += 1 * PlusMinus);
-        GM.homeUI.SetMonsterTexts();
-        GM.homeUI.SetMonsterValue();
-        GM.homeUI.SetMonsterXPBarUndLevel();
+        //GM.homeUI.SetMonsterTexts();
+        //GM.homeUI.SetMonsterValue();
+        //GM.homeUI.SetMonsterXPBarUndLevel();
         GM.homeUI.SetSlotSymbol();
-        GM.homeUI.ShowMonsterStats();
 
         if (GM.CurMonsters[(int)GM.curMonsterSlot].Monster == null)
         {
             GM.homeUI.TrainButtonActive(false);
+            GM.homeUI.ShowMonsterStats(false);
         }
         else
         {
             GM.homeUI.TrainButtonActive(true);
+            GM.homeUI.ShowMonsterStats(true);
         }
 
         GM.homeUI.SetSwipeButtonStatus();
     }
 
+    /// <summary>
+    /// Changes dungeon screen UI values of the monster on swipe
+    /// </summary>
+    /// <param name="PlusMinus"></param>
     private void SetNewScreenDungeon(int PlusMinus)
     {
         SetScreen(GM.curMonsterSlot += 1 * PlusMinus);

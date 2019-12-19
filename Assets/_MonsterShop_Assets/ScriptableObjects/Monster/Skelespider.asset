@@ -16,15 +16,9 @@ MonoBehaviour:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
-    - {fileID: 8897925627698123234, guid: d90ca549545cd15459ba403897af83b3, type: 3}
-    - {fileID: 6210505099405860988, guid: 71b654ea1bb4232478d62dce4edcbe2c, type: 3}
-    - {fileID: 2112956810851548724, guid: d3cebc9baf437ad4a86aca540d103a65, type: 3}
-    - {fileID: 8897925627698123234, guid: fead6d29a8a99764cb36624ebbbb1d0f, type: 3}
-    - {fileID: 6210505099405860988, guid: 0cc237601e8bc224e9f62f5418347bdf, type: 3}
-    - {fileID: 2112956810851548724, guid: 48fadddd0a9eea94c9396f1b83677c6d, type: 3}
-    - {fileID: 8897925627698123234, guid: f5711e1c5c4d3dc4897c75706320b27d, type: 3}
-    - {fileID: 6210505099405860988, guid: 1cabcb778de89c84c9be2d4614b112e0, type: 3}
-    - {fileID: 2112956810851548724, guid: 8830554a2695536488f68ed4cfa76d13, type: 3}
+    - {fileID: 6393821976897875123, guid: 32f418798e0bf2642b7e8158cee01356, type: 3}
+    - {fileID: 6393821976897875123, guid: cfea4941829a44646941d7468d8e3f31, type: 3}
+    - {fileID: 6393821976897875123, guid: eab5201c6bf04d34aa55ea1b0a7efd7c, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -44,28 +38,28 @@ MonoBehaviour:
       Data: 0
     - Name: 
       Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 10
+      Data: 1
+    - Name: 
+      Entry: 10
+      Data: 1
+    - Name: 
+      Entry: 10
       Data: 1
     - Name: 
       Entry: 10
       Data: 2
     - Name: 
       Entry: 10
-      Data: 3
+      Data: 2
     - Name: 
       Entry: 10
-      Data: 4
-    - Name: 
-      Entry: 10
-      Data: 5
-    - Name: 
-      Entry: 10
-      Data: 6
-    - Name: 
-      Entry: 10
-      Data: 7
-    - Name: 
-      Entry: 10
-      Data: 8
+      Data: 2
     - Name: 
       Entry: 13
       Data: 
@@ -81,10 +75,12 @@ MonoBehaviour:
   - 180
   MultiplicatorRare: 2
   MultiplicatorLegendary: 3
-  BaseCost: 600
-  GoldModificator: 1
+  BaseCost: 150
+  GoldModificator:
+  - 1
+  - 1.25
+  - 1.5
   BaseValue: 50
   MonsterType: 0
   MonsterName: Pumpkin
-  EggSprite: {fileID: 21300000, guid: 6b893814efaba4cb196da4fcb9cb10ca, type: 3}
   EggPrefab: {fileID: 74603032622791611, guid: e4f1d0972e5b19a469f7de1e6df9cc30, type: 3}

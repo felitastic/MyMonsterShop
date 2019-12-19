@@ -15,16 +15,13 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects:
-    - {fileID: 6393821976897875123, guid: 32f418798e0bf2642b7e8158cee01356, type: 3}
-    - {fileID: 6393821976897875123, guid: cfea4941829a44646941d7468d8e3f31, type: 3}
-    - {fileID: 6393821976897875123, guid: eab5201c6bf04d34aa55ea1b0a7efd7c, type: 3}
+    ReferencedUnityObjects: []
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: m_CreaturePrefabs
+    - Name: m_MonsterPrefabs
       Entry: 7
       Data: 0|UnityEngine.GameObject[,], UnityEngine.CoreModule
     - Name: 
@@ -34,8 +31,11 @@ MonoBehaviour:
       Entry: 1
       Data: 3|3
     - Name: 
-      Entry: 10
-      Data: 0
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 6
       Data: 
@@ -43,17 +43,14 @@ MonoBehaviour:
       Entry: 6
       Data: 
     - Name: 
-      Entry: 10
-      Data: 1
-    - Name: 
       Entry: 6
       Data: 
     - Name: 
       Entry: 6
       Data: 
     - Name: 
-      Entry: 10
-      Data: 2
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 6
       Data: 
@@ -76,31 +73,12 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  LevelThreshold_rare:
-  - 50
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  LevelThreshold_legendary:
-  - 50
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  BaseCost: 0
+  MultiplicatorRare: 0
+  MultiplicatorLegendary: 0
+  BaseCost: 100000
   GoldModificator: 0
   BaseValue: 100
   MonsterType: 1
-  CreatureName: Cube
-  EggSprite: {fileID: 0}
+  MonsterName: 
   EggPrefab: {fileID: 1127267322663477947, guid: a9c3a29d2d3d06e4599a15db2f8b68b9,
     type: 3}

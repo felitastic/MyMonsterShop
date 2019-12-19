@@ -16,15 +16,12 @@ MonoBehaviour:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
-    - {fileID: 8897925627698123234, guid: d90ca549545cd15459ba403897af83b3, type: 3}
-    - {fileID: 6210505099405860988, guid: 71b654ea1bb4232478d62dce4edcbe2c, type: 3}
-    - {fileID: 2112956810851548724, guid: d3cebc9baf437ad4a86aca540d103a65, type: 3}
-    - {fileID: 8897925627698123234, guid: fead6d29a8a99764cb36624ebbbb1d0f, type: 3}
-    - {fileID: 6210505099405860988, guid: 0cc237601e8bc224e9f62f5418347bdf, type: 3}
-    - {fileID: 2112956810851548724, guid: 48fadddd0a9eea94c9396f1b83677c6d, type: 3}
-    - {fileID: 8897925627698123234, guid: f5711e1c5c4d3dc4897c75706320b27d, type: 3}
-    - {fileID: 6210505099405860988, guid: 1cabcb778de89c84c9be2d4614b112e0, type: 3}
-    - {fileID: 2112956810851548724, guid: 8830554a2695536488f68ed4cfa76d13, type: 3}
+    - {fileID: 1726278807984886216, guid: 2e59b769548a21e4faf212389ac273b4, type: 3}
+    - {fileID: 1726278807984886216, guid: 3bae605bf4ef56746aab75be7af505d1, type: 3}
+    - {fileID: 1726278807984886216, guid: 942fd82a969cc304ea8ac10d46294b20, type: 3}
+    - {fileID: 1726278807984886216, guid: bc20ca332ae5e4a4dbd3adc35adc573a, type: 3}
+    - {fileID: 1726278807984886216, guid: 0c671f3f705174441b9d4605d1d1591c, type: 3}
+    - {fileID: 1726278807984886216, guid: 5f700ae8c1cd40243a117c12f5a99054, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -47,7 +44,13 @@ MonoBehaviour:
       Data: 1
     - Name: 
       Entry: 10
+      Data: 1
+    - Name: 
+      Entry: 10
       Data: 2
+    - Name: 
+      Entry: 10
+      Data: 3
     - Name: 
       Entry: 10
       Data: 3
@@ -59,13 +62,7 @@ MonoBehaviour:
       Data: 5
     - Name: 
       Entry: 10
-      Data: 6
-    - Name: 
-      Entry: 10
-      Data: 7
-    - Name: 
-      Entry: 10
-      Data: 8
+      Data: 5
     - Name: 
       Entry: 13
       Data: 
@@ -81,8 +78,11 @@ MonoBehaviour:
   - 180
   MultiplicatorRare: 2
   MultiplicatorLegendary: 3
-  BaseCost: 600
-  GoldModificator: 1
+  BaseCost: 100
+  GoldModificator:
+  - 1
+  - 1.25
+  - 1.5
   BaseValue: 50
   MonsterType: 0
   MonsterName: Pumpkin

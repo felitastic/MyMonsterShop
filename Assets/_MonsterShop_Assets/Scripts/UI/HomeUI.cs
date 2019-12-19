@@ -22,6 +22,9 @@ public class HomeUI : UIController
 
     public Sprite[] BGsprites;
 
+    public GameObject CageTop;
+    public GameObject CageFront;
+
     public Image D_Signature;
     private int totalValue;
 
@@ -32,7 +35,7 @@ public class HomeUI : UIController
         homeRight,
         dungeonLeft,
         dungeonMiddle,
-        dungeonRight,
+        dungeonRight
     }
 
     private enum eMenus
@@ -118,7 +121,7 @@ public class HomeUI : UIController
     private void Start()
     {
         SetUIStage(eHomeUIScene.Home);
-        ShowMonsterStats();
+        ShowMonsterStats(GM.CurMonsters[(int)GM.curMonsterSlot].Monster != null);
         SetMonsterXPBarUndLevel();
         SetSlotSymbol();
         SetMonsterValue();
@@ -215,7 +218,11 @@ public class HomeUI : UIController
         {
             HomeBGs[i].sprite = BGsprites[i];
         }
-                
+
+        //scale monsters
+        GM.homeMonsterManager.ScaleMonsterBody(0.20f);
+
+
         DisableMenu((int)eMenus.Dungeon);
         //DisableMenu((int)eMenus.DungeonBG);
         DisableMenu((int)eMenus.D_BottomButtons);
@@ -262,8 +269,9 @@ public class HomeUI : UIController
             HomeBGs[i].sprite = BGsprites[i+3];
         }
 
-        //TODO: do not show lock/plus symbol in this scene
-
+        //scale monsters
+        GM.homeMonsterManager.ScaleMonsterBody(0.150f);
+        
         //DisableMenu((int)eMenus.HomeBG);
         DisableMenu((int)eMenus.Home);
 
@@ -303,9 +311,13 @@ public class HomeUI : UIController
         }
     }
 
-    public void ShowMonsterStats()
+    public void ShowMonsterStats(bool show)
     {
-        if (GM.CurMonsters[(int)GM.curMonsterSlot].Monster != null)
+        GM.homeUI.SetMonsterTexts();
+        GM.homeUI.SetMonsterValue();
+        GM.homeUI.SetMonsterXPBarUndLevel();
+
+        if (show)
         {
             EnableMenu((int)eMenus.H_MonsterStats);
         }
@@ -375,8 +387,8 @@ public class HomeUI : UIController
 
     // Updating Monster and Player Values 
     public void SetMonsterValue()
-    {
-        GM.homeMonsterManager.CalculateMonsterValue();
+    {     
+        int curValue = GM.homeMonsterManager.CalculateMonsterValue(); 
 
         if (GM.CurMonsters[(int)GM.curMonsterSlot].Monster == null)
         {            
@@ -385,12 +397,12 @@ public class HomeUI : UIController
         }
         else if (GM.CurMonsters[(int)GM.curMonsterSlot].Sold)
         {
-            GM.homeUI.SetText((int)eTextfields.D_MonsterValue, "Sold for " + GM.CurMonsters[(int)GM.curMonsterSlot].MonsterValue);
+            GM.homeUI.SetText((int)eTextfields.D_MonsterValue, "Sold for " + curValue);
         }
         else
         {
-            GM.homeUI.SetText((int)eTextfields.H_MonsterValue, "Value: " + GM.CurMonsters[(int)GM.curMonsterSlot].MonsterValue);
-            GM.homeUI.SetText((int)eTextfields.D_MonsterValue, "Value: " + GM.CurMonsters[(int)GM.curMonsterSlot].MonsterValue);
+            GM.homeUI.SetText((int)eTextfields.H_MonsterValue, "Value: " + curValue);
+            GM.homeUI.SetText((int)eTextfields.D_MonsterValue, "Value: " + curValue);
             //GM.homeUI.SetText((int)eTextfields.MonsterLevel, "" + GM.CurMonsters[(int)GM.curMonsterSlot].MonsterLevel);
             //print("Value: " + GM.CurMonsters[(int)GM.curMonsterSlot].MonsterValue);
         }
@@ -627,8 +639,7 @@ public class HomeUI : UIController
 
         if (hatchTaps == EggHatchCount)
         {
-            GM.CurMonsters[(int)GM.curMonsterSlot].MonsterLevel = 1;
-            GM.CurMonsters[(int)GM.curMonsterSlot].GoldModificator = GM.CurMonsters[(int)GM.curMonsterSlot].Monster.GoldModificator;
+            GM.CurMonsters[(int)GM.curMonsterSlot].MonsterLevel = 1;            
             GM.homeMonsterManager.SetEggRarity();
             StartCoroutine(GM.homeMonsterManager.cHatchEgg(GM.homeMonsterManager.EggSpawn));
             DisableMenu((int)eMenus.S_TappEggButton);
@@ -704,7 +715,7 @@ public class HomeUI : UIController
             GM.CurMonsters[(int)GM.curMonsterSlot].Sold = true;
             StartCoroutine(cMonsterCage());
         }
-        else
+        else        
         {
             //enable swipe buttons
             DisableSwiping(false);
@@ -724,7 +735,7 @@ public class HomeUI : UIController
         SetText((int)eTextfields.DungeonDialogue, "Deal!");
 
         SetText((int)eTextfields.D_MonsterValue,
-            "Sold for " + GM.CurMonsters[(int)GM.curMonsterSlot].MonsterValue);
+            "Sold for " + Mathf.RoundToInt(GM.CurMonsters[(int)GM.curMonsterSlot].MonsterValue));
 
         yield return new WaitForSeconds(0.5f);
         DisableMenu((int)eMenus.D_SaleConfirm);
@@ -751,12 +762,15 @@ public class HomeUI : UIController
                 "\nReally leave and sell?";
             SetPopInfoWindowStatus(true, msg);
             DisableMenu((int)eMenus.D_BottomButtons);
-            EnableMenu((int)eMenus.D_LeaveConfirmButton);                         
+            EnableMenu((int)eMenus.D_LeaveConfirmButton);
+
+            //TODO remove this when dungeon lord timer is implemented!!
+            GM.DungeonlordWaiting = true;
         }
     }
 
     /// <summary>
-    /// Y/N choice when leaving the dungeonlords menu after marking monsters as sold
+    /// Player pressed a button of the Y/N choice when leaving the dungeonlords menu after marking monsters as sold
     /// </summary>
     /// <param name="goHome"></param>
     public void SellMonsterAndGoHome(bool goHome)
@@ -780,17 +794,17 @@ public class HomeUI : UIController
                     slot.ResetValues();
                 }
             }
-
             SetText((int)eTextfields.D_SoldMonster1, msg);
+            EnableMenu((int)eMenus.D_SalesContract);          
 
-            EnableMenu((int)eMenus.D_SalesContract);           
         }
         else
         {
             EnableMenu((int)eMenus.D_BottomButtons);
-            SetPopInfoWindowStatus(false);
-            DisableMenu((int)eMenus.D_LeaveConfirmButton);
         }
+        DisableMenu((int)eMenus.D_LeaveConfirmButton);
+        SetPopInfoWindowStatus(false);
+
     }
 
     /// <summary>
@@ -807,14 +821,16 @@ public class HomeUI : UIController
     /// <returns></returns>
     public IEnumerator cSignMonsterSaleContract()
     {
+        //TODO Dungeon Lord sale: animated signature
         D_Signature.color = new Color(D_Signature.color.r, D_Signature.color.g, D_Signature.color.b, 1.0f);
 
         yield return new WaitForSeconds(0.5f);
         GM.ChangePlayerGold(+totalValue);
         yield return new WaitForSeconds(2f);
-        totalValue = 0;
-        DisableMenu((int)eMenus.D_SalesContract);
-        SetUIStage(eHomeUIScene.Home);
+        //totalValue = 0;
+        //DisableMenu((int)eMenus.D_SalesContract);
+        //D_Signature.color = new Color(D_Signature.color.r, D_Signature.color.g, D_Signature.color.b, 0.0f);
+        StartCoroutine(GM.cLoadHomeScene());
     }
 
     /// <summary>
@@ -827,7 +843,7 @@ public class HomeUI : UIController
         {
             GM.CurMonsters[(int)GM.curMonsterSlot].Monster = monster;
             GM.CurMonsters[(int)GM.curMonsterSlot].MonsterLevel = 1;
-            GM.CurMonsters[(int)GM.curMonsterSlot].GoldModificator = GM.CurMonsters[(int)GM.curMonsterSlot].Monster.GoldModificator;
+            GM.CurMonsters[(int)GM.curMonsterSlot].GoldModificator = GM.CurMonsters[(int)GM.curMonsterSlot].Monster.GoldModificator[(int)GM.CurMonsters[(int)GM.curMonsterSlot].Rarity];
             GM.homeMonsterManager.SetEggRarity();
             GM.CurMonsters[(int)GM.curMonsterSlot].BaseValue = GM.CurMonsters[(int)GM.curMonsterSlot].Monster.BaseValue;
             GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage = eMonsterStage.Baby;

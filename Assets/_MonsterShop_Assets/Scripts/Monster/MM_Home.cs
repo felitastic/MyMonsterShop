@@ -8,6 +8,9 @@ public class MM_Home : MonsterManager
     public GameObject[] Plus;
     public Transform EggSpawn;
 
+    public double RareDrop = 5.0f;
+    public double EpicDrop = 1.0f;
+
     public void Awake()
     {
         GetGameManager();
@@ -73,26 +76,34 @@ public class MM_Home : MonsterManager
     //TODO: calculate random chance for monster rarity right
     public void SetEggRarity()
     {
-        //TODO Rarity errechnen
-        GM.CurMonsters[(int)GM.curMonsterSlot].Rarity = (eRarity)Random.Range(0, 3);
+        float rand = Random.Range(0.0f, 1.01f);
+        double percentage = System.Math.Round((double)rand, 2);
+        double epic = System.Math.Round((EpicDrop / 100.0), 2);
+        double rare = System.Math.Round((RareDrop / 100.0), 2);
+        Debug.Log("random chance: " + percentage+"epic: " + epic+ "rare: " + rare); 
 
-        switch (GM.CurMonsters[(int)GM.curMonsterSlot].Rarity)
+        if (percentage <= epic)
         {
-            case eRarity.normal:
-                GM.CurMonsters[(int)GM.curMonsterSlot].LevelThreshold_current = newLevelThreshold();
-                break;
-            case eRarity.rare:
-                GM.CurMonsters[(int)GM.curMonsterSlot].LevelThreshold_current = newLevelThreshold(GM.CurMonsters[(int)GM.curMonsterSlot].Monster.MultiplicatorRare);
-                
-                break;
-            case eRarity.legendary:
-                GM.CurMonsters[(int)GM.curMonsterSlot].LevelThreshold_current = newLevelThreshold(GM.CurMonsters[(int)GM.curMonsterSlot].Monster.MultiplicatorLegendary);
-
-                break;
-            default:
-                break;
+            GM.CurMonsters[(int)GM.curMonsterSlot].Rarity = (eRarity)2;
+            GM.CurMonsters[(int)GM.curMonsterSlot].GoldModificator = GM.CurMonsters[(int)GM.curMonsterSlot].Monster.GoldModificator[2];
+            GM.CurMonsters[(int)GM.curMonsterSlot].LevelThreshold_current = 
+                newLevelThreshold(GM.CurMonsters[(int)GM.curMonsterSlot].Monster.MultiplicatorLegendary);
         }
-        print(GM.CurMonsters[(int)GM.curMonsterSlot].Rarity);
+        else if (percentage <= rare)
+        {
+            GM.CurMonsters[(int)GM.curMonsterSlot].Rarity = (eRarity)1;
+            GM.CurMonsters[(int)GM.curMonsterSlot].GoldModificator = GM.CurMonsters[(int)GM.curMonsterSlot].Monster.GoldModificator[1];
+            GM.CurMonsters[(int)GM.curMonsterSlot].LevelThreshold_current = 
+                newLevelThreshold(GM.CurMonsters[(int)GM.curMonsterSlot].Monster.MultiplicatorRare);
+        }
+        else
+        {
+            GM.CurMonsters[(int)GM.curMonsterSlot].Rarity = (eRarity)0;
+            GM.CurMonsters[(int)GM.curMonsterSlot].GoldModificator = GM.CurMonsters[(int)GM.curMonsterSlot].Monster.GoldModificator[0];
+            GM.CurMonsters[(int)GM.curMonsterSlot].LevelThreshold_current = newLevelThreshold();
+        }        
+
+        Debug.Log("Rarity: "+GM.CurMonsters[(int)GM.curMonsterSlot].Rarity);
     }
 
     // calculates level threshold of the monster according to its rarity (with rarity multiplier)
@@ -128,7 +139,7 @@ public class MM_Home : MonsterManager
         Destroy(monsterBody[SlotID], 0.1f);
         GM.homeUI.SetUIStage(HomeUI.eHomeUIScene.Home);
         GM.homeMonsterManager.SpawnCurrentMonster(MonsterSpawn[SlotID]);
-        GM.homeUI.ShowMonsterStats();
+        GM.homeUI.ShowMonsterStats(true);
         GM.homeUI.TrainButtonActive(true);
         yield return null;
     }
