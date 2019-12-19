@@ -111,6 +111,7 @@ public class GameManager : Singleton<GameManager>
     public IEnumerator cLoadHomeScene()
     {
         print("loading new scene");
+        curScreen = eScene.home;
         SceneManager.LoadScene(0);
 
         yield return new WaitForSeconds(1.0f);

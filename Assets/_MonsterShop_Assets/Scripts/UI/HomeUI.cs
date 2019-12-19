@@ -104,7 +104,8 @@ public class HomeUI : UIController
         Home,
         Eggshop,
         Minigame,
-        Dungeonlord
+        Dungeonlord,
+        Kompendium
     }
 
 
@@ -213,6 +214,11 @@ public class HomeUI : UIController
         }
     }
 
+    private void UI_Kompendium()
+    {
+        
+    }
+
     private void UI_MonsterView()
     {
         for(int i = 0; i < 3; i++)
@@ -223,6 +229,9 @@ public class HomeUI : UIController
         //scale monsters
         GM.homeMonsterManager.ScaleMonsterBody(0.20f);
 
+        EnableMenu((int)eMenus.H_MonsterStats);
+        EnableMenu((int)eMenus.H_BottomButtons);
+        EnableMenu((int)eMenus.SwipeButtons);
 
         DisableMenu((int)eMenus.Dungeon);
         //DisableMenu((int)eMenus.DungeonBG);
@@ -238,9 +247,6 @@ public class HomeUI : UIController
         //EnableMenu((int)eMenus.HomeBG);
         //EnableMenu((int)eMenus.H_SwipeButtons);
         //EnableMenu((int)eMenus.XPBar);
-        EnableMenu((int)eMenus.H_MonsterStats);
-        EnableMenu((int)eMenus.H_BottomButtons);
-        EnableMenu((int)eMenus.SwipeButtons);
         DisableSwiping(false);
 
         SetMonsterTexts();
@@ -414,7 +420,7 @@ public class HomeUI : UIController
         if (GM.CurMonsters[(int)GM.curMonsterSlot].Monster == null)
         {          
             GM.homeUI.SetText((int)eTextfields.H_MonsterTypeandStage, "");
-            GM.homeUI.SetText((int)eTextfields.D_MonsterTypeandStage, "");
+            GM.homeUI.SetText((int)eTextfields.D_MonsterTypeandStage, "No monster available for sale");
         }
         else
         {           
@@ -509,7 +515,7 @@ public class HomeUI : UIController
     {
         SetUIStage(eHomeUIScene.Eggshop);
         SetText((int)eTextfields.ShopDialogue, 
-            "What can I do for you?");
+            "Click the egg you want to buy!");
     }
 
     public void GoToMinigames()
