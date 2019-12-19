@@ -27,6 +27,7 @@ public class HomeUI : UIController
 
     public Image D_Signature;
     private int totalValue;
+    private bool signed = false;
 
     private enum BGsprite
     {
@@ -819,7 +820,10 @@ public class HomeUI : UIController
     /// </summary>
     public void SignContract()
     {
-        StartCoroutine(cSignMonsterSaleContract());
+        if (!signed)
+        {
+            StartCoroutine(cSignMonsterSaleContract());
+        }
     }
 
     /// <summary>
@@ -828,6 +832,7 @@ public class HomeUI : UIController
     /// <returns></returns>
     public IEnumerator cSignMonsterSaleContract()
     {
+        signed = true;
         //TODO Dungeon Lord sale: animated signature
         D_Signature.color = new Color(D_Signature.color.r, D_Signature.color.g, D_Signature.color.b, 1.0f);
 
@@ -837,6 +842,7 @@ public class HomeUI : UIController
         //totalValue = 0;
         //DisableMenu((int)eMenus.D_SalesContract);
         //D_Signature.color = new Color(D_Signature.color.r, D_Signature.color.g, D_Signature.color.b, 0.0f);
+        signed = false;
         StartCoroutine(GM.cLoadHomeScene());
     }
 
