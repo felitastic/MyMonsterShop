@@ -22,8 +22,8 @@ public class HomeUI : UIController
 
     public Sprite[] BGsprites;
 
-    public GameObject CageTop;
-    public GameObject CageFront;
+    public GameObject AllCages;
+    public Animator[] CageTop;
 
     public Image D_Signature;
     private int totalValue;
@@ -67,7 +67,8 @@ public class HomeUI : UIController
         SwipeRightInput,
         D_SaleConfirmButton,
         D_LeaveConfirmButton,
-        D_SalesContract
+        D_SalesContract,
+        Kompendium
     }
 
     private enum  eButtons
@@ -80,7 +81,9 @@ public class HomeUI : UIController
         S_PurchaseNo,
         SwipeLeft,
         SwipeRight,
-        DungeonSellButton
+        DungeonSellButton,
+        K_PaageLeft,
+        K_PageRight
     }
 
     private enum eTextfields
@@ -97,7 +100,9 @@ public class HomeUI : UIController
         D_MonsterLevel,
         D_SoldMonster1,
         D_SoldMonster2,
-        D_SoldMonster3
+        D_SoldMonster3,
+        K_MonsterDetail,
+        K_MonsterFluff
     }
 
     public enum eHomeUIScene
@@ -208,6 +213,11 @@ public class HomeUI : UIController
                 GM.CurCamHomePos = Camera.main.transform.position;
                 //Camera.main.transform.position = camDungeonPos;
                 UI_DungeonLord();
+                
+                break;
+
+            case eHomeUIScene.Kompendium:
+                UI_Kompendium();
 
                 break;
             default:
@@ -217,7 +227,15 @@ public class HomeUI : UIController
 
     private void UI_Kompendium()
     {
-        
+        DisableMenu((int)eMenus.Home);
+        DisableMenu((int)eMenus.H_MonsterStats);
+        DisableMenu((int)eMenus.XPBar);
+        DisableMenu((int)eMenus.SwipeButtons);
+        DisableMenu((int)eMenus.H_MonsterStats);
+        DisableMenu((int)eMenus.PlayerInfo);
+
+        EnableMenu((int)eMenus.Kompendium);
+
     }
 
     private void UI_MonsterView()
@@ -230,10 +248,13 @@ public class HomeUI : UIController
         //scale monsters
         GM.homeMonsterManager.ScaleMonsterBody(0.20f);
 
+        SetCageVisibility(false);
         EnableMenu((int)eMenus.H_MonsterStats);
         EnableMenu((int)eMenus.H_BottomButtons);
         EnableMenu((int)eMenus.SwipeButtons);
+        EnableMenu((int)eMenus.PlayerInfo);
 
+        DisableMenu((int)eMenus.Kompendium);
         DisableMenu((int)eMenus.Dungeon);
         //DisableMenu((int)eMenus.DungeonBG);
         DisableMenu((int)eMenus.D_BottomButtons);
@@ -277,6 +298,7 @@ public class HomeUI : UIController
             HomeBGs[i].sprite = BGsprites[i+3];
         }
 
+        SetCageVisibility(true);
         //scale monsters
         GM.homeMonsterManager.ScaleMonsterBody(0.150f);
         
@@ -512,6 +534,13 @@ public class HomeUI : UIController
 
     //Button Inputs for menu changes
 
+    public void GoToKompendium()
+    {
+        SetUIStage(eHomeUIScene.Kompendium);
+        //TODO set info to be the fist monster in list
+    }
+
+
     public void GoToEggShop()
     {
         SetUIStage(eHomeUIScene.Eggshop);
@@ -541,6 +570,11 @@ public class HomeUI : UIController
         {
             GM.homeUI.SellButtonActive(true);
         }
+    }
+
+    public void ExitKompendium()
+    {
+        SetUIStage(eHomeUIScene.Home);
     }
 
     public void ExitMinigameMenu()
@@ -695,8 +729,8 @@ public class HomeUI : UIController
         }
     }
 
-    //Button Inputs Dungeonlord
-    
+    //Button Inputs Dungeonlord    
+
    /// <summary>
    /// Player pressed Sell monster Button in Dungeon screen
    /// </summary>
@@ -745,11 +779,23 @@ public class HomeUI : UIController
         SetText((int)eTextfields.D_MonsterValue,
             "Sold for " + Mathf.RoundToInt(GM.CurMonsters[(int)GM.curMonsterSlot].MonsterValue));
 
+        DropCage(GM.CurMonsters[(int)GM.curMonsterSlot].SlotID);
         yield return new WaitForSeconds(0.5f);
         DisableMenu((int)eMenus.D_SaleConfirm);
         DisableSwiping(false);
         EnableMenu((int)eMenus.D_BottomButtons);
         SellButtonActive(false);
+    }
+
+    private void SetCageVisibility(bool isVisible)
+    {
+        AllCages.SetActive(isVisible);        
+    }
+
+    private void DropCage(int slotID)
+    {
+        CageTop[slotID].SetTrigger("falling");
+        CageTop[slotID].SetBool("down", true);
     }
 
     /// <summary>
