@@ -40,7 +40,8 @@ public class Monster_Kompendium : MonoBehaviour
             if (GM.UnlockedLogEntries[i])
             {
                 ButtonImage[i].sprite = MonsterEntry[i].UnlockedButtonImage;
-                ButtonText[i].text = MonsterEntry[i].ButtonText;
+                //ButtonText[i].text = MonsterEntry[i].ButtonText;
+                ButtonText[i].text = "";
             }
             else
             {
@@ -74,5 +75,10 @@ public class Monster_Kompendium : MonoBehaviour
             CurMonsterHatchCount.text = "..."; 
             CurMonsterHighestPrice.text = "..."; 
         }
+    }
+
+    public void SetActive(Button button)
+    {
+        button.Select();
     }
 }
