@@ -21,6 +21,7 @@ public class GameManager : Singleton<GameManager>
     //MonsterManager
     public MM_Home homeMonsterManager;
     public MM_Runner runnerMonsterManager;
+    public Monster_Kompendium monsterKompendium;
 
     [Header("Monster Values")]
     public CameraMovement HomeCam;
@@ -43,7 +44,12 @@ public class GameManager : Singleton<GameManager>
     //momentane unlocked slots and creatures, die der Spieler hat
     //public CurrentMonster[] CurMonsters = new CurrentMonster[3];
     public MonsterSlot[] CurMonsters;
-    
+
+    /// <summary>
+    /// Reihenfolge wie eMonsterType
+    /// </summary>
+    public bool[] UnlockedLogEntries = new bool[9];
+
     //public CurrentMonster thisMonster = new CurrentMonster();
 
     //Lautstärke vom Spieler eingestellt

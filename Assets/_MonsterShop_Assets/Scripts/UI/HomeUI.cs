@@ -49,6 +49,7 @@ public class HomeUI : UIController
         Dungeon,
         MiniGameWindow,
         H_BottomButtons,
+        S_ShopUI,
         S_BottomButtons,
         S_PurchaseConfirm,
         S_EggMenu,
@@ -287,6 +288,7 @@ public class HomeUI : UIController
 
         //EnableMenu((int)eMenus.ShopBG);
         EnableMenu((int)eMenus.Shop);
+        EnableMenu((int)eMenus.S_ShopUI);
         EnableMenu((int)eMenus.S_EggMenu);
         EnableMenu((int)eMenus.S_BottomButtons);
     }
@@ -662,8 +664,11 @@ public class HomeUI : UIController
     {
         //wait until egg is spawned
         yield return new WaitForSeconds(0.35f);
-        SetText((int)eTextfields.ShopDialogue, 
-            "Tap egg to hatch it!");
+        //SetText((int)eTextfields.ShopDialogue, 
+        //    "Tap egg to hatch it!");
+        DisableMenu((int)eMenus.S_ShopUI);
+        DisableMenu((int)eMenus.S_EggMenu);
+        DisableMenu((int)eMenus.S_BottomButtons);
         EnableMenu((int)eMenus.S_TappEggButton);
     }
 
@@ -678,6 +683,7 @@ public class HomeUI : UIController
     public void TapEgg()
     {
         hatchTaps += 1;
+        //tapeffect
 
         if (hatchTaps == EggHatchCount)
         {
@@ -746,6 +752,30 @@ public class HomeUI : UIController
         EnableMenu((int)eMenus.D_SaleConfirm);
     }
 
+    private void WriteValuesToKompendium()
+    {
+        int entrySlot = (int)GM.CurMonsters[(int)GM.curMonsterSlot].Monster.MonsterType;
+
+        switch (GM.CurMonsters[(int)GM.curMonsterSlot].Rarity)
+        {
+            case eRarity.normal:
+
+                break;
+            case eRarity.rare:
+                entrySlot += 1;
+                break;
+            case eRarity.legendary:
+                entrySlot += 2;
+                break;
+            default:
+                break;
+        }
+        GM.UnlockedLogEntries[entrySlot] = true;
+        GM.monsterKompendium.MonsterEntry[entrySlot].MonsterHatchCount += 1;
+        GM.monsterKompendium.MonsterEntry[entrySlot].MonsterHighestPrice =
+            "" + Mathf.RoundToInt(GM.CurMonsters[(int)GM.curMonsterSlot].MonsterValue);
+    }
+
     /// <summary>
     /// Player confirms/cancels sale of monster in dungeon screen
     /// </summary>
@@ -755,6 +785,7 @@ public class HomeUI : UIController
         {
             GM.DungeonlordWaiting = false;
             GM.CurMonsters[(int)GM.curMonsterSlot].Sold = true;
+            WriteValuesToKompendium();
             StartCoroutine(cMonsterCage());
         }
         else        

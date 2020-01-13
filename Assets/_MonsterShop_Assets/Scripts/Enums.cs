@@ -1,7 +1,8 @@
-﻿public enum eMonsterType
+﻿//in 3er schritten wegen der rarities
+public enum eMonsterType
 {    
-    pumpkin,
-    slime
+    pumpkin = 0,
+    slime = 3
 }
 
 public enum eMonsterStage

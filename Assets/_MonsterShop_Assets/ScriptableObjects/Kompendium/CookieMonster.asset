@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75f36803bf407fe4f828c9bda9cd6105, type: 3}
+  m_Name: CookieMonster
+  m_EditorClassIdentifier: 
+  ShadowButtonImage: {fileID: 21300000, guid: 46ee40c10b64f69488d36ffd44e2f114, type: 3}
+  UnlockedButtonImage: {fileID: 21300000, guid: baf5b270c528de84daf19efaa6941921,
+    type: 3}
+  ButtonText: Cookie Monster
+  MonsterImage: {fileID: 21300000, guid: baf5b270c528de84daf19efaa6941921, type: 3}
+  MonsterFluff: Its the one and only cookie monster. Hide your cookies. Now!
+  MonsterName: Cookie Monster
+  MonsterRarity: Unique
+  MonsterHatchCount: 0
+  MonsterHighestPrice: Invaluable
+  MonsterType: 0

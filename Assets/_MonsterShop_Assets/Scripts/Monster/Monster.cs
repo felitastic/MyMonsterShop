@@ -6,6 +6,7 @@ using Sirenix.OdinInspector;
 /// <summary>
 /// Unchanging base values of the Monsters
 /// </summary>
+
 [CreateAssetMenu(fileName = "newMonster", menuName = "MonsterShop/Monster", order = 1)]
 public class Monster : SerializedScriptableObject
 {
