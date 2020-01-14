@@ -17,6 +17,9 @@ public class MonsterSlot
     public float MonsterValue = 0;
     public float GoldModificator;
     public int BaseValue;
+    public bool IsHappy;
+    [Tooltip("How many times the monster has been stroked")]
+    public int StrokeTimes;
 
     public void ResetValues()
     {

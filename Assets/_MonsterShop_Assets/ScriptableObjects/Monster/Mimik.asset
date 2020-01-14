@@ -84,7 +84,7 @@ MonoBehaviour:
   - 1.25
   - 1.5
   BaseValue: 50
-  MonsterType: 0
-  MonsterName: Pumpkin
+  MonsterType: 3
+  MonsterName: Mimik
   EggPrefab: {fileID: 4718825962684987210, guid: 5829bb730b3ff2b419f2eea1ad22fe29,
     type: 3}

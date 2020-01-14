@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75f36803bf407fe4f828c9bda9cd6105, type: 3}
-  m_Name: Skeleton_rare
+  m_Name: Mimik_legendary
   m_EditorClassIdentifier: 
   ShadowButtonImage: {fileID: 21300000, guid: 46ee40c10b64f69488d36ffd44e2f114, type: 3}
   UnlockedButtonImage: {fileID: 21300000, guid: 8f6c4004b346a6a41bedc9623425dbd3,
     type: 3}
-  ButtonText: Skeleton
+  ButtonText: Mimik
   MonsterImage: {fileID: 21300000, guid: 8f6c4004b346a6a41bedc9623425dbd3, type: 3}
-  MonsterFluff: A spoopy skeweton
-  MonsterName: Skeleton
-  MonsterRarity: rare
+  MonsterFluff: A spoopy chest
+  MonsterName: Mimik
+  MonsterRarity: legendary
   MonsterHatchCount: 0
   MonsterHighestPrice: 1234
-  MonsterType: 0
+  MonsterType: 3

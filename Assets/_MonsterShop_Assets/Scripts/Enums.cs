@@ -2,7 +2,7 @@
 public enum eMonsterType
 {    
     pumpkin = 0,
-    slime = 3
+    mimik = 3
 }
 
 public enum eMonsterStage

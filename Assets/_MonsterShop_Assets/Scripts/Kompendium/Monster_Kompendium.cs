@@ -20,17 +20,13 @@ public class Monster_Kompendium : MonoBehaviour
     public Text CurMonsterHighestPrice;
 
     private GameManager GM;
-
-    void Start()
-    {
-
-    }
-
+    
     private void OnEnable()
     {
         GM = GameManager.Instance;
         GM.monsterKompendium = this;
         SetButtons();
+        ShowEntry(0);
     }
 
     public void SetButtons()
@@ -81,4 +77,4 @@ public class Monster_Kompendium : MonoBehaviour
     {
         button.Select();
     }
-}
+}   

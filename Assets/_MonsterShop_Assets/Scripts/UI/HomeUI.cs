@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class HomeUI : UIController
 {
     [HideInInspector]
-    public eHomeUIScene curScene;
+    public eHomeUIScene curScene;    
     private Monster curEgg;
     private int hatchTaps;
     //private Vector3 camHomePos { get { return GM.CurCamHomePos; } }
@@ -22,10 +22,11 @@ public class HomeUI : UIController
 
     public Sprite[] BGsprites;
 
-    public GameObject AllCages;
     public Animator[] CageTop;
-
+    public GameObject AllCages;
     public Image D_Signature;
+    public CameraMovement camMovement;
+
     private int totalValue;
     private bool signed = false;
 
@@ -69,7 +70,11 @@ public class HomeUI : UIController
         D_SaleConfirmButton,
         D_LeaveConfirmButton,
         D_SalesContract,
-        Kompendium
+        Kompendium,
+        Petting,
+        PetMeSymbol,
+        PettingInfo,
+        PettingXPBar
     }
 
     private enum  eButtons
@@ -112,7 +117,9 @@ public class HomeUI : UIController
         Eggshop,
         Minigame,
         Dungeonlord,
-        Kompendium
+        Kompendium,
+        Petting,
+        none
     }
 
 
@@ -214,16 +221,59 @@ public class HomeUI : UIController
                 GM.CurCamHomePos = Camera.main.transform.position;
                 //Camera.main.transform.position = camDungeonPos;
                 UI_DungeonLord();
-                
+
                 break;
 
             case eHomeUIScene.Kompendium:
                 UI_Kompendium();
 
                 break;
+            case eHomeUIScene.Petting:
+                UI_Petting();
+
+                break;
+            case eHomeUIScene.none:
+                NoUI();
+
+                break;
             default:
+                Debug.LogError("No UI scene set!");
                 break;
         }
+    }
+
+    private void NoUI()
+    {
+        DisableMenu((int)eMenus.Home);
+        DisableMenu((int)eMenus.Petting);
+        DisableMenu((int)eMenus.Kompendium);
+        DisableMenu((int)eMenus.Dungeon);
+        DisableMenu((int)eMenus.Shop);
+        DisableMenu((int)eMenus.S_EggMenu);
+        DisableMenu((int)eMenus.S_BottomButtons);
+        DisableMenu((int)eMenus.H_MonsterStats);
+        DisableMenu((int)eMenus.D_MonsterStats);
+        DisableMenu((int)eMenus.D_BottomButtons);
+        DisableMenu((int)eMenus.MiniGameWindow);
+        DisableMenu((int)eMenus.PlayerInfo);
+        DisableMenu((int)eMenus.SwipeButtons);
+        DisableMenu((int)eMenus.XPBar);
+        DisableMenu((int)eMenus.SwipeButtons);
+    }
+
+    private void UI_Petting()
+    {
+        DisableMenu((int)eMenus.Home);
+        DisableMenu((int)eMenus.H_MonsterStats);
+        DisableMenu((int)eMenus.XPBar);
+        DisableMenu((int)eMenus.SwipeButtons);
+        DisableMenu((int)eMenus.H_MonsterStats);
+        DisableMenu((int)eMenus.PlayerInfo);
+        DisableSwiping(true);
+
+        EnableMenu((int)eMenus.Petting);
+        EnableMenu((int)eMenus.PettingInfo);
+        DisableMenu((int)eMenus.PettingXPBar);
     }
 
     private void UI_Kompendium()
@@ -234,9 +284,9 @@ public class HomeUI : UIController
         DisableMenu((int)eMenus.SwipeButtons);
         DisableMenu((int)eMenus.H_MonsterStats);
         DisableMenu((int)eMenus.PlayerInfo);
+        DisableSwiping(true);
 
         EnableMenu((int)eMenus.Kompendium);
-
     }
 
     private void UI_MonsterView()
@@ -254,7 +304,9 @@ public class HomeUI : UIController
         EnableMenu((int)eMenus.H_BottomButtons);
         EnableMenu((int)eMenus.SwipeButtons);
         EnableMenu((int)eMenus.PlayerInfo);
+        EnableMenu((int)eMenus.Home);
 
+        DisableMenu((int)eMenus.Petting);
         DisableMenu((int)eMenus.Kompendium);
         DisableMenu((int)eMenus.Dungeon);
         //DisableMenu((int)eMenus.DungeonBG);
@@ -265,7 +317,6 @@ public class HomeUI : UIController
         DisableMenu((int)eMenus.S_BottomButtons);
         DisableMenu((int)eMenus.MiniGameWindow);
         DisableMenu((int)eMenus.D_MonsterStats);
-        EnableMenu((int)eMenus.Home);
 
         //EnableMenu((int)eMenus.HomeBG);
         //EnableMenu((int)eMenus.H_SwipeButtons);
@@ -321,6 +372,12 @@ public class HomeUI : UIController
     {
         DisableMenu((int)eMenus.Home);
         EnableMenu((int)eMenus.MiniGameWindow);
+    }
+
+    public void ShowPetSessionResult()
+    { 
+        DisableMenu((int)eMenus.PettingInfo);
+        EnableMenu((int)eMenus.PettingXPBar);
     }
 
 // sets monster slot symbols if slot is locked or empty
@@ -463,11 +520,16 @@ public class HomeUI : UIController
             DisableMenu((int)eMenus.XPBar);
             GM.homeUI.SetText((int)eTextfields.H_MonsterLevel, "");
         }
-        else
+        else if (GM.CurMonsters[(int)GM.curMonsterSlot].Monster != null && GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage != eMonsterStage.Adult)
         {
             EnableMenu((int)eMenus.XPBar);
             SetText((int)eTextfields.H_MonsterLevel, "Lvl " + GM.CurMonsters[(int)GM.curMonsterSlot].MonsterLevel);
             SetXPBars();           
+        }
+        else
+        {
+            DisableMenu((int)eMenus.XPBar);
+            SetText((int)eTextfields.H_MonsterLevel, "Lvl " + GM.CurMonsters[(int)GM.curMonsterSlot].MonsterLevel);
         }
     }    
 
@@ -542,6 +604,36 @@ public class HomeUI : UIController
         //TODO set info to be the fist monster in list
     }
 
+    public void GoToPetSession()
+    {
+        StartCoroutine(cWaitForZoom(false));
+    }
+
+    public void ExitPetSession()
+    {
+        StartCoroutine(cWaitForZoom(true));
+    }
+
+    /// <summary>
+    /// Waiting for the zoom from Petting session
+    /// </summary>
+    /// <param name="zoomedIn"></param>
+    /// <returns></returns>
+    private IEnumerator cWaitForZoom(bool zoomedIn)
+    {
+        SetUIStage(eHomeUIScene.none);            
+
+        yield return new WaitForSeconds(0.15f);
+        if (zoomedIn)
+        {
+            camMovement.Zoom(false);
+            SetUIStage(eHomeUIScene.Home);
+        }
+        else
+        {
+            SetUIStage(eHomeUIScene.Petting);
+        }
+    }
 
     public void GoToEggShop()
     {
@@ -752,6 +844,9 @@ public class HomeUI : UIController
         EnableMenu((int)eMenus.D_SaleConfirm);
     }
 
+    /// <summary>
+    /// If an adult monster is sold, the entry in the kompendium is unlocked/updated
+    /// </summary>
     private void WriteValuesToKompendium()
     {
         int entrySlot = (int)GM.CurMonsters[(int)GM.curMonsterSlot].Monster.MonsterType;
@@ -785,7 +880,10 @@ public class HomeUI : UIController
         {
             GM.DungeonlordWaiting = false;
             GM.CurMonsters[(int)GM.curMonsterSlot].Sold = true;
-            WriteValuesToKompendium();
+            if (GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage == eMonsterStage.Adult)
+            {
+                WriteValuesToKompendium();
+            }
             StartCoroutine(cMonsterCage());
         }
         else        
@@ -923,6 +1021,11 @@ public class HomeUI : UIController
         StartCoroutine(GM.cLoadHomeScene());
     }
 
+    public void WatchAdButton()
+    {
+        print("watch an ad and get money");
+    }
+
     /// <summary>
     /// This is for testing bullshit; spawns a monster atm
     /// </summary>
@@ -944,5 +1047,11 @@ public class HomeUI : UIController
             GM.homeMonsterManager.SpawnCurrentMonster(GM.homeMonsterManager.MonsterSpawn[(int)GM.curMonsterSlot]);
             TrainButtonActive(true);
         }
+    }
+    public void AnotherCheat()
+    {
+        GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage = eMonsterStage.Adult;
+        GM.homeMonsterManager.DeleteMonsterBody(GM.CurMonsters[(int)GM.curMonsterSlot].SlotID);
+        GM.homeMonsterManager.SpawnCurrentMonster(GM.homeMonsterManager.MonsterSpawn[(int)GM.curMonsterSlot]);
     }
 }

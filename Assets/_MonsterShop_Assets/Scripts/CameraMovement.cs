@@ -10,16 +10,22 @@ public class CameraMovement : MonoBehaviour
 
     //Time for the whole movement, the higher, the slower the object moves
     public float lerpTime = 0.35f;
+    public float zoomTime = 0.10f;
     //Is set to the current time as long as the lerp is running
     float curLerpTime;
+    float curZoomTime;
     //To start the lerp
     public bool lerping;
+    public bool zooming;
     //Quaternion StartQuaternion;
     Vector3 StartPos;
     //Quaternion EndQuaternion;
     Vector3 EndPos;
     //public List<GameObject> CamTransforms;
     //public GameObject CamHolder;
+
+    float StartZoomPos;
+    float EndZoomPos;
 
     public void Awake()
     {
@@ -48,6 +54,22 @@ public class CameraMovement : MonoBehaviour
             if (Mathf.Approximately(percentage, 1.0f))
             {
                 EndLerp();
+            }
+        }
+
+        if (zooming)
+        {
+            curZoomTime += Time.deltaTime;
+            if (curZoomTime > zoomTime)
+                curZoomTime = zoomTime;
+
+            float percentage = curZoomTime / zoomTime;
+            Camera.main.orthographicSize = Mathf.Lerp(StartZoomPos, EndZoomPos, percentage);
+            Camera.main.transform.position = Vector3.Lerp(StartPos, EndPos, percentage);
+
+            if (Mathf.Approximately(percentage, 1.0f))
+            {
+                EndZoom();
             }
         }
     }
@@ -165,11 +187,41 @@ public class CameraMovement : MonoBehaviour
         StartLerp(lerpTime);
     }
 
+    public void Zoom(bool zoomIn)
+    {
+        StartPos = Camera.main.transform.position;
+        StartZoomPos = Camera.main.orthographicSize;
+
+        if (zoomIn)
+        {
+            EndPos = new Vector3(Camera.main.transform.position.x, -1, Camera.main.transform.position.z);
+            EndZoomPos = 7.5f;
+        }
+        else
+        {
+            EndPos = new Vector3(Camera.main.transform.position.x, 0, Camera.main.transform.position.z);
+            EndZoomPos = 9.5f;
+        }
+        StartZoom(zoomTime);
+    }
+
     public void SetCameraPosition(Vector3 CamPos)
     {
         Camera.main.transform.position = CamPos;
     }
 
+    public void StartZoom(float curSpeed)
+    {
+        zoomTime = curSpeed;
+        lerpTime = curSpeed;
+        zooming = true;        
+    }
+
+    public void EndZoom()
+    {
+        curZoomTime = 0.0f;
+        zooming = false;
+    }
 
     public void StartLerp(float curSpeed)
     {
