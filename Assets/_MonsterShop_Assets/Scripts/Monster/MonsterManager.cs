@@ -103,8 +103,16 @@ public class MonsterManager : MonoBehaviour
     // Changes the monsters xp
     public void SetMonsterXP(float gainValue)
     {
-        CurMonster.MonsterXP += gainValue;
-        print("xp: " + CurMonster.MonsterXP);
+        if (Mathf.Approximately(CurMonster.MonsterXP,CurMonster.XPCap))
+        {
+            print("xp: " + CurMonster.MonsterXP);
+            print("monster has reached max XP: "+CurMonster.XPCap);
+        }
+        else
+        {
+            CurMonster.MonsterXP += gainValue;
+            print("xp: " + CurMonster.MonsterXP);
+        }
     }
 
     // at which XP a level up occurs

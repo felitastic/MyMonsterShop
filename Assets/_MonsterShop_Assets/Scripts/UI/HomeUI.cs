@@ -23,6 +23,7 @@ public class HomeUI : UIController
     public Sprite[] BGsprites;
 
     public Animator[] CageTop;
+    public GameObject[] RarityStars = new GameObject[3];
     public GameObject AllCages;
     public Image D_Signature;
     public CameraMovement camMovement;
@@ -74,7 +75,8 @@ public class HomeUI : UIController
         Petting,
         PetMeSymbol,
         PettingInfo,
-        PettingXPBar
+        PettingXPBar,
+        K_Stars
     }
 
     private enum  eButtons
@@ -142,6 +144,21 @@ public class HomeUI : UIController
         SetMonsterValue();
         DisableSwiping(false);
         //SetGoldCounter();
+    }
+
+    public void SetPettingSymbol(bool show)
+    {
+        if (show)
+        {
+            //show symbol
+            EnableMenu((int)eMenus.PetMeSymbol);
+            //TODO change to sad idle
+        }
+        else
+        {
+            //hide symbol
+            DisableMenu((int)eMenus.PetMeSymbol);
+        }
     }
 
     /// <summary>
@@ -402,17 +419,20 @@ public class HomeUI : UIController
 
     public void ShowMonsterStats(bool show)
     {
-        GM.homeUI.SetMonsterTexts();
-        GM.homeUI.SetMonsterValue();
-        GM.homeUI.SetMonsterXPBarUndLevel();
+        SetMonsterTexts();
+        SetMonsterValue();
+        SetMonsterXPBarUndLevel();
+        SetMonsterRarityStars();
 
         if (show)
         {
             EnableMenu((int)eMenus.H_MonsterStats);
+            EnableMenu((int)eMenus.PetMeSymbol);
         }
         else
         {
             DisableMenu((int)eMenus.H_MonsterStats);
+            DisableMenu((int)eMenus.PetMeSymbol);
         }
     }
 
@@ -532,6 +552,36 @@ public class HomeUI : UIController
             SetText((int)eTextfields.H_MonsterLevel, "Lvl " + GM.CurMonsters[(int)GM.curMonsterSlot].MonsterLevel);
         }
     }    
+
+    public void SetMonsterRarityStars()
+    {
+        switch (GM.CurMonsters[(int)GM.curMonsterSlot].Rarity)
+        {
+            case eRarity.normal:
+                RarityStars[0].SetActive(true);
+                RarityStars[1].SetActive(false);
+                RarityStars[2].SetActive(false);
+                break;
+            case eRarity.rare:
+                RarityStars[0].SetActive(true);
+                RarityStars[1].SetActive(true);
+                RarityStars[2].SetActive(false);
+
+                break;
+            case eRarity.legendary:
+                RarityStars[0].SetActive(true);
+                RarityStars[1].SetActive(true);
+                RarityStars[2].SetActive(true);
+
+                break;
+            default:
+                RarityStars[0].SetActive(false);
+                RarityStars[1].SetActive(false);
+                RarityStars[2].SetActive(false);
+
+                break;
+        }
+    }
 
     public void SetMonsterlevel_Dungeon()
     {
@@ -721,7 +771,7 @@ public class HomeUI : UIController
             //put egg in empty slot position
             GM.CurMonsters[(int)GM.curMonsterSlot].Monster = curEgg;
             GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage = eMonsterStage.Egg;
-
+                       
             SetText((int)eTextfields.H_MonsterTypeandStage, 
                 GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage + " " + 
                 GM.CurMonsters[(int)GM.curMonsterSlot].Monster.MonsterName);
@@ -730,6 +780,7 @@ public class HomeUI : UIController
                 GM.CurMonsters[(int)GM.curMonsterSlot].Monster.MonsterName);
 
             GM.CurMonsters[(int)GM.curMonsterSlot].BaseValue = GM.CurMonsters[(int)GM.curMonsterSlot].Monster.BaseValue;
+            GM.CurMonsters[(int)GM.curMonsterSlot].XPCap = GM.CurMonsters[(int)GM.curMonsterSlot].Monster.XP_Cap;
             SetMonsterTexts();
             SetMonsterValue();
             GM.homeUI.SetSlotSymbol();

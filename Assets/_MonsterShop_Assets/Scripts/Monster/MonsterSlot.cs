@@ -10,6 +10,7 @@ public class MonsterSlot
     public bool Sold = false;
     public int UnlockPrice;
     public float[] LevelThreshold_current = new float[6];
+    public float XPCap;
     public eMonsterStage MonsterStage = eMonsterStage.none;
     public eRarity Rarity;
     public int MonsterLevel = 0;
@@ -20,6 +21,7 @@ public class MonsterSlot
     public bool IsHappy;
     [Tooltip("How many times the monster has been stroked")]
     public int StrokeTimes;
+    public bool MonsterSad;
 
     public void ResetValues()
     {
@@ -33,5 +35,6 @@ public class MonsterSlot
         MonsterValue = 0;
         GoldModificator = 0;
         BaseValue = 0;
+        XPCap = 0;
     }
 }

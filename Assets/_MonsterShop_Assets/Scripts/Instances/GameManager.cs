@@ -53,6 +53,9 @@ public class GameManager : Singleton<GameManager>
     /// </summary>
     public bool[] UnlockedLogEntries = new bool[9];
 
+    [Tooltip("Time until petting is available again in Seconds")]
+    public float TimeTilPetting = 120.10f;
+
     //public CurrentMonster thisMonster = new CurrentMonster();
 
     //Lautstärke vom Spieler eingestellt

@@ -59,7 +59,6 @@ public class PettingController : MonoBehaviour
         {
             GM.homeUI.ShowPetSessionResult();
 
-
             GM.CurMonsters[(int)GM.curMonsterSlot].StrokeTimes += 1;
             GM.CurMonsters[(int)GM.curMonsterSlot].IsHappy = true;
             print("monster has been stroked " + GM.CurMonsters[(int)GM.curMonsterSlot].StrokeTimes + " times");
@@ -97,6 +96,7 @@ public class PettingController : MonoBehaviour
                 MM.SetMonsterXP(GM.XPAffectionBonus);
             }
         }
+        GM.CurMonsters[(int)GM.curMonsterSlot].MonsterSad = false;
         GM.homeUI.ExitPetSession();
     }
 
@@ -112,6 +112,7 @@ public class PettingController : MonoBehaviour
             if (monsterStroked == GM.StrokesPerPettingSession)
             {
                 print("oh yay, monster is happy");
+                GM.homeUI.SetPettingSymbol(false);
                 StartCoroutine(cEndPetSession());
             }
             //else if (monsterStroked < 0)

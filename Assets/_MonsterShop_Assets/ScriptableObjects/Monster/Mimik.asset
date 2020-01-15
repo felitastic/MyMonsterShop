@@ -76,6 +76,7 @@ MonoBehaviour:
   - 120
   - 150
   - 180
+  XP_Cap: 8100
   MultiplicatorRare: 2
   MultiplicatorLegendary: 3
   BaseCost: 100
