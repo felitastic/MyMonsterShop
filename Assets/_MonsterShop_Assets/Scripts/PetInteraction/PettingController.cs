@@ -131,6 +131,7 @@ public class PettingController : MonoBehaviour
     private IEnumerator cStrokingMonstser()
     {
         //play animation
+        MM.monsterAnim[MM.CurMonster.SlotID].SetTrigger("poked");
         //wait for it to finish
         yield return new WaitForSeconds(petTime);
         strokeDelay = false;
