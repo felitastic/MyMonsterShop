@@ -21,5 +21,5 @@ MonoBehaviour:
   MonsterName: Pumpkin
   MonsterRarity: Normal
   MonsterHatchCount: 0
-  MonsterHighestPrice: 300
+  MonsterHighestPrice: 220
   MonsterType: 0

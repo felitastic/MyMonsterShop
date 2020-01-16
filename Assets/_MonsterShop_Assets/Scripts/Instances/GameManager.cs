@@ -45,7 +45,7 @@ public class GameManager : Singleton<GameManager>
     //public CurrentMonster[] CurMonsters = new CurrentMonster[3];
     public MonsterSlot[] CurMonsters;
 
-    public int StrokesPerPettingSession = 3;
+    public int StrokesPerPettingSession = 5;
     public float XPGainPerPettingSession = 100.0f;
     public float XPAffectionBonus = 50.0f;
     /// <summary>

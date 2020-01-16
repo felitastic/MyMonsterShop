@@ -141,6 +141,7 @@ public class MM_Home : MonsterManager
         GM.homeMonsterManager.SpawnCurrentMonster(MonsterSpawn[SlotID]);
         GM.homeUI.ShowMonsterStats(true);
         GM.homeUI.TrainButtonActive(true);
+        GM.homeMonsterManager.monsterAnim[GM.homeMonsterManager.CurMonster.SlotID].SetBool("isSad", true);
         yield return null;
     }
 }

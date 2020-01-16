@@ -980,7 +980,7 @@ public class HomeUI : UIController
         DropCage(GM.CurMonsters[(int)GM.curMonsterSlot].SlotID);
         yield return new WaitForSeconds(0.5f);
         PlayerGold.SetTrigger("gain");
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.2f);
         GM.ChangePlayerGold(+totalValue);
         yield return new WaitForSeconds(0.5f);
         DisableMenu((int)eMenus.D_SaleConfirm);

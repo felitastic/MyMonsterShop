@@ -111,6 +111,7 @@ public class PettingController : MonoBehaviour
 
             if (monsterStroked == GM.StrokesPerPettingSession)
             {
+                MM.monsterAnim[MM.CurMonster.SlotID].SetBool("isSad", false);
                 print("oh yay, monster is happy");
                 GM.homeUI.SetPettingSymbol(false);
                 StartCoroutine(cEndPetSession());
@@ -131,7 +132,7 @@ public class PettingController : MonoBehaviour
     private IEnumerator cStrokingMonstser()
     {
         //play animation
-        MM.monsterAnim[MM.CurMonster.SlotID].SetTrigger("poked");
+        MM.monsterAnim[MM.CurMonster.SlotID].SetTrigger("stroke");
         //wait for it to finish
         yield return new WaitForSeconds(petTime);
         strokeDelay = false;
