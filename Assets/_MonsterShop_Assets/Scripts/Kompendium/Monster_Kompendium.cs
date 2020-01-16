@@ -21,12 +21,10 @@ public class Monster_Kompendium : MonoBehaviour
 
     private GameManager GM;
     
-    private void OnEnable()
+    private void Start()
     {
         GM = GameManager.Instance;
         GM.monsterKompendium = this;
-        SetButtons();
-        ShowEntry(0);
     }
 
     public void SetButtons()

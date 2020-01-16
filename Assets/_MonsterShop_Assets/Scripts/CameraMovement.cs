@@ -96,7 +96,6 @@ public class CameraMovement : MonoBehaviour
             GM.homeUI.TrainButtonActive(true);
             GM.homeUI.ShowMonsterStats(true);
         }
-
         GM.homeUI.SetSwipeButtonStatus();
     }
 

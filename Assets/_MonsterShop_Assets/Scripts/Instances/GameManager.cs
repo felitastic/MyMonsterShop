@@ -56,6 +56,7 @@ public class GameManager : Singleton<GameManager>
     [Tooltip("Time until petting is available again in Seconds")]
     public float TimeTilPetting = 120.10f;
 
+
     //public CurrentMonster thisMonster = new CurrentMonster();
 
     //Lautstärke vom Spieler eingestellt
