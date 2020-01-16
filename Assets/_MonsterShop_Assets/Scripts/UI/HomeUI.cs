@@ -25,7 +25,7 @@ public class HomeUI : UIController
     public Animator[] CageTop;
     public GameObject[] RarityStars = new GameObject[3];
     public GameObject AllCages;
-    public Image D_Signature;
+    public Animator D_Signature;
     public CameraMovement camMovement;
     public Animator PlayerGold;
 
@@ -374,10 +374,10 @@ public class HomeUI : UIController
         GM.homeMonsterManager.ScaleMonsterBody(0.150f);
         
         //DisableMenu((int)eMenus.HomeBG);
-        DisableMenu((int)eMenus.Home);
-
-        DisableMenu((int)eMenus.H_MonsterStats);
         //DisableMenu((int)eMenus.XPBar);
+        DisableMenu((int)eMenus.Home);
+        DisableMenu((int)eMenus.H_MonsterStats);
+        DisableMenu((int)eMenus.D_SalesContract);        
         EnableMenu((int)eMenus.D_MonsterStats);
 
         //EnableMenu((int)eMenus.DungeonBG);
@@ -980,7 +980,7 @@ public class HomeUI : UIController
         DropCage(GM.CurMonsters[(int)GM.curMonsterSlot].SlotID);
         yield return new WaitForSeconds(0.5f);
         PlayerGold.SetTrigger("gain");
-        yield return new WaitForSeconds(0.8f);
+        yield return new WaitForSeconds(0.3f);
         GM.ChangePlayerGold(+totalValue);
         yield return new WaitForSeconds(0.5f);
         DisableMenu((int)eMenus.D_SaleConfirm);
@@ -1109,7 +1109,8 @@ public class HomeUI : UIController
     {
         signed = true;
         //TODO Dungeon Lord sale: animated signature
-        D_Signature.color = new Color(D_Signature.color.r, D_Signature.color.g, D_Signature.color.b, 1.0f);
+
+        D_Signature.SetTrigger("sign");
         
         yield return new WaitForSeconds(1f);
         //totalValue = 0;
