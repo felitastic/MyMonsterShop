@@ -343,6 +343,15 @@ public class HomeUI : UIController
         SetMonsterTexts();
         SetMonsterValue();
         SetGoldCounter();
+
+        if (GM.CurMonsters[(int)GM.curMonsterSlot].Monster == null)
+        {
+            ShowMonsterStats(false);
+        }
+        else
+        {
+            ShowMonsterStats(true);
+        }
     }
 
     private void UI_EggShop()
@@ -602,7 +611,6 @@ public class HomeUI : UIController
     {
         SetText((int)eTextfields.GoldCount, "" + GM.PlayerMoney);
     }
-
 
     /// <summary>
     /// Sets the dungeonlords dialogue depending on the offered monsters stage
