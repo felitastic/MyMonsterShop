@@ -125,7 +125,6 @@ public class HomeUI : UIController
         none
     }
 
-
     public void Awake()
     {
         GetGameManager();
@@ -526,7 +525,7 @@ public class HomeUI : UIController
         if (GM.CurMonsters[(int)GM.curMonsterSlot].Monster == null)
         {          
             GM.homeUI.SetText((int)eTextfields.H_MonsterTypeandStage, "");
-            GM.homeUI.SetText((int)eTextfields.D_MonsterTypeandStage, "No monster available for sale");
+            GM.homeUI.SetText((int)eTextfields.D_MonsterTypeandStage, "No monster \navailable");
         }
         else
         {           
@@ -639,7 +638,7 @@ public class HomeUI : UIController
                     break;
                 case eMonsterStage.none:
                     textline =
-                        "What've you got for me?";
+                        "Got anything for me?";
                     break;
                 default:
                     textline =
