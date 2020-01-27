@@ -60,7 +60,6 @@ public class PettingController : MonoBehaviour
             GM.homeUI.ShowPetSessionResult();
 
             GM.CurMonsters[(int)GM.curMonsterSlot].StrokeTimes += 1;
-            //GM.CurMonsters[(int)GM.curMonsterSlot].IsHappy = true;
             print("monster has been stroked " + GM.CurMonsters[(int)GM.curMonsterSlot].StrokeTimes + " times");
             //TODO change monster idle to happy
 
@@ -96,7 +95,7 @@ public class PettingController : MonoBehaviour
                 MM.SetMonsterXP(GM.XPAffectionBonus);
             }
         }
-        GM.CurMonsters[(int)GM.curMonsterSlot].IsHappy = true;
+        GM.CurMonsters[GM.curMonsterID].IsHappy = true;
         GM.homeUI.ExitPetSession();
     }
 

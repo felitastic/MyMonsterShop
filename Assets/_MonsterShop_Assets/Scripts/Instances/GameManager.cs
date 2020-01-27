@@ -34,8 +34,11 @@ public class GameManager : Singleton<GameManager>
     public bool DungeonlordWaiting;
     public eScene curScreen;
 
-    //left, middle, right -> used as (int) to get the right monsterslot ID
+    //left, middle, right screen in home
     public ecurMonsterSlot curMonsterSlot;
+    //uses above value as (int) to get the currently selected MonsterSlot ID
+    public int curMonsterID { get { return CurMonsters[(int)curMonsterSlot].SlotID; } }
+
     public Vector3 CurCamHomePos;
 
     public Rigidbody[] curMonsterRigid;
@@ -45,6 +48,7 @@ public class GameManager : Singleton<GameManager>
     //public CurrentMonster[] CurMonsters = new CurrentMonster[3];
     public MonsterSlot[] CurMonsters;
 
+
     public int StrokesPerPettingSession = 5;
     public float XPGainPerPettingSession = 100.0f;
     public float XPAffectionBonus = 50.0f;
@@ -53,24 +57,26 @@ public class GameManager : Singleton<GameManager>
     /// </summary>
     public bool[] UnlockedLogEntries = new bool[9];
 
-    [Tooltip("Time until petting is available again in Seconds")]
-    public float TimeTilPetting = 120.10f;
+    //For the timers
+    public System.DateTime[] PetWaitTimeEnd = new System.DateTime[3];
+    public System.DateTime[] PlayWaitTimeEnd = new System.DateTime[3];
+    public System.DateTime DungeonLordWaitTimeEnd;
+    public bool runTimers;
+    public bool playedMinigame;
+
+    //Timer scripts
+    public MonsterTimer monsterTimer;
 
 
-    //public CurrentMonster thisMonster = new CurrentMonster();
+    //Scripte für die Minigames
+    public RunnerController runnerController;
 
     //Lautstärke vom Spieler eingestellt
-
     //public float BGMVolume;
     //public float SFXVolume;
 
     //private bool isLoading;
     //private AsyncOperation asyncOperation;
-
-    //private GameObject monsterBody;
-
-    //Scripte für die Minigames
-    public RunnerController runnerController;
 
     //private bool isLoading = false;
     //private AsyncOperation asyncOperation;
@@ -121,31 +127,11 @@ public class GameManager : Singleton<GameManager>
         homeUI.SetGoldCounter();
     }
 
-    public IEnumerator cLoadHomeScene()
+    public void LoadHomeScene()
     {
         print("loading new scene");
         curScreen = eScene.home;
         SceneManager.LoadScene(0);
-
-        yield return new WaitForSeconds(1.0f);
-
-        //homeUI.SetUIStage(HomeUI.eHomeUIScene.Home);
-
-
-        //asyncOperation = SceneManager.LoadSceneAsync(0);
-        //isLoading = true;
-
-        //while(asyncOperation.progress < 1f && isLoading)
-        //{
-        //    print("loading scene");
-
-        //    if (asyncOperation.progress >= 0.9f)
-        //    {
-        //        isLoading = false;
-
-        //    }
-        //}
-
     }
 
 

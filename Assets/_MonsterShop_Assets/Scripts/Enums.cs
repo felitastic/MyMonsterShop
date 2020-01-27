@@ -1,4 +1,16 @@
-﻿//in 3er schritten wegen der rarities
+﻿public enum VFXRunner_Pos
+{
+    //NumberofPositions needs to be the last in list!
+    NumberofPositions
+}
+
+public enum VFXRunner
+{
+    //NumberofVFX needs to be the last in list!
+    NumberofVFX
+}
+
+//in 3er schritten wegen der rarities
 public enum eMonsterType
 {    
     pumpkin = 0,

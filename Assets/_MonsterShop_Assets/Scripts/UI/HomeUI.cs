@@ -77,7 +77,8 @@ public class HomeUI : UIController
         PetMeSymbol,
         PettingInfo,
         PettingXPBar,
-        DungeonSellButton
+        DungeonSellButton,
+        H_TrainButtonTimeOut
     }
 
     private enum  eButtons
@@ -108,10 +109,12 @@ public class HomeUI : UIController
         D_MonsterValue,
         D_MonsterLevel,
         D_SoldMonster1,
-        D_SoldMonster2,
-        D_SoldMonster3,
-        K_MonsterDetail,
-        K_MonsterFluff
+        K_MonsterFluff,
+        K_MonsterName,
+        K_MonsterRarity,
+        K_MonsterHatchCount,
+        K_MonsterHighestPrice,
+        H_TrainButtonTimer
     }
 
     public enum eHomeUIScene
@@ -146,17 +149,39 @@ public class HomeUI : UIController
         //SetGoldCounter();
     }
 
+    public void SetDungeonTimer()
+    {
+
+    }
+
+    public void UpdatePlayTimer(string time)
+    {
+        SetText((int)eTextfields.H_TrainButtonTimer, time);
+    }
+
+    public void SetPlayTimer(bool show)
+    {
+        if (show)
+        {
+            EnableMenu((int)eMenus.H_TrainButtonTimeOut);
+            //TrainButtonActive(false);
+        }
+        else
+        {
+            DisableMenu((int)eMenus.H_TrainButtonTimeOut);
+            //TrainButtonActive(true);
+        }
+    }
+   
     public void SetPettingSymbol(bool show)
     {
         if (show)
         {
-            //show symbol
             EnableMenu((int)eMenus.PetMeSymbol);
             //TODO change to sad idle
         }
         else
         {
-            //hide symbol
             DisableMenu((int)eMenus.PetMeSymbol);
         }
     }
@@ -684,11 +709,14 @@ public class HomeUI : UIController
     /// <returns></returns>
     private IEnumerator cWaitForZoom(bool zoomedIn)
     {
-        SetUIStage(eHomeUIScene.none);            
+        SetUIStage(eHomeUIScene.none);    
+
 
         yield return new WaitForSeconds(0.15f);
         if (zoomedIn)
         {
+            if (GM.CurMonsters[GM.curMonsterID].IsHappy)
+                GM.monsterTimer.SetPetTimerValues();
             camMovement.Zoom(false);
             SetUIStage(eHomeUIScene.Home);
         }
@@ -867,6 +895,8 @@ public class HomeUI : UIController
     //Button Inputs extra menus in home (Minigame, Pet, Feed?)
     public void ChooseMinigame(int scene)
     {
+        GM.runTimers = false;
+        GM.CurMonsters[GM.curMonsterID].IsTired = true;
         GM.curScreen = (eScene)scene;
         SceneManager.LoadScene(scene);
     }
@@ -1037,7 +1067,6 @@ public class HomeUI : UIController
             //DisableMenu((int)eMenus.D_BottomButtons);
             //EnableMenu((int)eMenus.D_LeaveConfirmButton);
 
-            SellMonsterAndGoHome(true);
             //TODO remove this when dungeon lord timer is implemented!!
             GM.DungeonlordWaiting = true;
             StartCoroutine(cExitDungeon());
@@ -1058,43 +1087,6 @@ public class HomeUI : UIController
         }
         SetSlotSymbol();
         SetUIStage(eHomeUIScene.Home);
-    }
-
-    /// <summary>
-    /// Player pressed a button of the Y/N choice when leaving the dungeonlords menu after marking monsters as sold
-    /// </summary>
-    /// <param name="goHome"></param>
-    public void SellMonsterAndGoHome(bool goHome)
-    {
-        //if (goHome)
-        //{
-        //    DisableSwiping(true);
-        //    DisableMenu((int)eMenus.SwipeButtons);
-
-        //    string msg = "";
-
-        //    foreach (MonsterSlot slot in GM.CurMonsters)
-        //    {
-        //        if (slot.Sold)
-        //        {
-        //            msg += slot.Monster.MonsterName + "\n" +
-        //                "Selling Price" + Mathf.RoundToInt(slot.MonsterValue) + "\n";
-
-        //            totalValue += Mathf.RoundToInt(slot.MonsterValue);
-        //            GM.homeMonsterManager.DeleteMonsterBody(slot.SlotID);
-        //            slot.ResetValues();
-        //        }
-        //    }
-        //    SetText((int)eTextfields.D_SoldMonster1, msg);
-        //    EnableMenu((int)eMenus.D_SalesContract);          
-
-        //}
-        //else
-        //{
-        //    EnableMenu((int)eMenus.D_BottomButtons);
-        //}
-        //DisableMenu((int)eMenus.D_LeaveConfirmButton);
-        //SetPopInfoWindowStatus(false);
     }
 
     /// <summary>

@@ -85,15 +85,26 @@ public class CameraMovement : MonoBehaviour
         //GM.homeUI.SetMonsterValue();
         //GM.homeUI.SetMonsterXPBarUndLevel();
         GM.homeUI.SetSlotSymbol();
+        GM.monsterTimer.OnSceneChange();
 
         if (GM.CurMonsters[(int)GM.curMonsterSlot].Monster == null)
         {
             GM.homeUI.TrainButtonActive(false);
+            GM.homeUI.SetPlayTimer(false);
             GM.homeUI.ShowMonsterStats(false);
         }
         else
         {
-            GM.homeUI.TrainButtonActive(true);
+            if (GM.CurMonsters[GM.curMonsterID].IsTired)
+            {
+                GM.homeUI.SetPlayTimer(true);
+            }
+            else
+            {
+                GM.homeUI.TrainButtonActive(true);
+                GM.homeUI.SetPlayTimer(false);
+            }
+
             GM.homeUI.ShowMonsterStats(true);
         }
         GM.homeUI.SetSwipeButtonStatus();

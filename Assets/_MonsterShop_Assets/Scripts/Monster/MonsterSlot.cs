@@ -18,7 +18,10 @@ public class MonsterSlot
     public float MonsterValue = 0;
     public float GoldModificator;
     public int BaseValue;
+    [Tooltip("If true, pet counter is running, no pet button")]
     public bool IsHappy;
+    [Tooltip("If true, minigame counter is running, no playing available")]
+    public bool IsTired;
     [Tooltip("How many times the monster has been stroked")]
     public int StrokeTimes;
 
@@ -35,5 +38,8 @@ public class MonsterSlot
         GoldModificator = 0;
         BaseValue = 0;
         XPCap = 0;
+        IsHappy = false;
+        IsTired = false;
+        StrokeTimes = 0;
     }
 }

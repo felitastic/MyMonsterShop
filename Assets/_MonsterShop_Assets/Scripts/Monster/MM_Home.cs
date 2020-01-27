@@ -23,30 +23,7 @@ public class MM_Home : MonsterManager
         SpawnAllCurrentMonsters();
         //CalculateMonsterValue();
     }
-
-    //// sets monster slot symbols if slot is locked or empty
-    //public void SetSlotSymbol()
-    //{
-    //    for (int i = 0; i < 3; i++)
-    //    {
-    //        if (GM.CurMonsters[i].Monster == null && !GM.CurMonsters[i].Unlocked)
-    //        {
-    //            Lock[i].SetActive(true);
-    //            Plus[i].SetActive(false);
-    //        }
-    //        else if (GM.CurMonsters[i].Monster == null && GM.CurMonsters[i].Unlocked)
-    //        {
-    //            Plus[i].SetActive(true);
-    //            Lock[i].SetActive(false);
-    //        }
-    //        else
-    //        {
-    //            Plus[i].SetActive(false);
-    //            Lock[i].SetActive(false);
-    //        }
-    //    }
-    //}
-
+    
     // Spawns all currently owned monsters in home scene each start
     public void SpawnAllCurrentMonsters()
     {
@@ -57,30 +34,28 @@ public class MM_Home : MonsterManager
             if (GM.CurMonsters[i].Monster == null)
             {
                 print("slot " + i + " is empty");
-                //print("rarity: " + (int)GM.CurMonsters[i].Rarity);
-                //print("stage: " + (int)GM.CurMonsters[i].MonsterStage);
-                //print("spawn: " + MonsterSpawn[i].name);
             }
             else
             {
                 print("slot " + i + " is NOT empty");
+                SpawnAnyMonster(GM.CurMonsters[i].Monster.MonsterPrefabs[(int)GM.CurMonsters[i].Rarity, (int)GM.CurMonsters[i].MonsterStage], MonsterSpawn[i], i);
                 //print("rarity: " + (int)GM.CurMonsters[i].Rarity);
                 //print("stage: " + (int)GM.CurMonsters[i].MonsterStage);
                 //print("spawn: " + MonsterSpawn[i].name);
-                SpawnAnyMonster(GM.CurMonsters[i].Monster.MonsterPrefabs[(int)GM.CurMonsters[i].Rarity, (int)GM.CurMonsters[i].MonsterStage], MonsterSpawn[i]);
             }
         }
     }
 
-    // Sets rarity of the hatching monster via chance
-    //TODO: calculate random chance for monster rarity right
+    /// <summary>
+    /// Sets rarity of the hatching monster via chance
+    /// </summary>
     public void SetEggRarity()
     {
         float rand = Random.Range(0.0f, 1.01f);
         double percentage = System.Math.Round((double)rand, 2);
         double epic = System.Math.Round((EpicDrop / 100.0), 2);
         double rare = System.Math.Round((RareDrop / 100.0), 2);
-        Debug.Log("random chance: " + percentage+"epic: " + epic+ "rare: " + rare); 
+        //Debug.Log("random chance: " + percentage+"epic: " + epic+ "rare: " + rare); 
 
         if (percentage <= epic)
         {
@@ -123,7 +98,7 @@ public class MM_Home : MonsterManager
         //effect for spawning
         //yield return new WaitForSeconds(0.5f);
         CurMonster.MonsterStage = eMonsterStage.Egg;
-        SpawnAnyMonster(CurMonster.Monster.EggPrefab, EggSpawn);
+        SpawnAnyMonster(CurMonster.Monster.EggPrefab, EggSpawn, CurMonster.SlotID);
         yield return null;
     }
 

@@ -119,8 +119,9 @@ public class RunnerUI : UIController
 
     // EndResultButtons function
     public void TapResult()
-    {        
-        StartCoroutine(GM.cLoadHomeScene());
+    {
+        GM.playedMinigame = true;
+        GM.LoadHomeScene();
     }
 
     // Endabling Startbutton after a short wait to make sure everything has loaded

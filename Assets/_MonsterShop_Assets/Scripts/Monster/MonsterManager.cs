@@ -184,12 +184,12 @@ public class MonsterManager : MonoBehaviour
         monsterRigid[SlotID] = monsterBody[SlotID].GetComponentInChildren<Rigidbody>();
     }
 
-    public void SpawnAnyMonster(GameObject monster, Transform monsterSpawn)
+    public void SpawnAnyMonster(GameObject monster, Transform monsterSpawn, int slotID)
     {
-        monsterBody[SlotID] = Instantiate(monster, monsterSpawn);
-        monsterBody[SlotID].transform.SetParent(monsterSpawn);
-        monsterAnim[SlotID] = monsterBody[SlotID].GetComponentInChildren<Animator>();
-        monsterRigid[SlotID] = monsterBody[SlotID].GetComponentInChildren<Rigidbody>();
+        monsterBody[slotID] = Instantiate(monster, monsterSpawn);
+        monsterBody[slotID].transform.SetParent(monsterSpawn);
+        monsterAnim[slotID] = monsterBody[slotID].GetComponentInChildren<Animator>();
+        monsterRigid[slotID] = monsterBody[slotID].GetComponentInChildren<Rigidbody>();
     }
 
     public IEnumerator cLevelUpMonster(eMonsterStage newStage, Transform monsterSpawn)
