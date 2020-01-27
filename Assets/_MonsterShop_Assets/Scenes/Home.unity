@@ -631,7 +631,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 100 $
+  m_Text: 500 $
 --- !u!222 &30445820
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2167,7 +2167,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.35154858, g: 0.9433962, b: 0.88503724, a: 1}
+  m_Color: {r: 0.18244925, g: 0.7025903, b: 0.9433962, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -3415,8 +3415,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1635510326}
-        m_MethodName: ExitPetSession
+      - m_Target: {fileID: 1635510329}
+        m_MethodName: EndSession
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5440,7 +5440,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 150 $
+  m_Text: 850 $
 --- !u!222 &694582951
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5619,7 +5619,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: List
+  m_Text: Notes
 --- !u!222 &719743300
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -12049,6 +12049,7 @@ GameObject:
   - component: {fileID: 1635510325}
   - component: {fileID: 1635510328}
   - component: {fileID: 1635510327}
+  - component: {fileID: 1635510329}
   m_Layer: 0
   m_Name: --Home Scripts--
   m_TagString: Untagged
@@ -12230,8 +12231,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e66f551151c88a347b339a2fdbc7f541, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  petWaitInMinutes: 2
-  playWaitInMinutes: 2
 --- !u!114 &1635510328
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12280,6 +12279,26 @@ MonoBehaviour:
   CurMonsterRarity: {fileID: 4622088697404672858}
   CurMonsterHatchCount: {fileID: 4622088695687649600}
   CurMonsterHighestPrice: {fileID: 4622088697113092868}
+--- !u!114 &1635510329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1635510323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6c307f139711854c8b6d9aea949310d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MM: {fileID: 1635510325}
+  HeartMeter: {fileID: 1912892226}
+  XPBars:
+  - {fileID: 2517964791101518619}
+  - {fileID: 974123561825978403}
+  - {fileID: 974123560944909506}
+  GM: {fileID: 0}
+  monsterStroked: 0
 --- !u!1 &1647596676
 GameObject:
   m_ObjectHideFlags: 0
@@ -12448,7 +12467,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1657505101}
-  - component: {fileID: 1657505103}
   m_Layer: 5
   m_Name: Petting
   m_TagString: Untagged
@@ -12479,26 +12497,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1657505103
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1657505100}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6c307f139711854c8b6d9aea949310d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MM: {fileID: 1635510325}
-  HeartMeter: {fileID: 1912892226}
-  XPBars:
-  - {fileID: 2517964791101518619}
-  - {fileID: 974123561825978403}
-  - {fileID: 974123560944909506}
-  GM: {fileID: 0}
-  monsterStroked: 0
 --- !u!1 &1658488894
 GameObject:
   m_ObjectHideFlags: 0
@@ -14324,7 +14322,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1657505103}
+      - m_Target: {fileID: 1635510329}
         m_MethodName: PetMonster
         m_Mode: 1
         m_Arguments:

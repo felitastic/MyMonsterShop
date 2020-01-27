@@ -33,11 +33,11 @@ public class MM_Home : MonsterManager
         {
             if (GM.CurMonsters[i].Monster == null)
             {
-                print("slot " + i + " is empty");
+                //print("slot " + i + " is empty");
             }
             else
             {
-                print("slot " + i + " is NOT empty");
+                //print("slot " + i + " is NOT empty");
                 SpawnAnyMonster(GM.CurMonsters[i].Monster.MonsterPrefabs[(int)GM.CurMonsters[i].Rarity, (int)GM.CurMonsters[i].MonsterStage], MonsterSpawn[i], i);
                 //print("rarity: " + (int)GM.CurMonsters[i].Rarity);
                 //print("stage: " + (int)GM.CurMonsters[i].MonsterStage);
@@ -78,7 +78,7 @@ public class MM_Home : MonsterManager
             GM.CurMonsters[(int)GM.curMonsterSlot].LevelThreshold_current = newLevelThreshold();
         }        
 
-        Debug.Log("Rarity: "+GM.CurMonsters[(int)GM.curMonsterSlot].Rarity);
+        //Debug.Log("Rarity: "+GM.CurMonsters[(int)GM.curMonsterSlot].Rarity);
     }
 
     // calculates level threshold of the monster according to its rarity (with rarity multiplier)
@@ -87,7 +87,7 @@ public class MM_Home : MonsterManager
         for (int i = 0; i < GM.CurMonsters[(int)GM.curMonsterSlot].LevelThreshold_current.Length; i++)
         {
             GM.CurMonsters[(int)GM.curMonsterSlot].LevelThreshold_current[i] = GM.CurMonsters[(int)GM.curMonsterSlot].Monster.LevelThreshold_normal[i] * multiplier;
-            print(i+" = "+GM.CurMonsters[(int)GM.curMonsterSlot].LevelThreshold_current[i]);
+            //print(i+" = "+GM.CurMonsters[(int)GM.curMonsterSlot].LevelThreshold_current[i]);
         }
         return GM.CurMonsters[(int)GM.curMonsterSlot].LevelThreshold_current;
     }

@@ -85,7 +85,6 @@ public class CameraMovement : MonoBehaviour
         //GM.homeUI.SetMonsterValue();
         //GM.homeUI.SetMonsterXPBarUndLevel();
         GM.homeUI.SetSlotSymbol();
-        GM.monsterTimer.OnSceneChange();
 
         if (GM.CurMonsters[(int)GM.curMonsterSlot].Monster == null)
         {
@@ -95,17 +94,17 @@ public class CameraMovement : MonoBehaviour
         }
         else
         {
-            if (GM.CurMonsters[GM.curMonsterID].IsTired)
-            {
-                GM.homeUI.SetPlayTimer(true);
-            }
-            else
-            {
-                GM.homeUI.TrainButtonActive(true);
-                GM.homeUI.SetPlayTimer(false);
-            }
-
+            GM.monsterTimer.CheckDateTimes();
             GM.homeUI.ShowMonsterStats(true);
+            //if (GM.CurMonsters[GM.curMonsterID].IsTired)
+            //{
+            //    GM.homeUI.SetPlayTimer(true);
+            //}
+            //else
+            //{
+            //    GM.homeUI.TrainButtonActive(true);
+            //    GM.homeUI.SetPlayTimer(false);
+            //}
         }
         GM.homeUI.SetSwipeButtonStatus();
     }

@@ -133,9 +133,8 @@ public class HomeUI : UIController
         GetGameManager();
         GM.homeUI = this;
         camShopPos = new Vector3(0.0f, 20.0f, -10.001f);
-        //camDungeonPos = new Vector3(-10.801f, 20.0f, -10.001f);
         EggHatchCount = 1;
-        //print("home ui has been started");
+        //camDungeonPos = new Vector3(-10.801f, 20.0f, -10.001f);
     }
 
     private void Start()
@@ -146,7 +145,9 @@ public class HomeUI : UIController
         SetSlotSymbol();
         SetMonsterValue();
         DisableSwiping(false);
-        //SetGoldCounter();
+
+        //if (GM.monsterTimer = null)
+        //    GM.monsterTimer = FindObjectOfType<MonsterTimer>();
     }
 
     public void SetDungeonTimer()
@@ -159,6 +160,10 @@ public class HomeUI : UIController
         SetText((int)eTextfields.H_TrainButtonTimer, time);
     }
 
+    /// <summary>
+    /// Shows the minigame timer
+    /// </summary>
+    /// <param name="show"></param>
     public void SetPlayTimer(bool show)
     {
         if (show)
@@ -173,6 +178,10 @@ public class HomeUI : UIController
         }
     }
    
+    /// <summary>
+    /// Shows Petting Symbol and Button to enable Petting Session
+    /// </summary>
+    /// <param name="show"></param>
     public void SetPettingSymbol(bool show)
     {
         if (show)
@@ -375,7 +384,7 @@ public class HomeUI : UIController
         }
         else
         {
-            ShowMonsterStats(true);
+            ShowMonsterStats(true);            
         }
     }
 
@@ -393,6 +402,7 @@ public class HomeUI : UIController
         EnableMenu((int)eMenus.S_ShopUI);
         EnableMenu((int)eMenus.S_EggMenu);
         EnableMenu((int)eMenus.S_BottomButtons);
+        DisableSwiping(true);
     }
 
     private void UI_DungeonLord()
@@ -423,6 +433,8 @@ public class HomeUI : UIController
     {
         DisableMenu((int)eMenus.Home);
         EnableMenu((int)eMenus.MiniGameWindow);
+        DisableMenu((int)eMenus.SwipeButtons);
+        DisableSwiping(true);
     }
 
     public void ShowPetSessionResult()
@@ -716,7 +728,8 @@ public class HomeUI : UIController
         if (zoomedIn)
         {
             if (GM.CurMonsters[GM.curMonsterID].IsHappy)
-                GM.monsterTimer.SetPetTimerValues();
+                GM.SetPetTimer(GM.curMonsterID);
+            GM.monsterTimer.CheckDateTimes();
             camMovement.Zoom(false);
             SetUIStage(eHomeUIScene.Home);
         }
@@ -832,9 +845,7 @@ public class HomeUI : UIController
             GM.ChangePlayerGold(-GM.CurMonsters[(int)GM.curMonsterSlot].Monster.BaseCost);
 
             StartCoroutine(GM.homeMonsterManager.cSpawnEgg());
-            StartCoroutine(cStartEggHatchMinigame());
-
-            //StartCoroutine(ConfirmEggPurchase());
+            StartCoroutine(cStartEggHatchMinigame());            
         }
         else
         {
@@ -856,6 +867,10 @@ public class HomeUI : UIController
         EnableMenu((int)eMenus.S_TappEggButton);
     }
 
+    /// <summary>
+    /// Deactivates and greys out the TrainButton
+    /// </summary>
+    /// <param name="isActive"></param>
     public void TrainButtonActive(bool isActive)
     {
         if (isActive)
@@ -871,6 +886,8 @@ public class HomeUI : UIController
 
         if (hatchTaps == EggHatchCount)
         {
+            GM.CurMonsters[GM.curMonsterID].PetTimerEnd = System.DateTime.Now;
+            GM.CurMonsters[GM.curMonsterID].PlayTimerEnd = System.DateTime.Now;
             GM.CurMonsters[(int)GM.curMonsterSlot].MonsterLevel = 1;            
             GM.homeMonsterManager.SetEggRarity();
             StartCoroutine(GM.homeMonsterManager.cHatchEgg(GM.homeMonsterManager.EggSpawn));
@@ -895,7 +912,6 @@ public class HomeUI : UIController
     //Button Inputs extra menus in home (Minigame, Pet, Feed?)
     public void ChooseMinigame(int scene)
     {
-        GM.runTimers = false;
         GM.CurMonsters[GM.curMonsterID].IsTired = true;
         GM.curScreen = (eScene)scene;
         SceneManager.LoadScene(scene);

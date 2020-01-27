@@ -50,7 +50,7 @@ public class MonsterManager : MonoBehaviour
     public int CalculateMonsterValue()
     {
         CurMonster.MonsterValue = (CurMonster.GoldModificator * CurMonster.MonsterXP) + (float)CurMonster.BaseValue;
-        print("cur monster value: " + CurMonster.MonsterValue);
+        //print("cur monster value: " + CurMonster.MonsterValue);
         return Mathf.RoundToInt(CurMonster.MonsterValue);
     }
 
@@ -62,7 +62,7 @@ public class MonsterManager : MonoBehaviour
             // if xp is same or higher as required for levelup
             if (CurMonster.MonsterXP > NextLvlUpAt() || Mathf.Approximately(CurMonster.MonsterXP, NextLvlUpAt()))
             {
-                print("curXp" + CurMonster.MonsterXP + ", LVLup requires: " + NextLvlUpAt());
+                //print("curXp" + CurMonster.MonsterXP + ", LVLup requires: " + NextLvlUpAt());
                 CurMonster.MonsterLevel += 1;
                 return true;
             }
@@ -111,7 +111,7 @@ public class MonsterManager : MonoBehaviour
         else
         {
             CurMonster.MonsterXP += gainValue;
-            print("xp: " + CurMonster.MonsterXP);
+            //print("xp: " + CurMonster.MonsterXP);
         }
     }
 

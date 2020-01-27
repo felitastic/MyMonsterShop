@@ -51,7 +51,7 @@ public abstract class UIController : MonoBehaviour
     {
         if (GM.CurMonsters[(int)GM.curMonsterSlot].MonsterLevel < 7)
         {
-            print("cur XP: " + GM.CurMonsters[(int)GM.curMonsterSlot].MonsterXP);
+            //print("cur XP: " + GM.CurMonsters[(int)GM.curMonsterSlot].MonsterXP);
             float[] fillAmount = new float[3];
 
             switch (GM.curScreen)

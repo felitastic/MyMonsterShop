@@ -120,7 +120,6 @@ public class RunnerUI : UIController
     // EndResultButtons function
     public void TapResult()
     {
-        GM.playedMinigame = true;
         GM.LoadHomeScene();
     }
 

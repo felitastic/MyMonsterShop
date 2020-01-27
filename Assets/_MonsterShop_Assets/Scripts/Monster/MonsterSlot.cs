@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class MonsterSlot
 {
@@ -20,11 +21,13 @@ public class MonsterSlot
     public int BaseValue;
     [Tooltip("If true, pet counter is running, no pet button")]
     public bool IsHappy;
+    public DateTime PetTimerEnd;
     [Tooltip("If true, minigame counter is running, no playing available")]
     public bool IsTired;
+    public DateTime PlayTimerEnd;
     [Tooltip("How many times the monster has been stroked")]
     public int StrokeTimes;
-
+    
     public void ResetValues()
     {
         Monster = null;

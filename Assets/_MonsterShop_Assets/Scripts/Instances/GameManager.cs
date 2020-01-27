@@ -1,4 +1,5 @@
 ﻿using core;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -58,15 +59,14 @@ public class GameManager : Singleton<GameManager>
     public bool[] UnlockedLogEntries = new bool[9];
 
     //For the timers
-    public System.DateTime[] PetWaitTimeEnd = new System.DateTime[3];
-    public System.DateTime[] PlayWaitTimeEnd = new System.DateTime[3];
     public System.DateTime DungeonLordWaitTimeEnd;
-    public bool runTimers;
-    public bool playedMinigame;
 
-    //Timer scripts
+    //Timer
     public MonsterTimer monsterTimer;
-
+    //How long until you can pet again
+    public float petWaitInMinutes = 2.0f;
+    //How long until you can play again
+    public float playWaitInMinutes = 4.0f;
 
     //Scripte für die Minigames
     public RunnerController runnerController;
@@ -87,22 +87,17 @@ public class GameManager : Singleton<GameManager>
         WriteEmptySlots();
         curScreen = eScene.home;
         DungeonlordWaiting = true;
+        petWaitInMinutes = 3.0f;
+        playWaitInMinutes = 2.0f;
     }
 
     private void Start()
     {
-        //GetImportantScripts();
         HomeCam.SetScreen(ecurMonsterSlot.middle);
         CurCamHomePos = Camera.main.transform.position;
         homeUI.TrainButtonActive(false);
         ChangePlayerGold(+500);
     }
-
-    //public void GetCurMonsterComponents(Animator anim, Rigidbody rigid)
-    //{
-    //    curMonsterAnim = anim;
-    //    curMonsterRigid = rigid;
-    //}
 
     private void WriteEmptySlots()
     {
@@ -120,16 +115,35 @@ public class GameManager : Singleton<GameManager>
         CurMonsters[2].UnlockPrice = 150;
     }
 
+    /// <summary>
+    /// Sets the pet timer to now-time plus waiting time
+    /// </summary>
+    /// <param name="slotID"></param>
+    public void SetPetTimer(int slotID)
+    {
+        CurMonsters[slotID].PetTimerEnd = DateTime.Now.AddMinutes(petWaitInMinutes);
+    }
+
+    /// <summary>
+    /// Sets the play timer to now-time plus waiting time
+    /// </summary>
+    /// <param name="slotID"></param>
+    public void SetPlayTimer(int slotID)
+    {
+        CurMonsters[slotID].PlayTimerEnd = DateTime.Now.AddMinutes(playWaitInMinutes);
+    }
+
     public void ChangePlayerGold(int value)
     {
         PlayerMoney += value;
-        print("player gold: " + PlayerMoney);
+        //print("player gold: " + PlayerMoney);
         homeUI.SetGoldCounter();
     }
 
     public void LoadHomeScene()
     {
         print("loading new scene");
+        SetPlayTimer(curMonsterID);
         curScreen = eScene.home;
         SceneManager.LoadScene(0);
     }
@@ -146,23 +160,17 @@ public class GameManager : Singleton<GameManager>
     //        //    //{
     //        //    //    print("home ui loaded");
     //        //    //}            
-
     //        //    //if (homeMonsterManager != null)
     //        //    //{
     //        //    //    print("home mm loaded");
     //        //    //}
-
     //        //    //SpawnAllCurrentMonsters();
     //        //    //homeMonsterManager.CalculateMonsterValue();
     //        //    //homeUI.SetGoldCounter();
-
     //        yield return null;
     //    }
-
     //    print("loading done");
     //    //GetImportantScripts();
-
-
     //    //SceneManager.LoadScene(0);
     //    //print("loading scene");
     //    //yield return new WaitForSeconds(1.5f);
@@ -170,24 +178,4 @@ public class GameManager : Singleton<GameManager>
     //    //print("loading done");
     //    //homeUI.DisableLoadingScreen();
     //}    
-
-    private void GetImportantScripts()
-    {
-        //int loadedScene = SceneManager.GetActiveScene().buildIndex;
-
-        //if (loadedScene == SceneManager.GetSceneByName("Home").buildIndex)
-        //{
-        //    homeMonsterManager = FindObjectOfType<MM_Home>();
-        //    homeUI = FindObjectOfType<HomeUI>();
-        //    HomeCam = FindObjectOfType<CameraMovement>();            
-        //}
-        //else if (loadedScene == SceneManager.GetSceneByName("EndlessRunner_ButtonControls").buildIndex)
-        //{
-        //    runnerUI = FindObjectOfType<RunnerUI>();
-        //    gameResultMonsterManager = FindObjectOfType<MM_GameResult>();
-        //}
-
-        //print("got all scripts");
-    }
-
 }

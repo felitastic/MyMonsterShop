@@ -68,7 +68,7 @@ public class PettingController : MonoBehaviour
             SetXPBars();
 
             MM.SetMonsterXP(GM.XPGainPerPettingSession);
-            if (GM.CurMonsters[(int)GM.curMonsterSlot].StrokeTimes > 1)
+            if (GM.CurMonsters[(int)GM.curMonsterSlot].StrokeTimes > 5)
             {
                 MM.SetMonsterXP(GM.XPAffectionBonus);
             }
@@ -96,6 +96,13 @@ public class PettingController : MonoBehaviour
             }
         }
         GM.CurMonsters[GM.curMonsterID].IsHappy = true;
+        EndSession();
+    }
+
+    public void EndSession()
+    {
+        monsterStroked = 0;
+        HeartMeter.fillAmount = monsterStroked / GM.StrokesPerPettingSession;
         GM.homeUI.ExitPetSession();
     }
 
@@ -107,12 +114,12 @@ public class PettingController : MonoBehaviour
             monsterStroked += 1;
             HeartMeter.fillAmount = monsterStroked / GM.StrokesPerPettingSession;
             strokeDelay = true;
+            StartCoroutine(cStrokingMonstser());
 
             if (monsterStroked == GM.StrokesPerPettingSession)
             {
                 MM.monsterAnim[MM.CurMonster.SlotID].SetBool("isSad", false);
                 print("oh yay, monster is happy");
-                GM.homeUI.SetPettingSymbol(false);
                 StartCoroutine(cEndPetSession());
             }
             //else if (monsterStroked < 0)
@@ -124,8 +131,6 @@ public class PettingController : MonoBehaviour
         {
             print("wait a moment before stroking again");
         }
-
-        StartCoroutine(cStrokingMonstser());
     }
 
     private IEnumerator cStrokingMonstser()
@@ -135,11 +140,5 @@ public class PettingController : MonoBehaviour
         //wait for it to finish
         yield return new WaitForSeconds(petTime);
         strokeDelay = false;
-    }
-
-    private void OnDisable()
-    {
-        monsterStroked = 0;
-        HeartMeter.fillAmount = 0;
     }
 }

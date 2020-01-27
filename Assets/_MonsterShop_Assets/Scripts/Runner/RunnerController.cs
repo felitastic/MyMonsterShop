@@ -81,7 +81,7 @@ public class RunnerController : MonoBehaviour
             GameObject newTile = Instantiate(LevelTiles[whichTile]);
             newTile.transform.position = new Vector3(0f, newYPos, 0f);
         }
-        print("last tile spawned");
+        //print("last tile spawned");
     }
 
 }

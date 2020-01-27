@@ -7,16 +7,15 @@ public class MonsterTimer : MonoBehaviour
 {   
     private GameManager GM;
     private DateTime curDate { get { return DateTime.Now; } }
-
-    //How long until you can pet again
-    public float petWaitInMinutes;
-    //How long until you can play again
-    public float playWaitInMinutes;
+    private MonsterSlot curMonster { get { return GM.CurMonsters[(int)GM.curMonsterID]; } }
 
     //Seconds for the timer until you can pet again
     private float curPetWaitTime;
     //Seconds for the timer until you can play again
     private float curPlayWaitTime;
+
+    private bool runPetTimer;
+    private bool runPlayTimer;
 
     ////test values
     //bool testbool;
@@ -26,140 +25,55 @@ public class MonsterTimer : MonoBehaviour
     //double curStartTime;
     //float curWaitingTime;
 
+    private void Awake()
+    {
+        runPetTimer = false;
+        runPlayTimer = false;
+    }
+
     private void Start()
     {
         GM = GameManager.Instance;
         GM.monsterTimer = this;
-        if (GM.playedMinigame)
-        {
-            SetPlayTimerValues();
-            GM.playedMinigame = false;
-        }
-        OnSceneChange();
+
+        if (curMonster.Monster != null)
+            CheckDateTimes();
     }
     
     private void Update()
     {
-        if (GM.runTimers)
+        if (runPetTimer)
         {
-            if (GM.CurMonsters[GM.curMonsterID].IsHappy)
-            {
-                PetTimer();
-            }
-
-            if (GM.CurMonsters[GM.curMonsterID].IsTired)
-            {
-                PlayTimer();
-            }
+            PetTimer();
+        }
+        if (runPlayTimer)
+        {
+            PlayTimer();
         }
     }
-
     /// <summary>
-    /// Sets values for the currently selected monster on scene change (scene load or cam movement)
+    /// Timer for the petting sessions
     /// </summary>
-    public void OnSceneChange()
-    {
-        if (GM.CurMonsters[GM.curMonsterID].Monster != null)
-        {
-            if (GM.CurMonsters[GM.curMonsterID].IsHappy || GM.CurMonsters[GM.curMonsterID].IsTired)
-            {
-                CompareDateTimes();
-            }
-        }
-        else
-        {
-            GM.homeUI.SetPettingSymbol(false);
-        }
-    }
-
-    /// <summary>
-    /// Compares Endtime to current Time on SceneChange to see if the timer is even necessary
-    /// </summary>
-    private void CompareDateTimes()
-    {
-        if (GM.PetWaitTimeEnd[GM.curMonsterID] <= curDate)
-        {
-            GM.CurMonsters[GM.curMonsterID].IsHappy = true;
-            GM.homeUI.SetPettingSymbol(false);
-            //happy idle
-            print("Monster ready for affection <3");
-        }
-        else
-        {
-            curPetWaitTime = GetWaitingTimeInSeconds(GM.PetWaitTimeEnd[GM.curMonsterID]);
-            GM.homeUI.SetPettingSymbol(true);
-            //sad idle
-        }
-
-        if (GM.PlayWaitTimeEnd[GM.curMonsterID] <= curDate)
-        {
-            GM.CurMonsters[GM.curMonsterID].IsTired = true;
-            //GM.homeUI.SetPlayTimer(true);
-            print("Monster wants to play! :D");
-        }
-        else
-        {
-            curPlayWaitTime = GetWaitingTimeInSeconds(GM.PlayWaitTimeEnd[GM.curMonsterID]);
-            //GM.homeUI.SetPlayTimer(false);
-        }
-
-        GM.runTimers = true;
-    } 
-
-    public void SetPetTimerValues()
-    {
-        if (GM.CurMonsters[GM.curMonsterID].IsHappy)
-        {
-            GM.PetWaitTimeEnd[GM.curMonsterID] = curDate.AddMinutes(petWaitInMinutes);
-            print("Endtime Pet for monster no" + GM.curMonsterID + ": " + GM.PetWaitTimeEnd[GM.curMonsterID]);
-            curPetWaitTime = GetWaitingTimeInSeconds(GM.PetWaitTimeEnd[GM.curMonsterID]);
-            print("Seconds til pet session: " + curPetWaitTime);
-            GM.homeUI.SetPettingSymbol(false);
-        }      
-    }
-
-    public void SetPlayTimerValues()
-    {
-        if (GM.CurMonsters[GM.curMonsterID].IsTired)
-        {
-            GM.PlayWaitTimeEnd[GM.curMonsterID] = curDate.AddMinutes(playWaitInMinutes);
-            print("Endtime Play for monster no" + GM.curMonsterID + ": " + GM.PlayWaitTimeEnd[GM.curMonsterID]);
-            curPlayWaitTime = GetWaitingTimeInSeconds(GM.PlayWaitTimeEnd[GM.curMonsterID]);
-            print("Seconds til play session: " + curPlayWaitTime);
-            GM.homeUI.SetPlayTimer(true);
-            GM.homeUI.TrainButtonActive(false);
-        }
-    }
-
-    float GetWaitingTimeInSeconds(DateTime endTime)
-    {
-        // Find time difference between two dates
-        TimeSpan TimeDifference = curDate - endTime;            
-
-        int hours = TimeDifference.Hours *-1;
-        //print("hours to wait: " + hours);
-        int mins = TimeDifference.Minutes *-1;
-        //print("mins to wait: " + mins);
-        int secs = TimeDifference.Seconds *-1;
-        //print("secs to wait: " + secs);
-        
-        return (float)hours * 3600 + (float)mins * 60 + (float)secs;
-    }
-
     private void PetTimer()
     {
         curPetWaitTime -= Time.deltaTime;
 
-        //string SendToPetUI = ConvertTimeToText(curPetWaitTime);
-        //print("Timer: " + SendToPetUI);
+        string SendToPetUI = ConvertTimeToText(curPetWaitTime);
+        print("PetTimer: " + SendToPetUI);
 
         if (curPetWaitTime <= 0.0f)
         {
-            GM.CurMonsters[GM.curMonsterID].IsHappy = false;
-            curPetWaitTime = 0.0f;
-            print("Oh no, monster needs affection! :(");
-            GM.homeUI.SetPettingSymbol(true);
+            EnablePetSession();
         }
+    }
+
+    private void EnablePetSession()
+    {
+        runPetTimer = false;
+        GM.CurMonsters[GM.curMonsterID].IsHappy = false;
+        curPetWaitTime = 0.0f;
+        GM.homeUI.SetPettingSymbol(true);
+        print("Pet timer done");
     }
 
     private void PlayTimer()
@@ -169,12 +83,65 @@ public class MonsterTimer : MonoBehaviour
 
         if (curPlayWaitTime <= 0.0f)
         {
-            GM.CurMonsters[GM.curMonsterID].IsTired = false;
-            curPlayWaitTime = 0.0f;
-            GM.homeUI.SetPlayTimer(false);
-            GM.homeUI.TrainButtonActive(true);
-            print("Monster is ready to play again! :)");
+            EnableMinigames();
         }
+    }
+
+    private void EnableMinigames()
+    {
+        runPlayTimer = false;
+        GM.CurMonsters[GM.curMonsterID].IsTired = false;
+        curPlayWaitTime = 0.0f;
+        GM.homeUI.SetPlayTimer(false);
+        GM.homeUI.TrainButtonActive(true);
+        print("Play timer done");
+    }
+    /// <summary>
+    /// Checks if a timer should be running for the current monster
+    /// </summary>
+    public void CheckDateTimes()
+    {
+        if (curMonster.PetTimerEnd <= curDate)
+        {
+            EnablePetSession();
+        }
+        else
+        {
+            curPetWaitTime = CalculateWaitingTimes(curMonster.PetTimerEnd);
+            GM.homeUI.SetPettingSymbol(false);
+            runPetTimer = true;
+        }
+        if (curMonster.PlayTimerEnd <= curDate)
+        {
+            EnableMinigames();
+        }
+        else
+        {
+            curPlayWaitTime = CalculateWaitingTimes(curMonster.PlayTimerEnd);
+            GM.homeUI.TrainButtonActive(false);
+            GM.homeUI.SetPlayTimer(true);
+            runPlayTimer = true;
+        }
+    }
+
+    /// <summary>
+    /// Returns the current waiting time in seconds for the timer
+    /// </summary>
+    /// <param name="endTime"></param>
+    /// <returns></returns>
+    private float CalculateWaitingTimes(DateTime endTime)
+    {
+        // Find time difference between two dates
+        TimeSpan TimeDifference = curDate - endTime;
+
+        int hours = TimeDifference.Hours * -1;
+        //print("hours to wait: " + hours);
+        int mins = TimeDifference.Minutes * -1;
+        //print("mins to wait: " + mins);
+        int secs = TimeDifference.Seconds * -1;
+        //print("secs to wait: " + secs);
+
+        return (float)hours * 3600 + (float)mins * 60 + (float)secs;
     }
 
     private string ConvertTimeToText(float curTime)
@@ -188,7 +155,86 @@ public class MonsterTimer : MonoBehaviour
             return (curMin + ":0" + curSec);
     }
 
-//################################################################
+
+
+
+    /// <summary>
+    /// Sets values for the currently selected monster on camera movement in home screen
+    /// </summary>
+    //public void OnSceneChange()
+    //{
+    //    if (GM.CurMonsters[GM.curMonsterID].Monster != null)
+    //    {
+    //        if (GM.CurMonsters[GM.curMonsterID].IsHappy || GM.CurMonsters[GM.curMonsterID].IsTired)
+    //        {
+    //            CompareDateTimes();
+    //        }
+    //    }
+    //    else
+    //    {
+    //        GM.homeUI.SetPettingSymbol(false);
+    //    }
+    //}
+
+    ///// <summary>
+    ///// Compares Endtime to current Time on SceneChange to see if the timer is even necessary
+    ///// </summary>
+    //private void CompareDateTimes()
+    //{
+    //    if (GM.PetWaitTimeEnd[GM.curMonsterID] <= curDate)
+    //    {
+    //        GM.CurMonsters[GM.curMonsterID].IsHappy = true;
+    //        GM.homeUI.SetPettingSymbol(false);
+    //        //happy idle
+    //        print("Monster ready for affection <3");
+    //    }
+    //    else
+    //    {
+    //        curPetWaitTime = GetWaitingTimeInSeconds(GM.PetWaitTimeEnd[GM.curMonsterID]);
+    //        GM.homeUI.SetPettingSymbol(true);
+    //        //sad idle
+    //    }
+
+    //    if (GM.PlayWaitTimeEnd[GM.curMonsterID] <= curDate)
+    //    {
+    //        GM.CurMonsters[GM.curMonsterID].IsTired = true;
+    //        //GM.homeUI.SetPlayTimer(true);
+    //        print("Monster wants to play! :D");
+    //    }
+    //    else
+    //    {
+    //        curPlayWaitTime = GetWaitingTimeInSeconds(GM.PlayWaitTimeEnd[GM.curMonsterID]);
+    //        //GM.homeUI.SetPlayTimer(false);
+    //    }
+
+    //    GM.runTimers = true;
+    //} 
+
+    //public void SetPetTimerValues()
+    //{
+    //    if (GM.CurMonsters[GM.curMonsterID].IsHappy)
+    //    {
+    //        GM.PetWaitTimeEnd[GM.curMonsterID] = curDate.AddMinutes(petWaitInMinutes);
+    //        print("Pet Monster " + GM.curMonsterID + ": " + GM.PetWaitTimeEnd[GM.curMonsterID]);
+    //        curPetWaitTime = GetWaitingTimeInSeconds(GM.PetWaitTimeEnd[GM.curMonsterID]);
+    //        print("Seconds til PET session: " + curPetWaitTime);
+    //        GM.homeUI.SetPettingSymbol(false);
+    //    }      
+    //}
+
+    //public void SetPlayTimerValues()
+    //{
+    //    if (GM.CurMonsters[GM.curMonsterID].IsTired)
+    //    {
+    //        GM.PlayWaitTimeEnd[GM.curMonsterID] = curDate.AddMinutes(playWaitInMinutes);
+    //        print("Play Monster " + GM.curMonsterID + ": " + GM.PlayWaitTimeEnd[GM.curMonsterID]);
+    //        curPlayWaitTime = GetWaitingTimeInSeconds(GM.PlayWaitTimeEnd[GM.curMonsterID]);
+    //        print("Seconds til PLAY session: " + curPlayWaitTime);
+    //        GM.homeUI.SetPlayTimer(true);
+    //        GM.homeUI.TrainButtonActive(false);
+    //    }
+    //}
+    //################################################################
 
 
     ////test functions
