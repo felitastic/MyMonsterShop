@@ -19,12 +19,16 @@ public class Monster_Kompendium : MonoBehaviour
     public Text CurMonsterHatchCount;
     public Text CurMonsterHighestPrice;
 
+    public GameObject[] Page;
+    private int curPage;
+
     private GameManager GM;
     
     private void Start()
     {
         GM = GameManager.Instance;
         GM.monsterKompendium = this;
+        curPage = 0;
     }
 
     public void SetButtons()
@@ -63,16 +67,51 @@ public class Monster_Kompendium : MonoBehaviour
         else
         {
             CurMonsterImage.sprite = MonsterEntry[EntryNo].ShadowButtonImage;
-            CurMonsterFluff.text = " Hatch and sell this monster to unlock info!";
+            CurMonsterFluff.text = "Sell adult version of this monster to unlock info!";
             CurMonsterName.text = "???"; 
-            CurMonsterRarity.text = "..."; 
-            CurMonsterHatchCount.text = "..."; 
-            CurMonsterHighestPrice.text = "..."; 
+            CurMonsterRarity.text = "Rarity: ???"; 
+            CurMonsterHatchCount.text = "Total hatched: 0"; 
+            CurMonsterHighestPrice.text = "Highest price: N/A"; 
         }
     }
 
     public void SetActive(Button button)
     {
         button.Select();
+        button.animator.SetTrigger("Selected");
+    }
+
+    public void ChangePage(bool left)
+    {
+        if (left)
+        {
+            curPage -= 1;
+            if (curPage >= 0 && curPage < Page.Length)
+            {
+                Page[curPage+1].SetActive(false);
+                Page[curPage].SetActive(true);
+            }
+            else if (curPage < 0)
+            {
+                Page[curPage + 1].SetActive(false);
+                curPage = Page.Length-1;
+                Page[curPage].SetActive(true);
+            }
+        }
+        else
+        {
+            curPage += 1;
+            if (curPage >= 0 && curPage < Page.Length)
+            {
+                Page[curPage - 1].SetActive(false);
+                Page[curPage].SetActive(true);
+            }
+            else if (curPage >= Page.Length)
+            {
+                Page[curPage - 1].SetActive(false);
+                curPage = 0;
+                Page[curPage].SetActive(true);
+            }
+        }
     }
 }   

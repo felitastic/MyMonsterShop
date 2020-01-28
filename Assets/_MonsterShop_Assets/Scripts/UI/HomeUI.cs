@@ -78,7 +78,8 @@ public class HomeUI : UIController
         PettingInfo,
         PettingXPBar,
         DungeonSellButton,
-        H_TrainButtonTimeOut
+        H_TrainButtonTimeOut,
+        CheatWindow
     }
 
     private enum  eButtons
@@ -126,6 +127,7 @@ public class HomeUI : UIController
         Dungeonlord,
         Kompendium,
         Petting,
+        Cheats,
         none
     }
 
@@ -134,12 +136,12 @@ public class HomeUI : UIController
         GetGameManager();
         GM.homeUI = this;
         camShopPos = new Vector3(0.0f, 20.0f, -10.001f);
-        EggHatchCount = 1;
         //camDungeonPos = new Vector3(-10.801f, 20.0f, -10.001f);
     }
 
     private void Start()
     {
+        EggHatchCount = GM.TapsToHatch;
         SetUIStage(eHomeUIScene.Home);
         ShowMonsterStats(GM.CurMonsters[(int)GM.curMonsterSlot].Monster != null);
         SetMonsterXPBarUndLevel();
@@ -230,18 +232,28 @@ public class HomeUI : UIController
 
         if (swipeDisabled)
         {
-            DisableButton((int)eButtons.SwipeRight);
-            DisableMenu((int)eMenus.SwipeRightInput);
-            DisableButton((int)eButtons.SwipeLeft);
-            DisableMenu((int)eMenus.SwipeLeftInput);
+            DisabelAllSwiping();
         }
         else
         {
-            EnableButton((int)eButtons.SwipeRight);
-            EnableMenu((int)eMenus.SwipeRightInput);
-            EnableButton((int)eButtons.SwipeLeft);
-            EnableMenu((int)eMenus.SwipeLeftInput);
+            EnableDefaultSwiping();            
         }
+    }
+
+    private void EnableDefaultSwiping()
+    {
+        EnableButton((int)eButtons.SwipeRight);
+        EnableMenu((int)eMenus.SwipeRightInput);
+        EnableButton((int)eButtons.SwipeLeft);
+        EnableMenu((int)eMenus.SwipeLeftInput);
+    }
+
+    private void DisabelAllSwiping()
+    {
+        DisableButton((int)eButtons.SwipeRight);
+        DisableMenu((int)eMenus.SwipeRightInput);
+        DisableButton((int)eButtons.SwipeLeft);
+        DisableMenu((int)eMenus.SwipeLeftInput);
     }
 
     // Changes UI menus according to scene 
@@ -288,6 +300,9 @@ public class HomeUI : UIController
                 NoUI();
 
                 break;
+            case eHomeUIScene.Cheats:
+                UI_Cheats();
+                break;
             default:
                 Debug.LogError("No UI scene set!");
                 break;
@@ -297,6 +312,7 @@ public class HomeUI : UIController
     private void NoUI()
     {
         DisableMenu((int)eMenus.Home);
+        DisableMenu((int)eMenus.CheatWindow);
         DisableMenu((int)eMenus.Petting);
         DisableMenu((int)eMenus.Kompendium);
         DisableMenu((int)eMenus.Dungeon);
@@ -315,6 +331,7 @@ public class HomeUI : UIController
 
     private void UI_Petting()
     {
+        DisableMenu((int)eMenus.CheatWindow);
         DisableMenu((int)eMenus.Home);
         DisableMenu((int)eMenus.H_MonsterStats);
         DisableMenu((int)eMenus.XPBar);
@@ -330,6 +347,7 @@ public class HomeUI : UIController
 
     private void UI_Kompendium()
     {
+        DisableMenu((int)eMenus.CheatWindow);
         DisableMenu((int)eMenus.Home);
         DisableMenu((int)eMenus.H_MonsterStats);
         DisableMenu((int)eMenus.XPBar);
@@ -358,6 +376,7 @@ public class HomeUI : UIController
         EnableMenu((int)eMenus.PlayerInfo);
         EnableMenu((int)eMenus.Home);
 
+        DisableMenu((int)eMenus.CheatWindow);
         DisableMenu((int)eMenus.Petting);
         DisableMenu((int)eMenus.Kompendium);
         DisableMenu((int)eMenus.Dungeon);
@@ -391,6 +410,7 @@ public class HomeUI : UIController
 
     private void UI_EggShop()
     {
+        DisableMenu((int)eMenus.CheatWindow);
         DisableMenu((int)eMenus.Home);
         DisableMenu((int)eMenus.H_MonsterStats);
         DisableMenu((int)eMenus.XPBar);
@@ -416,9 +436,10 @@ public class HomeUI : UIController
         SetCageVisibility(true);
         //scale monsters
         GM.homeMonsterManager.ScaleMonsterBody(0.150f);
-        
+
         //DisableMenu((int)eMenus.HomeBG);
         //DisableMenu((int)eMenus.XPBar);
+        DisableMenu((int)eMenus.CheatWindow);
         DisableMenu((int)eMenus.Home);
         DisableMenu((int)eMenus.H_MonsterStats);
         DisableMenu((int)eMenus.D_SalesContract);        
@@ -428,6 +449,12 @@ public class HomeUI : UIController
         EnableMenu((int)eMenus.Dungeon);
         EnableMenu((int)eMenus.D_BottomButtons);
         EnableMenu((int)eMenus.SwipeButtons);
+    }
+
+    private void UI_Cheats()
+    {
+        DisableMenu((int)eMenus.Home);
+        EnableMenu((int)eMenus.CheatWindow);
     }
 
     private void UI_Minigame()
@@ -490,6 +517,12 @@ public class HomeUI : UIController
     {
         GoToEggShop();
     }
+
+    public void EnablePopupInfoCloseButton()
+    {
+        EnableMenu((int)eMenus.ClosePopupButton);        
+    }
+
     public void SetPopInfoWindowStatus(bool open, string message = "")
     {
         if (open)
@@ -807,6 +840,11 @@ public class HomeUI : UIController
             SetText((int)eTextfields.ShopDialogue, 
                 "It seems you cannot afford this egg!");
         }
+        else if (thisMonster == null)
+        {
+            SetText((int)eTextfields.ShopDialogue,
+                "Sorry, I don't have this kind of egg right now!");
+        }
         else
         {
             if (GM.CurMonsters[(int)GM.curMonsterSlot].Unlocked)
@@ -873,6 +911,7 @@ public class HomeUI : UIController
         DisableMenu((int)eMenus.S_ShopUI);
         DisableMenu((int)eMenus.S_EggMenu);
         DisableMenu((int)eMenus.S_BottomButtons);
+        DisableMenu((int)eMenus.PlayerInfo);
         EnableMenu((int)eMenus.S_TappEggButton);
     }
 
@@ -891,6 +930,7 @@ public class HomeUI : UIController
     public void TapEgg()
     {
         hatchTaps += 1;
+        GM.vfx_home.SpawnEffect(VFX_Home.VFX.TapEgg, VFX_Home.Position.EggHatching);
         //tapeffect
 
         if (hatchTaps == EggHatchCount)
@@ -899,7 +939,7 @@ public class HomeUI : UIController
             GM.CurMonsters[GM.curMonsterID].PlayTimerEnd = System.DateTime.Now;
             GM.CurMonsters[(int)GM.curMonsterSlot].MonsterLevel = 1;            
             GM.homeMonsterManager.SetEggRarity();
-            StartCoroutine(GM.homeMonsterManager.cHatchEgg(GM.homeMonsterManager.EggSpawn));
+            StartCoroutine(GM.homeMonsterManager.cHatchEgg(GM.homeMonsterManager.BabySpawn));
             DisableMenu((int)eMenus.S_TappEggButton);
             GM.monsterKompendium.MonsterEntry[CurKompendiumEntrySlot()].MonsterHatchCount += 1;
             SetMonsterTexts();

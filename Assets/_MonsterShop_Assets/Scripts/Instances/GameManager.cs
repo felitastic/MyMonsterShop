@@ -19,6 +19,10 @@ public class GameManager : Singleton<GameManager>
     public HomeUI homeUI;
     public RunnerUI runnerUI;
 
+    //VFX
+    public VFX_Home vfx_home;
+    public VFX_Runner vfx_runner;
+
     //MonsterManager
     public MM_Home homeMonsterManager;
     public MM_Runner runnerMonsterManager;
@@ -48,6 +52,8 @@ public class GameManager : Singleton<GameManager>
     //public CurrentMonster[] CurMonsters = new CurrentMonster[3];
     public MonsterSlot[] CurMonsters;
 
+    //how many taps til egg hatches
+    public int TapsToHatch = 3;
 
     public int StrokesPerPettingSession = 5;
     public float XPGainPerPettingSession = 100.0f;
@@ -72,6 +78,11 @@ public class GameManager : Singleton<GameManager>
 
     //Scripte für die Minigames
     public RunnerController runnerController;
+
+
+    //Cheats
+    public bool getEpic;
+    public bool getLegendary;
 
     //Lautstärke vom Spieler eingestellt
     //public float BGMVolume;

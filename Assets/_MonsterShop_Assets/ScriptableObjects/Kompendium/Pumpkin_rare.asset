@@ -17,9 +17,9 @@ MonoBehaviour:
     type: 3}
   ButtonText: Pumpkin
   MonsterImage: {fileID: 21300000, guid: 2b5fa41f7b18109459380e8636c703d0, type: 3}
-  MonsterFluff: 'A rare pumpking D:'
+  MonsterFluff: Smaller than other pumpkins but even more bitey to make up for it.
   MonsterName: Pumpkin
-  MonsterRarity: Rare
+  MonsterRarity: Bicolor Pear
   MonsterHatchCount: 0
   MonsterHighestPrice: 1234
   MonsterType: 0

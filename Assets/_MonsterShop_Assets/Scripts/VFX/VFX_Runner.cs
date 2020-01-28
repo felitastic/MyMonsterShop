@@ -20,9 +20,11 @@ public class VFX_Runner : MonoBehaviour
     public GameObject[] VFXEffect = new GameObject[4];
     public enum VFX             //One enum name for each prefab, needs to be the same order
     {
-        LevelUp,
-        GrowthUp,
-        Coins,
+        Orb_Glow,
+        Orb_Pickup,
+        Runner_Death,
+        Runner_Run,
+        Confetti,
 
         //NumberofVFX needs to be the last in list!
         NumberofVFX

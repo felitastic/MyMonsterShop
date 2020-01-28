@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1443647254795223427}
   - component: {fileID: 3985796912698651265}
   - component: {fileID: 6218373187638587976}
+  - component: {fileID: 8767183098359805619}
   m_Layer: 0
   m_Name: Obstacle_small
   m_TagString: Untagged
@@ -68,8 +69,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -767790707
+  m_SortingLayer: 3
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 73c05c899858a3842b7dc8ad4c4e3a4c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -93,8 +94,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 1, z: 2}
-  m_Center: {x: 0, y: -0.5, z: 0}
+  m_Size: {x: 2.4478984, y: 1.0267401, z: 2}
+  m_Center: {x: 0.010027409, y: -0.606961, z: 0}
 --- !u!114 &6218373187638587976
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -107,3 +108,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bce0893970f9cd43a1a6042475c9891, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &8767183098359805619
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3080256810881723035}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.858069, y: 1.3032095, z: 0.2}
+  m_Center: {x: 0.010027528, y: 0.4278437, z: 0}

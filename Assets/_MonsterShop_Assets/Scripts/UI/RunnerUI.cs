@@ -53,6 +53,10 @@ public class RunnerUI : UIController
     // Called by StartButton
     public void StartPressed()
     {
+        //GM.runnerController.InstantiateNextTile(GM.runnerController.curTile);
+        //GM.runnerController.curTile += 1;
+        //GM.runnerController.InstantiateNextTile(GM.runnerController.curTile);
+
         DisableMenu((int)eMenus.StartButton);
         EnableButton((int)eButtons.LeftButton);
         EnableButton((int)eButtons.RightButton);

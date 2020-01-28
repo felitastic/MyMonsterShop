@@ -17,9 +17,9 @@ MonoBehaviour:
     type: 3}
   ButtonText: Pumpkin
   MonsterImage: {fileID: 21300000, guid: 2b5fa41f7b18109459380e8636c703d0, type: 3}
-  MonsterFluff: Just a pumpkin. That can walk. And bite.
+  MonsterFluff: The classic halloween pumpkin we all love. Do not approach with knives!
   MonsterName: Pumpkin
-  MonsterRarity: Normal
-  MonsterHatchCount: 0
+  MonsterRarity: Atlantic Giant
+  MonsterHatchCount: 1
   MonsterHighestPrice: 220
   MonsterType: 0

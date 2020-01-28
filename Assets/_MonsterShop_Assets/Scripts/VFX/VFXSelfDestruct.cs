@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class VFXSelfDestruct : MonoBehaviour
 {
+    public bool isTimed;
     void Update()
     {
-        Destroy(this.gameObject, GetComponent<ParticleSystem>().main.duration);
+        if (!isTimed)
+            Destroy(this.gameObject, GetComponent<ParticleSystem>().main.duration);
+        else
+            Destroy(this.gameObject, 4.0f);
     }
 }

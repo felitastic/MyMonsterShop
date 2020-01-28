@@ -17,9 +17,9 @@ MonoBehaviour:
     type: 3}
   ButtonText: Pumpkin
   MonsterImage: {fileID: 21300000, guid: 2b5fa41f7b18109459380e8636c703d0, type: 3}
-  MonsterFluff: Legen- dont wait - dary!
+  MonsterFluff: Grows best in winter, prefers dark and cold spaces.
   MonsterName: Pumpkin
-  MonsterRarity: Legendary
+  MonsterRarity: Sweet dumpling
   MonsterHatchCount: 0
   MonsterHighestPrice: 1234
   MonsterType: 0

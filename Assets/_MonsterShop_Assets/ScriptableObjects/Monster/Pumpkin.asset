@@ -90,4 +90,5 @@ MonoBehaviour:
   BaseValue: 50
   MonsterType: 0
   MonsterName: Pumpkin
-  EggPrefab: {fileID: 74603032622791611, guid: e4f1d0972e5b19a469f7de1e6df9cc30, type: 3}
+  EggPrefab: {fileID: 7378189106694598689, guid: 946fc29714ee12148b41cc317badb4bf,
+    type: 3}

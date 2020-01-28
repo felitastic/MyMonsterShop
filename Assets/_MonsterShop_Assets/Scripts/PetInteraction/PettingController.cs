@@ -15,7 +15,7 @@ public class PettingController : MonoBehaviour
     [SerializeField]
     private float monsterStroked;
     private bool strokeDelay;
-    private float petTime = 0.15f;
+    private float petTime = 0.25f;
 
     private void Start()
     {
@@ -135,9 +135,8 @@ public class PettingController : MonoBehaviour
 
     private IEnumerator cStrokingMonstser()
     {
-        //play animation
+        GM.vfx_home.SpawnEffectViaInt(VFX_Home.VFX.Pet, GM.curMonsterID);
         MM.monsterAnim[MM.CurMonster.SlotID].SetTrigger("stroke");
-        //wait for it to finish
         yield return new WaitForSeconds(petTime);
         strokeDelay = false;
     }

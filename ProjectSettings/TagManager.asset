@@ -17,7 +17,7 @@ TagManager:
   - 
   - 
   - PostProcessing
-  - 
+  - Particles
   - 
   - 
   - 
@@ -49,4 +49,10 @@ TagManager:
     locked: 0
   - name: Home
     uniqueID: 3876676919
+    locked: 0
+  - name: Backgrounds
+    uniqueID: 3527176589
+    locked: 0
+  - name: Particles
+    uniqueID: 2027944273
     locked: 0
