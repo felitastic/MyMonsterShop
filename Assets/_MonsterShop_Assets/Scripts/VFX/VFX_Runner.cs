@@ -41,17 +41,31 @@ public class VFX_Runner : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Spawn effekt using the enum lists
+    /// </summary>
+    /// <param name="effect"></param>
+    /// <param name="position"></param>
     public void SpawnEffect(VFX effect, Position position)
     {
         GameObject newVFX = GameObject.Instantiate(this.VFXEffect[(int)effect], transform.position, transform.rotation) as GameObject;
         newVFX.name = "" + effect;
-        //newVFX.transform.position = this.SpawnPosition[(int)position].transform.position;
+        newVFX.transform.position = SpawnPosition[(int)position].transform.position;
+        newVFX.transform.SetParent(SpawnPosition[(int)position].transform);
+        //print("Spawned VFX " + newVFX.name + " under " + SpawnPosition[(int)position].name);
     }
 
+    /// <summary>
+    /// Spawn effekt via Button etc where enums cannot be used
+    /// </summary>
+    /// <param name="effect"></param>
+    /// <param name="position"></param>
     public void SpawnEffectViaInt(VFX effect, int position)
     {
         GameObject newVFX = GameObject.Instantiate(this.VFXEffect[(int)effect], transform.position, transform.rotation) as GameObject;
         newVFX.name = "" + effect;
-        newVFX.transform.position = this.SpawnPosition[position].transform.position;
+        newVFX.transform.position = SpawnPosition[(int)position].transform.position;
+        newVFX.transform.SetParent(SpawnPosition[(int)position].transform);
+        //print("Spawned VFX " + newVFX.name + " under " + SpawnPosition[(int)position].name);
     }
 }

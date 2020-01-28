@@ -61,7 +61,7 @@ public class VFX_Home : MonoBehaviour
         newVFX.name = "" + effect;
         newVFX.transform.position = SpawnPosition[(int)position].transform.position;
         newVFX.transform.SetParent(SpawnPosition[(int)position].transform);
-        print("Spawned VFX " + newVFX.name + " under " + SpawnPosition[(int)position].name);
+        //print("Spawned VFX " + newVFX.name + " under " + SpawnPosition[(int)position].name);
     }
 
     /// <summary>
@@ -75,6 +75,6 @@ public class VFX_Home : MonoBehaviour
         newVFX.name = "" + effect;
         newVFX.transform.position = SpawnPosition[(int)position].transform.position;
         newVFX.transform.SetParent(SpawnPosition[(int)position].transform);
-        print("Spawned VFX " + newVFX.name + " under " + SpawnPosition[(int)position].name);
+        //print("Spawned VFX " + newVFX.name + " under " + SpawnPosition[(int)position].name);
     }
 }

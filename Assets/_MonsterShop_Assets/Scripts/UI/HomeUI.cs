@@ -75,6 +75,7 @@ public class HomeUI : UIController
         Kompendium,
         Petting,
         PetMeSymbol,
+        TapMonster,
         PettingInfo,
         PettingXPBar,
         DungeonSellButton,
@@ -190,10 +191,13 @@ public class HomeUI : UIController
         if (show)
         {
             EnableMenu((int)eMenus.PetMeSymbol);
+            EnableMenu((int)eMenus.TapMonster);
+
             //TODO change to sad idle
         }
         else
         {
+            DisableMenu((int)eMenus.TapMonster);
             DisableMenu((int)eMenus.PetMeSymbol);
         }
     }
@@ -502,14 +506,21 @@ public class HomeUI : UIController
         {
             EnableMenu((int)eMenus.H_MonsterStats);
             if (!GM.CurMonsters[(int)GM.curMonsterSlot].IsHappy)
+            {
                 EnableMenu((int)eMenus.PetMeSymbol);
+                EnableMenu((int)eMenus.TapMonster);
+            }
             else
+            {
                 DisableMenu((int)eMenus.PetMeSymbol);
+                DisableMenu((int)eMenus.TapMonster);
+            }
         }
         else
         {
             DisableMenu((int)eMenus.H_MonsterStats);
             DisableMenu((int)eMenus.PetMeSymbol);
+            DisableMenu((int)eMenus.TapMonster);
         }
     }
 
@@ -755,8 +766,7 @@ public class HomeUI : UIController
     /// <returns></returns>
     private IEnumerator cWaitForZoom(bool zoomedIn)
     {
-        SetUIStage(eHomeUIScene.none);    
-
+        SetUIStage(eHomeUIScene.none);  
 
         yield return new WaitForSeconds(0.15f);
         if (zoomedIn)

@@ -88,7 +88,7 @@ public class MonsterTimer : MonoBehaviour
         curPetWaitTime -= Time.deltaTime;
 
         string SendToPetUI = ConvertTimeToText(curPetWaitTime);
-        print("PetTimer: " + SendToPetUI);
+        //print("PetTimer: " + SendToPetUI);
 
         if (curPetWaitTime <= 0.0f)
         {
