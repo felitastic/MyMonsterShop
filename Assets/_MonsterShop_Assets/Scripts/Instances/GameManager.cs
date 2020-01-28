@@ -32,7 +32,6 @@ public class GameManager : Singleton<GameManager>
 
     //wie oft spieler schon minigames gespielt hat (für unlocks)
     public int MinigamesPlayed;
-    public bool DungeonlordWaiting;
     public eScene curScreen;
 
     //left, middle, right screen in home
@@ -58,10 +57,13 @@ public class GameManager : Singleton<GameManager>
     /// </summary>
     public bool[] UnlockedLogEntries = new bool[9];
 
-    //For the timers
-    public System.DateTime DungeonLordWaitTimeEnd;
-
     //Timer
+    //For the dungeon lord timer
+    public System.DateTime DungeonLordWaitTimeEnd;
+    public bool DLIsGone;
+    public float DLWaitInMinutes = 10.0f;
+
+    //Other timers
     public MonsterTimer monsterTimer;
     //How long until you can pet again
     public float petWaitInMinutes = 2.0f;
@@ -86,7 +88,8 @@ public class GameManager : Singleton<GameManager>
         Application.targetFrameRate = 60;        
         WriteEmptySlots();
         curScreen = eScene.home;
-        DungeonlordWaiting = true;
+        DLIsGone = true;
+        SetDLTimer();
         petWaitInMinutes = 3.0f;
         playWaitInMinutes = 2.0f;
     }
@@ -113,6 +116,11 @@ public class GameManager : Singleton<GameManager>
         CurMonsters[1].Unlocked = true;
         CurMonsters[0].UnlockPrice = 50;
         CurMonsters[2].UnlockPrice = 150;
+    }
+
+    public void SetDLTimer()
+    {
+        DungeonLordWaitTimeEnd = DateTime.Now.AddMinutes(DLWaitInMinutes);
     }
 
     /// <summary>

@@ -114,7 +114,8 @@ public class HomeUI : UIController
         K_MonsterRarity,
         K_MonsterHatchCount,
         K_MonsterHighestPrice,
-        H_TrainButtonTimer
+        H_TrainButtonTimer,
+        H_DungeonLordTimer
     }
 
     public enum eHomeUIScene
@@ -149,10 +150,10 @@ public class HomeUI : UIController
         //if (GM.monsterTimer = null)
         //    GM.monsterTimer = FindObjectOfType<MonsterTimer>();
     }
-
-    public void SetDungeonTimer()
+    
+    public void UpdateDLTimer(string info)
     {
-
+        SetText((int)eTextfields.H_DungeonLordTimer, info);
     }
 
     public void UpdatePlayTimer(string time)
@@ -753,20 +754,28 @@ public class HomeUI : UIController
 
     public void GoToDungeonlord()
     {
-        SetUIStage(eHomeUIScene.Dungeonlord);
-        SetDungeonDialogue();
-      
-        GM.homeUI.SetMonsterTexts();
-        GM.homeUI.SetMonsterValue();
-        GM.homeUI.SetMonsterlevel_Dungeon();
-
-        if (GM.CurMonsters[(int)GM.curMonsterSlot].Monster == null)
+        if (GM.DLIsGone)
         {
-            GM.homeUI.SellButtonActive(false);
+            print("DL is not available right now");
+            //TODO show info, that he will be available later?
         }
         else
         {
-            GM.homeUI.SellButtonActive(true);
+            SetUIStage(eHomeUIScene.Dungeonlord);
+            SetDungeonDialogue();
+      
+            GM.homeUI.SetMonsterTexts();
+            GM.homeUI.SetMonsterValue();
+            GM.homeUI.SetMonsterlevel_Dungeon();
+
+            if (GM.CurMonsters[(int)GM.curMonsterSlot].Monster == null)
+            {
+                GM.homeUI.SellButtonActive(false);
+            }
+            else
+            {
+                GM.homeUI.SellButtonActive(true);
+            }
         }
     }
 
@@ -996,7 +1005,7 @@ public class HomeUI : UIController
     {
         if (yes)
         {
-            GM.DungeonlordWaiting = false;
+            GM.DLIsGone = true;
             GM.CurMonsters[(int)GM.curMonsterSlot].Sold = true;
             if (GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage == eMonsterStage.Adult)
             {
@@ -1069,7 +1078,7 @@ public class HomeUI : UIController
     public void ExitDungeonMenu()
     {
         // nothing has been sold to the dungeon lord
-        if (GM.DungeonlordWaiting)
+        if (!GM.DLIsGone)
         {
             SetUIStage(eHomeUIScene.Home);
         }
@@ -1081,10 +1090,7 @@ public class HomeUI : UIController
             //    "\nReally leave and sell?";
             //SetPopInfoWindowStatus(true, msg);
             //DisableMenu((int)eMenus.D_BottomButtons);
-            //EnableMenu((int)eMenus.D_LeaveConfirmButton);
-
-            //TODO remove this when dungeon lord timer is implemented!!
-            GM.DungeonlordWaiting = true;
+            //EnableMenu((int)eMenus.D_LeaveConfirmButton);            
             StartCoroutine(cExitDungeon());
         }
     }
@@ -1102,6 +1108,8 @@ public class HomeUI : UIController
             }
         }
         SetSlotSymbol();
+        GM.SetDLTimer();
+        GM.monsterTimer.CheckDateTimes();
         SetUIStage(eHomeUIScene.Home);
     }
 

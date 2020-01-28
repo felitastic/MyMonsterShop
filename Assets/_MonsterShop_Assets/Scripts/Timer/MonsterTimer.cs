@@ -13,7 +13,10 @@ public class MonsterTimer : MonoBehaviour
     private float curPetWaitTime;
     //Seconds for the timer until you can play again
     private float curPlayWaitTime;
+    //Seconds until the dungeon lord is available again
+    private float curDungeonLordWaitTime;
 
+    private bool runDLTimer;
     private bool runPetTimer;
     private bool runPlayTimer;
 
@@ -29,15 +32,14 @@ public class MonsterTimer : MonoBehaviour
     {
         runPetTimer = false;
         runPlayTimer = false;
+        runDLTimer = false;
     }
 
     private void Start()
     {
         GM = GameManager.Instance;
-        GM.monsterTimer = this;
-
-        if (curMonster.Monster != null)
-            CheckDateTimes();
+        GM.monsterTimer = this;        
+        CheckDateTimes();
     }
     
     private void Update()
@@ -50,7 +52,34 @@ public class MonsterTimer : MonoBehaviour
         {
             PlayTimer();
         }
+        if (runDLTimer)
+        {
+            DLTimer();
+        }
     }
+    /// <summary>
+    /// Timer for the Dungeon Lord
+    /// </summary>
+    private void DLTimer()
+    {
+        curDungeonLordWaitTime -= Time.deltaTime;
+        GM.homeUI.UpdateDLTimer(ConvertTimeToText(curDungeonLordWaitTime));
+
+        if (curDungeonLordWaitTime <= 0.0f)
+        {
+            EnableDungeonLord();
+        }
+    }
+
+    private void EnableDungeonLord()
+    {
+        runDLTimer = false;
+        GM.DLIsGone = false;
+        curDungeonLordWaitTime = 0.0f;
+        GM.homeUI.UpdateDLTimer("Sell");
+        print("Dungeon lord is ready");
+    }
+
     /// <summary>
     /// Timer for the petting sessions
     /// </summary>
@@ -101,26 +130,40 @@ public class MonsterTimer : MonoBehaviour
     /// </summary>
     public void CheckDateTimes()
     {
-        if (curMonster.PetTimerEnd <= curDate)
+        if (curMonster.Monster != null)
         {
-            EnablePetSession();
+            if (curMonster.PetTimerEnd <= curDate)
+            {
+                EnablePetSession();
+            }
+            else
+            {
+                curPetWaitTime = CalculateWaitingTimes(curMonster.PetTimerEnd);
+                GM.homeUI.SetPettingSymbol(false);
+                runPetTimer = true;
+            }
+
+            if (curMonster.PlayTimerEnd <= curDate)
+            {
+                EnableMinigames();
+            }
+            else
+            {
+                curPlayWaitTime = CalculateWaitingTimes(curMonster.PlayTimerEnd);
+                GM.homeUI.TrainButtonActive(false);
+                GM.homeUI.SetPlayTimer(true);
+                runPlayTimer = true;
+            }
+        }
+
+        if (GM.DungeonLordWaitTimeEnd <= curDate)
+        {
+            EnableDungeonLord();
         }
         else
         {
-            curPetWaitTime = CalculateWaitingTimes(curMonster.PetTimerEnd);
-            GM.homeUI.SetPettingSymbol(false);
-            runPetTimer = true;
-        }
-        if (curMonster.PlayTimerEnd <= curDate)
-        {
-            EnableMinigames();
-        }
-        else
-        {
-            curPlayWaitTime = CalculateWaitingTimes(curMonster.PlayTimerEnd);
-            GM.homeUI.TrainButtonActive(false);
-            GM.homeUI.SetPlayTimer(true);
-            runPlayTimer = true;
+            curDungeonLordWaitTime = CalculateWaitingTimes(GM.DungeonLordWaitTimeEnd);
+            runDLTimer = true;
         }
     }
 
@@ -148,15 +191,30 @@ public class MonsterTimer : MonoBehaviour
     {
         int curMin = Mathf.FloorToInt(curTime / 60F);
         int curSec = Mathf.FloorToInt(curTime - curMin * 60);
-        //TODO: gives these to UI for the countdown
+
         if (curSec >= 10)
-            return (curMin + ":" + curSec);
+        {
+            if (curMin >= 10)
+            {
+                return (curMin + ":" + curSec);
+            }
+            else 
+            {
+                return ("0"+curMin + ":" + curSec);
+            }
+        }
         else
-            return (curMin + ":0" + curSec);
+        {
+            if (curMin >= 10)
+            {
+                return (curMin + ":0" + curSec);
+            }
+            else 
+            {
+                return ("0" + curMin + ":0" + curSec);
+            }
+        }
     }
-
-
-
 
     /// <summary>
     /// Sets values for the currently selected monster on camera movement in home screen
