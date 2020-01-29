@@ -38,10 +38,7 @@ public class RunnerUI : UIController
 
     private void Awake()
     {
-        DisableButton((int)eButtons.LeftButton);
-        DisableButton((int)eButtons.RightButton);
-        DisableButton((int)eButtons.StartButton);
-        SetText((int)eTextfields.StartText, "");
+        StartMenu();
     }
     
     private void Start()
@@ -50,24 +47,29 @@ public class RunnerUI : UIController
         GM.runnerUI = this;
     }
 
+    private void StartMenu()
+    {
+        EnableMenu((int)eMenus.StartButton);
+        DisableButton((int)eButtons.LeftButton);
+        DisableButton((int)eButtons.RightButton);
+        DisableButton((int)eButtons.StartButton);
+        SetText((int)eTextfields.StartText, "");
+        StartCoroutine(cEnableStart());
+    }
+
+    public IEnumerator cEnableStart()
+    {
+        yield return new WaitForSeconds(0.5f);
+        GM.runnerUI.EnableStartButton();
+    }
+
     // Called by StartButton
     public void StartPressed()
     {
-        //GM.runnerController.InstantiateNextTile(GM.runnerController.curTile);
-        //GM.runnerController.curTile += 1;
-        //GM.runnerController.InstantiateNextTile(GM.runnerController.curTile);
-
-        DisableMenu((int)eMenus.StartButton);
+        DisableMenu((int)eMenus.StartButton);        
         EnableButton((int)eButtons.LeftButton);
         EnableButton((int)eButtons.RightButton);
-        StartCoroutine(cStartDelay());
-    }
-
-    private IEnumerator cStartDelay()
-    {
-        GM.runnerMonsterManager.cSpawnMonsterinRunner();
-        yield return new WaitForSeconds(0.5f);
-        GM.runnerController.IsRunning = true;
+        StartCoroutine(GM.runnerMonsterManager.cSpawnMonsterinRunner());
     }
 
     public void SetGameEndText(string text)

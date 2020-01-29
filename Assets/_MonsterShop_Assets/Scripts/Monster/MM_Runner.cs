@@ -17,14 +17,13 @@ public class MM_Runner : MonsterManager
 
     public IEnumerator cSpawnMonsterinRunner()
     {        
-        //change local scale and rotation to fit
         SpawnCurrentMonster(IngameMonsterSpawn);
         GM.runnerController.playerControls.Monster = GM.runnerMonsterManager.monsterRigid[SlotID];
+        GM.runnerController.Cam.transform.position =
+            new Vector3(0f, GM.runnerMonsterManager.IngameMonsterSpawn.transform.position.y + 6.0f, -10f);
+        yield return new WaitForSeconds(0.75f);
         GM.vfx_runner.SpawnEffektAtObject(VFX_Runner.VFX.Runner_Run, monsterBody[SlotID]);
-
-        //enable start button after setup is done
-        yield return new WaitForSeconds(0.5f);
-        GM.runnerUI.EnableStartButton();
+        GM.runnerController.IsRunning = true;        
     }       
 
 }

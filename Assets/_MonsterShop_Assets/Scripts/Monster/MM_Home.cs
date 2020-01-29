@@ -124,9 +124,11 @@ public class MM_Home : MonsterManager
     // Hatching egg animation
     public IEnumerator cHatchEgg(Transform monsterSpawn)
     {
+        yield return new WaitForSeconds(0.05f);
         CurMonster.MonsterStage = eMonsterStage.Baby;
         Destroy(monsterBody[SlotID]);
         GM.vfx_home.SpawnEffect(VFX_Home.VFX.EggShells, VFX_Home.Position.EggHatching);
+        StartCoroutine(GM.HomeCam.cShake(0.1f, 0.25f));
         GM.vfx_home.SpawnEffect(VFX_Home.VFX.EggGlow, VFX_Home.Position.EggGlow);
         GM.homeMonsterManager.SpawnCurrentMonster(monsterSpawn);
         yield return new WaitForSeconds(3f);

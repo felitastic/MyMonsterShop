@@ -24,4 +24,9 @@ public class CageVFX : MonoBehaviour
         }
         GameManager.Instance.vfx_home.SpawnEffectViaInt(VFX_Home.VFX.Cage_falls, pos);
     }
+
+    public void ScreenShake()
+    {
+        StartCoroutine(GameManager.Instance.HomeCam.cShake(0.15f, 0.25f));
+    }
 }

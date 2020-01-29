@@ -249,19 +249,25 @@ public class CameraMovement : MonoBehaviour
         lerping = false;
     }
 
-    //public void SetCamPosition(eCamPosition camEndPos)
-    //{
-    //    CamHolder.transform.position = CamTransforms[(int)camEndPos].transform.position;
-    //    CamHolder.transform.rotation = CamTransforms[(int)camEndPos].transform.rotation;
-    //}
+    public IEnumerator cShake(float duration, float magnitude)
+    {
+        print("start camshake");
+        Vector3 originalPos = Camera.main.transform.position;
 
-    //public void SetPositions(eCamPosition camEndPos)
-    //{
-    //    StartPos = CamHolder.transform.position;
-    //    StartQuaternion = CamHolder.transform.rotation;
-    //    EndPos = CamTransforms[(int)camEndPos].transform.position;
-    //    EndQuaternion = CamTransforms[(int)camEndPos].transform.rotation;
-    //}
+        float elapsedTime = 0f;
 
+        while (elapsedTime < duration)
+        {
+            float x = Random.Range(-1f, 1f) * magnitude;
+            float y = Random.Range(-1f, 1f) * magnitude;
 
+            Camera.main.transform.position = new Vector3(x+ originalPos.x, y+ originalPos.y, originalPos.z);
+
+            elapsedTime += Time.deltaTime;
+            yield return null;      //waits for the next frame before continuing while loop
+        }
+
+        print("end camshake");
+        Camera.main.transform.position = originalPos;
+    }
 }

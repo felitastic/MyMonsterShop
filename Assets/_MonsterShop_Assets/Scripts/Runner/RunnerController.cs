@@ -9,6 +9,7 @@ public class RunnerController : MonoBehaviour
     public EndlessRunner_Values RunnerValues;
     public PlayerControls playerControls;
     public RunnerUI UI;
+    public Camera Cam;
 
     public GameManager GM;
 
@@ -62,9 +63,32 @@ public class RunnerController : MonoBehaviour
         //Destroy(feedback, 0.3f);
     }
 
+    public IEnumerator cShake(float duration, float magnitude)
+    {
+        print("start camshake");
+        Vector3 originalPos = Cam.transform.position;
+
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            float x = Random.Range(-1f, 1f) * magnitude;
+            float y = Random.Range(-1f, 1f) * magnitude;
+
+            Cam.transform.position = new Vector3(x + originalPos.x, y + originalPos.y, originalPos.z);
+
+            elapsedTime += Time.deltaTime;
+            yield return null;      //waits for the next frame before continuing while loop
+        }
+
+        print("end camshake");
+        Cam.transform.position = originalPos;
+    }
+
     public IEnumerator cGameEnd(GameObject monster)
     {
-        GM.runnerController.IsRunning = false;
+        yield return new WaitForSeconds(0.2f);
+
         if (GameManager.Instance.runnerController.win)
         {
             UI.SetGameEndText("SUCCESS!");
@@ -73,7 +97,7 @@ public class RunnerController : MonoBehaviour
         else
         {
             UI.SetGameEndText("GAME OVER");
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.3f);
             monster.SetActive(false);
         }
         StartCoroutine(UI.cShowResult());

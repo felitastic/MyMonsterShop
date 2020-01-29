@@ -940,6 +940,7 @@ public class HomeUI : UIController
     public void TapEgg()
     {
         hatchTaps += 1;
+        StartCoroutine(GM.HomeCam.cShake(0.05f, 0.1f));
         GM.vfx_home.SpawnEffect(VFX_Home.VFX.TapEgg, VFX_Home.Position.EggHatching);
         //tapeffect
 
@@ -1084,11 +1085,12 @@ public class HomeUI : UIController
     private IEnumerator cMonsterCage()
     {
         SellButtonActive(false);
-        SetText((int)eTextfields.DungeonDialogue, "Can't wait to put this one to work!");
+        SetText((int)eTextfields.DungeonDialogue, "Good deal!");
 
         SetText((int)eTextfields.D_MonsterValue,
             "Sold for " + Mathf.RoundToInt(GM.CurMonsters[(int)GM.curMonsterSlot].MonsterValue));
 
+        yield return new WaitForSeconds(0.2f);
         DropCage(GM.CurMonsters[(int)GM.curMonsterSlot].SlotID);
         yield return new WaitForSeconds(0.5f);
         PlayerGold.SetTrigger("gain");
@@ -1181,22 +1183,19 @@ public class HomeUI : UIController
     public IEnumerator cSignMonsterSaleContract()
     {
         signed = true;
-        //TODO Dungeon Lord sale: animated signature
-
         D_Signature.SetTrigger("sign");
-        
-        yield return new WaitForSeconds(1f);
-        //totalValue = 0;
-        //DisableMenu((int)eMenus.D_SalesContract);
-        //D_Signature.color = new Color(D_Signature.color.r, D_Signature.color.g, D_Signature.color.b, 0.0f);
+        yield return new WaitForSeconds(1.0f);
+
         signed = false;
         DisableMenu((int)eMenus.D_SalesContract);
+        D_Signature.SetTrigger("done");
         StartCoroutine(cMonsterCage());
     }
 
     public void WatchAdButton()
     {
         print("watch an ad and get money");
+        StartCoroutine(GM.HomeCam.cShake(0.05f, 0.1f));
     }
 
     /// <summary>
