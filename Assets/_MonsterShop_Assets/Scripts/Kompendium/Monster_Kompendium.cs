@@ -60,7 +60,7 @@ public class Monster_Kompendium : MonoBehaviour
             CurMonsterImage.sprite = MonsterEntry[EntryNo].MonsterImage;
             CurMonsterFluff.text = MonsterEntry[EntryNo].MonsterFluff;
             CurMonsterName.text = MonsterEntry[EntryNo].MonsterName;
-            CurMonsterRarity.text = "Rarity: "+ MonsterEntry[EntryNo].MonsterRarity;
+            CurMonsterRarity.text = "Type: "+ MonsterEntry[EntryNo].MonsterRarity;
             CurMonsterHatchCount.text = "Total hatched: "+ MonsterEntry[EntryNo].MonsterHatchCount;
             CurMonsterHighestPrice.text = "Highest price: "+ MonsterEntry[EntryNo].MonsterHighestPrice;
         }
@@ -69,7 +69,7 @@ public class Monster_Kompendium : MonoBehaviour
             CurMonsterImage.sprite = MonsterEntry[EntryNo].ShadowButtonImage;
             CurMonsterFluff.text = "Sell adult version of this monster to unlock info!";
             CurMonsterName.text = "???"; 
-            CurMonsterRarity.text = "Rarity: ???"; 
+            CurMonsterRarity.text = "???"; 
             CurMonsterHatchCount.text = "Total hatched: 0"; 
             CurMonsterHighestPrice.text = "Highest price: N/A"; 
         }

@@ -22,12 +22,14 @@ public class HomeUI : UIController
 
     public Sprite[] BGsprites;
 
+
     public Animator[] CageTop;
     public GameObject[] RarityStars = new GameObject[3];
     public GameObject AllCages;
     public Animator D_Signature;
     public CameraMovement camMovement;
     public Animator PlayerGold;
+    public Animator DLTimerAnim;
 
     private int totalValue;
     private bool signed = false;
@@ -154,6 +156,16 @@ public class HomeUI : UIController
         //    GM.monsterTimer = FindObjectOfType<MonsterTimer>();
     }
     
+    /// <summary>
+    /// true = the DL button is not pulsing
+    /// </summary>
+    /// <param name="still"></param>
+    public void UpdateDLButtonAnim(bool still)
+    {
+        print("DL timer not pulsing: " + still);
+        DLTimerAnim.SetBool("still", still);      
+    }
+
     public void UpdateDLTimer(string info)
     {
         SetText((int)eTextfields.H_DungeonLordTimer, info);

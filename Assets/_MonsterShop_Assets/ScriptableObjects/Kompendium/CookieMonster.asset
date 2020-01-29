@@ -20,6 +20,6 @@ MonoBehaviour:
   MonsterFluff: Its the one and only cookie monster. Hide your cookies. Now!
   MonsterName: Cookie Monster
   MonsterRarity: Unique
-  MonsterHatchCount: 0
+  MonsterHatchCount: 1
   MonsterHighestPrice: Invaluable
   MonsterType: 0

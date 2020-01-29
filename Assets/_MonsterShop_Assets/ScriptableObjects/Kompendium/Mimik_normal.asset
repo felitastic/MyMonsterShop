@@ -17,9 +17,10 @@ MonoBehaviour:
     type: 3}
   ButtonText: Mimik
   MonsterImage: {fileID: 21300000, guid: 8f6c4004b346a6a41bedc9623425dbd3, type: 3}
-  MonsterFluff: A spoopy chest
+  MonsterFluff: It looks like a normal chest but instead of items it will give you
+    love bites.
   MonsterName: Mimik
-  MonsterRarity: normal
+  MonsterRarity: Classic
   MonsterHatchCount: 0
   MonsterHighestPrice: 1234
   MonsterType: 3
