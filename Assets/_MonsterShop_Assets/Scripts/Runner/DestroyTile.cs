@@ -10,8 +10,8 @@ public class DestroyTile : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            print("tile " + this.gameObject.name + " will be destroyed in " + TimeTilDestroy + "s");
             Destroy(this.gameObject, TimeTilDestroy);
         }
     }
-
 }

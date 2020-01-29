@@ -66,8 +66,8 @@ public class PettingController : MonoBehaviour
             yield return new WaitForSeconds(0.25f);
 
             SetXPBars();
-
             MM.SetMonsterXP(GM.XPGainPerPettingSession);
+
             if (GM.CurMonsters[(int)GM.curMonsterSlot].StrokeTimes > 5)
             {
                 MM.SetMonsterXP(GM.XPAffectionBonus);
@@ -76,12 +76,14 @@ public class PettingController : MonoBehaviour
             //the whole shitty check for levelup and call levelup scene
             while (MM.CheckForMonsterLevelUp())
             {
+                SetXPBars();
+                //TODO vfx effekt level up
                 if (MM.CheckForStageChange())
                 {
                     StartCoroutine(MM.cLevelUpMonster(GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage, MM.MonsterSpawn[(int)GM.curMonsterSlot]));
+                    //TODO vfx growth effect
                     yield return new WaitForSeconds(0.5f);
                 }
-                SetXPBars();
                 yield return new WaitForSeconds(0.5f);
             }
 
@@ -110,7 +112,7 @@ public class PettingController : MonoBehaviour
     {
         if (!strokeDelay && monsterStroked < GM.StrokesPerPettingSession)
         {
-            print("you have pet the monster! :)");
+            //print("you have pet the monster! :)");
             monsterStroked += 1;
             HeartMeter.fillAmount = monsterStroked / GM.StrokesPerPettingSession;
             strokeDelay = true;
@@ -135,7 +137,23 @@ public class PettingController : MonoBehaviour
 
     private IEnumerator cStrokingMonstser()
     {
-        GM.vfx_home.SpawnEffectViaInt(VFX_Home.VFX.Pet, GM.curMonsterID);
+        int pos = 0;
+        switch(GM.curMonsterID)
+        {
+            case 0:
+                pos = 0;
+                break;
+            case 1:
+                pos = 1;
+                break;
+            case 2:
+                pos = 2;
+                break;
+            default:
+                pos = 1;
+                break;
+        }
+        GM.vfx_home.SpawnEffectViaInt(VFX_Home.VFX.Pet, pos);
         MM.monsterAnim[MM.CurMonster.SlotID].SetTrigger("stroke");
         yield return new WaitForSeconds(petTime);
         strokeDelay = false;

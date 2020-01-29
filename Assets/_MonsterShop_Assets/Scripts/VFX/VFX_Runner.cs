@@ -9,8 +9,8 @@ public class VFX_Runner : MonoBehaviour
     public GameObject[] SpawnPosition = new GameObject[3];
     public enum Position         //One enum for each Position, needs to be the same order
     {
-        ResultLevelUp,
-        ResultGrowthUp,        
+        //ResultLevelUp,
+        //ResultGrowthUp,        
 
         //NumberofPositions needs to be the last in list!
         NumberofPositions
@@ -20,7 +20,6 @@ public class VFX_Runner : MonoBehaviour
     public GameObject[] VFXEffect = new GameObject[4];
     public enum VFX             //One enum name for each prefab, needs to be the same order
     {
-        Orb_Glow,
         Orb_Pickup,
         Runner_Death,
         Runner_Run,
@@ -29,8 +28,11 @@ public class VFX_Runner : MonoBehaviour
         //NumberofVFX needs to be the last in list!
         NumberofVFX
     }
-    void Start()
+
+    private void Start()
     {
+        GameManager.Instance.vfx_runner = this;        
+
         if (VFXEffect.Length != (int)VFX.NumberofVFX)
         {
             Debug.LogError("Not enough VFX assigned");
@@ -39,6 +41,22 @@ public class VFX_Runner : MonoBehaviour
         {
             Debug.LogError("Not enough Transforms assigned");
         }
+    }
+
+    public void SpawnEffektAtPosition(VFX effect, Vector3 position)
+    {
+        GameObject newVFX = GameObject.Instantiate(this.VFXEffect[(int)effect], transform.position, transform.rotation) as GameObject;
+        newVFX.name = "" + effect;
+        newVFX.transform.position = position;
+        //newVFX.transform.SetParent(SpawnPosition[(int)position].transform);
+    }
+
+    public void SpawnEffektAtObject(VFX effect, GameObject parent)
+    {
+        GameObject newVFX = GameObject.Instantiate(this.VFXEffect[(int)effect], transform.position, transform.rotation) as GameObject;
+        newVFX.name = "" + effect;
+        newVFX.transform.position = parent.transform.position;
+        newVFX.transform.SetParent(parent.transform);
     }
 
     /// <summary>

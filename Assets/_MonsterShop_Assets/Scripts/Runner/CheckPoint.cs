@@ -22,7 +22,7 @@ public class CheckPoint : MonoBehaviour
                 //CollectedCountWinModifier();
                 GameManager.Instance.runnerController.curSpeedModifier = 0.5f;
                 GameManager.Instance.runnerController.win = true;
-                StartCoroutine(GameManager.Instance.runnerController.cGameEnd());
+                StartCoroutine(GameManager.Instance.runnerController.cGameEnd(other.gameObject));
             }
             else
             {

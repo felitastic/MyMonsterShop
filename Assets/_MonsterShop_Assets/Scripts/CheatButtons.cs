@@ -48,6 +48,31 @@ public class CheatButtons : MonoBehaviour
         homeUI.EnablePopupInfoCloseButton();
     }
 
+    public void GiveMoney(int value)
+    {
+        GM.ChangePlayerGold(+value);
+    }
+
+    public void ToggleDungeonLord()
+    {
+        if (GM.DLIsGone)
+        {
+            //change dungeonlord endtime GM
+            GM.DLIsGone = false;
+            GM.DungeonLordWaitTimeEnd = System.DateTime.Now;
+            //check if timer should be running Timer
+            GM.monsterTimer.CheckDateTimes();
+        }
+        else
+        {
+            //change dungeonlord endtime GM
+            GM.DLIsGone = true;
+            GM.SetDLTimer();
+            //check if timer should be running Timer
+            GM.monsterTimer.CheckDateTimes();
+        }
+    }
+
     /// <summary>
     /// Current Monster gains one level, can also lead to growth
     /// </summary>

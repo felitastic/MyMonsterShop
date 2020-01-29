@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class VFX_Home : MonoBehaviour
 {
-    private GameManager GM;
-
     [Header("List of Positions to spawn the VFX")]
     public GameObject[] SpawnPosition = new GameObject[(int)Position.NumberofPositions];  
     public enum Position         //One enum for each Position, needs to be the same order
     {
-        HomeLeft,
-        HomeMiddle,
-        HomeRight,
+        PetLeft,
+        PetMiddle,
+        PetRight,
+        CageLeft,
+        CageMiddle,
+        CageRight,
         EggHatching,
         EggGlow,
 
@@ -37,8 +38,7 @@ public class VFX_Home : MonoBehaviour
     }
     void Start()
     {
-        GM = GameManager.Instance;
-        GM.vfx_home = this;
+        GameManager.Instance.vfx_home = this;
 
         if (VFXEffect.Length != (int)VFX.NumberofVFX)
         {
@@ -51,7 +51,7 @@ public class VFX_Home : MonoBehaviour
     }
 
     /// <summary>
-    /// Spawn effekt using the enum lists
+    /// Spawn VFX using the enum lists
     /// </summary>
     /// <param name="effect"></param>
     /// <param name="position"></param>
@@ -65,7 +65,7 @@ public class VFX_Home : MonoBehaviour
     }
 
     /// <summary>
-    /// Spawn effekt via Button etc where enums cannot be used
+    /// Spawn VFX via int; pet 0-2; cage 3-5;  
     /// </summary>
     /// <param name="effect"></param>
     /// <param name="position"></param>

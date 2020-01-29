@@ -136,7 +136,7 @@ public class HomeUI : UIController
     {
         GetGameManager();
         GM.homeUI = this;
-        camShopPos = new Vector3(0.0f, 20.0f, -10.001f);
+        camShopPos = new Vector3(0.0f, 20.0f, -20.00f);
         //camDungeonPos = new Vector3(-10.801f, 20.0f, -10.001f);
     }
 

@@ -177,15 +177,15 @@ public class CameraMovement : MonoBehaviour
         switch (GM.curMonsterSlot)
         {
             case ecurMonsterSlot.left:
-                EndPos = new Vector3(-CamXMovement, 0, -10);
+                EndPos = new Vector3(-CamXMovement, 0, -20);
 
                 break;
             case ecurMonsterSlot.middle:
-                EndPos = new Vector3(0, 0, -10);
+                EndPos = new Vector3(0, 0, -20);
 
                 break;
             case ecurMonsterSlot.right:
-                EndPos = new Vector3(CamXMovement, 0, -10);
+                EndPos = new Vector3(CamXMovement, 0, -20);
 
                 break;
             default:

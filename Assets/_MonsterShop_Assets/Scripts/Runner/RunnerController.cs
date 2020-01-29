@@ -62,14 +62,21 @@ public class RunnerController : MonoBehaviour
         //Destroy(feedback, 0.3f);
     }
 
-    public IEnumerator cGameEnd()
+    public IEnumerator cGameEnd(GameObject monster)
     {
-        //show fancy anims oder so
         GM.runnerController.IsRunning = false;
-        yield return new WaitForSeconds(0.01f);
-        UI.GameOver();
-        //Scene scene = SceneManager.GetActiveScene();
-        //SceneManager.LoadScene(scene.name);
+        if (GameManager.Instance.runnerController.win)
+        {
+            UI.SetGameEndText("SUCCESS!");
+            yield return new WaitForSeconds(0.5f);
+        }
+        else
+        {
+            UI.SetGameEndText("GAME OVER");
+            yield return new WaitForSeconds(0.5f);
+            monster.SetActive(false);
+        }
+        StartCoroutine(UI.cShowResult());
     }
 
     public void InstantiateNextTile(int whichTile)

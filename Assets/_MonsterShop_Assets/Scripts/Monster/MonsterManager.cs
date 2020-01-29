@@ -64,6 +64,7 @@ public class MonsterManager : MonoBehaviour
             {
                 //print("curXp" + CurMonster.MonsterXP + ", LVLup requires: " + NextLvlUpAt());
                 CurMonster.MonsterLevel += 1;
+                print("level up to " + CurMonster.MonsterLevel);
                 return true;
             }
         }

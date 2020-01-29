@@ -10,7 +10,8 @@ public class Collectable : MonoBehaviour
         {
             UpdateCollectedCount();
             StartCoroutine(GameManager.Instance.runnerController.cOnCollectFeedback());
-            Destroy(this.gameObject, 0.25f);
+            GameManager.Instance.vfx_runner.SpawnEffektAtPosition(VFX_Runner.VFX.Orb_Pickup, this.gameObject.transform.position);
+            Destroy(this.gameObject, 0.15f);
         }
     }
 

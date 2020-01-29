@@ -8,9 +8,10 @@ public class Obstacle : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            GameManager.Instance.vfx_runner.SpawnEffektAtPosition(VFX_Runner.VFX.Runner_Death, other.gameObject.transform.position);
             GameManager.Instance.runnerController.win = false;
-            other.gameObject.SetActive(false);
-            StartCoroutine(GameManager.Instance.runnerController.cGameEnd());
+            //other.gameObject.SetActive(false);
+            StartCoroutine(GameManager.Instance.runnerController.cGameEnd(other.gameObject));
         }
     }
 }

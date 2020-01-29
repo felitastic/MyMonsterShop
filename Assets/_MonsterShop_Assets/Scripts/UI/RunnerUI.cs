@@ -60,27 +60,31 @@ public class RunnerUI : UIController
         DisableMenu((int)eMenus.StartButton);
         EnableButton((int)eButtons.LeftButton);
         EnableButton((int)eButtons.RightButton);
+        StartCoroutine(cStartDelay());
+    }
+
+    private IEnumerator cStartDelay()
+    {
+        GM.runnerMonsterManager.cSpawnMonsterinRunner();
+        yield return new WaitForSeconds(0.5f);
         GM.runnerController.IsRunning = true;
     }
 
-    // Called after monster hits an obstacle
-    public void GameOver()
+    public void SetGameEndText(string text)
     {
-        if (GM.runnerController.win)
-        {
-            GM.runnerUI.SetText((int)eTextfields.GameOverFeedback, "YOU WIN");
-        }
-        else
-        {
-            GM.runnerUI.SetText((int)eTextfields.GameOverFeedback, "GAME OVER");
-        }
-        StartCoroutine(cShowResult());
+        GM.runnerUI.SetText((int)eTextfields.GameOverFeedback, text);
     }
+
+    // Called after monster hits an obstacle
+    //public void GameOver()
+    //{
+    //    StartCoroutine(cShowResult());
+    //}
 
     // called after game over or win 
     public IEnumerator cShowResult()
     {
-        yield return new WaitForSeconds(0.5f);
+        //yield return new WaitForSeconds(0.5f);
 
         // set xp bars from inherited function
         SetXPBars();   
