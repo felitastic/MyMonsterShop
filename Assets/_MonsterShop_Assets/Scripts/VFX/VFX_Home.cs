@@ -30,9 +30,8 @@ public class VFX_Home : MonoBehaviour
         Pet,
         EggShells,
         TapEgg,
-        EggGlow,        
+        EggGlow,
 
-        TapScreen,
         //NumberofVFX needs to be the last in list!
         NumberofVFX
     }
@@ -76,5 +75,13 @@ public class VFX_Home : MonoBehaviour
         newVFX.transform.position = SpawnPosition[(int)position].transform.position;
         newVFX.transform.SetParent(SpawnPosition[(int)position].transform);
         //print("Spawned VFX " + newVFX.name + " under " + SpawnPosition[(int)position].name);
+    }
+
+    public void SpawnEffektAtPosition(VFX effect, Vector3 position)
+    {
+        GameObject newVFX = GameObject.Instantiate(this.VFXEffect[(int)effect], transform.position, transform.rotation) as GameObject;
+        newVFX.name = "" + effect;
+        newVFX.transform.position = position;
+        //newVFX.transform.SetParent(SpawnPosition[(int)position].transform);
     }
 }

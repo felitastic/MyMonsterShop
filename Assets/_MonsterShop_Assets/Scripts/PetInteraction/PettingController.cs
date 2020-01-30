@@ -15,7 +15,7 @@ public class PettingController : MonoBehaviour
     [SerializeField]
     private float monsterStroked;
     private bool strokeDelay;
-    private float petTime = 0.25f;
+    private float petTime = 0.15f;
 
     private void Start()
     {
@@ -81,8 +81,7 @@ public class PettingController : MonoBehaviour
                 if (MM.CheckForStageChange())
                 {
                     StartCoroutine(MM.cLevelUpMonster(GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage, MM.MonsterSpawn[(int)GM.curMonsterSlot]));
-                    //TODO vfx growth effect
-                    yield return new WaitForSeconds(0.5f);
+                    yield return new WaitForSeconds(1.0f);
                 }
                 yield return new WaitForSeconds(0.5f);
             }
@@ -115,19 +114,19 @@ public class PettingController : MonoBehaviour
             //print("you have pet the monster! :)");
             monsterStroked += 1;
             HeartMeter.fillAmount = monsterStroked / GM.StrokesPerPettingSession;
+            MM.monsterAnim[MM.CurMonster.SlotID].SetTrigger("stroke");
             strokeDelay = true;
-            StartCoroutine(cStrokingMonstser());
 
-            if (monsterStroked == GM.StrokesPerPettingSession)
+            if (monsterStroked >= GM.StrokesPerPettingSession)
             {
                 MM.monsterAnim[MM.CurMonster.SlotID].SetBool("isSad", false);
                 print("oh yay, monster is happy");
                 StartCoroutine(cEndPetSession());
             }
-            //else if (monsterStroked < 0)
-            //{
-            //    //play monster does not want anim
-            //}
+            else
+            {
+                StartCoroutine(cStrokingMonstser());
+            }
         }
         else
         {
@@ -153,8 +152,8 @@ public class PettingController : MonoBehaviour
                 pos = 1;
                 break;
         }
-        GM.vfx_home.SpawnEffectViaInt(VFX_Home.VFX.Pet, pos);
-        MM.monsterAnim[MM.CurMonster.SlotID].SetTrigger("stroke");
+        yield return new WaitForSeconds(0.2f);
+        GM.vfx_home.SpawnEffectViaInt(VFX_Home.VFX.Pet, pos);        
         yield return new WaitForSeconds(petTime);
         strokeDelay = false;
     }

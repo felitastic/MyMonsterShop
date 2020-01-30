@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Pumpkin
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 0
-    SerializedBytes: 0101100000006d005f004d006f006e00730074006500720050007200650066006100620073002f00000000013100000055006e0069007400790045006e00670069006e0065002e00470061006d0065004f0062006a006500630074005b002c005d002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c00650000000000060900000000000000270105000000720061006e006b007300010300000033007c0033000c000000000c010000000c020000000c030000000c040000000c050000000c060000000c070000000c080000000705
+    SerializedFormat: 2
+    SerializedBytes: 
     ReferencedUnityObjects:
     - {fileID: 8897925627698123234, guid: d90ca549545cd15459ba403897af83b3, type: 3}
     - {fileID: 6210505099405860988, guid: 71b654ea1bb4232478d62dce4edcbe2c, type: 3}
@@ -29,14 +29,56 @@ MonoBehaviour:
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes: []
+    SerializationNodes:
+    - Name: m_MonsterPrefabs
+      Entry: 7
+      Data: 0|UnityEngine.GameObject[,], UnityEngine.CoreModule
+    - Name: 
+      Entry: 12
+      Data: 9
+    - Name: ranks
+      Entry: 1
+      Data: 3|3
+    - Name: 
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 10
+      Data: 1
+    - Name: 
+      Entry: 10
+      Data: 2
+    - Name: 
+      Entry: 10
+      Data: 3
+    - Name: 
+      Entry: 10
+      Data: 4
+    - Name: 
+      Entry: 10
+      Data: 5
+    - Name: 
+      Entry: 10
+      Data: 6
+    - Name: 
+      Entry: 10
+      Data: 7
+    - Name: 
+      Entry: 10
+      Data: 8
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
   LevelThreshold_normal:
-  - 100
-  - 200
-  - 300
-  - 400
-  - 500
-  - 600
+  - 2
+  - 3
+  - 4
+  - 5
+  - 6
+  - 7
   XP_Cap: 8100
   MultiplicatorRare: 1
   MultiplicatorLegendary: 1

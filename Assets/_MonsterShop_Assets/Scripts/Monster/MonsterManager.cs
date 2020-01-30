@@ -196,15 +196,52 @@ public class MonsterManager : MonoBehaviour
     public IEnumerator cLevelUpMonster(eMonsterStage newStage, Transform monsterSpawn)
     {
         CurMonster.MonsterStage = newStage;
-        print(newStage);
+        //print(newStage);
 
+        //play effect for level up            
         if (CurMonster.MonsterStage != eMonsterStage.none)
-        {            
-            //play effect for level up            
-            yield return new WaitForSeconds(0.25f);
+        {
+            switch (GM.curScreen)
+            {
+                case eScene.home:
+                    GM.homeUI.LevelUpScreen.SetTrigger("glow");
+
+                    break;
+                case eScene.runner:
+                    //TODO runner ui animator glow thing setzen GM.runnerUI.LevelUpScreen.SetTrigger("glow");
+                    GM.runnerUI.LevelUpScreen.SetTrigger("glow");
+
+                    break;
+                case eScene.slidingpicture:
+                    //TODO: put monster manager of sliding picture game here
+                    break;
+                default:
+                    print("cant find vfx script cause I dont know which scene we're in");
+                    break;
+            }
+        
+            yield return new WaitForSeconds(0.4f);
             Destroy(monsterBody[SlotID]);
-            yield return new WaitForSeconds(0.1f);
             SpawnCurrentMonster(monsterSpawn);
+            yield return new WaitForSeconds(0.4f);
+            switch (GM.curScreen)
+            {
+                case eScene.home:
+                    GM.vfx_home.SpawnEffektAtPosition(VFX_Home.VFX.Confetti, monsterSpawn.transform.position);
+
+                    break;
+                case eScene.runner:
+                    GM.vfx_runner.SpawnEffektAtPosition(VFX_Runner.VFX.Confetti, monsterSpawn.transform.position);
+
+                    break;
+                case eScene.slidingpicture:
+                    //TODO: put monster manager of sliding picture game here
+                    break;
+                default:
+                    print("cant find vfx script cause I dont know which scene we're in");
+                    break;
+            }
+            yield return new WaitForSeconds(4.0f);
             yield return null;
         }
         else

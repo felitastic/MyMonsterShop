@@ -9,6 +9,7 @@ public class RunnerUI : UIController
     //public Text CollectedText;
     //public Text GameEndText;
     //public Text CollectedFeedbackText;
+    public Animator LevelUpScreen;
 
     private enum eMenus
     {
@@ -114,7 +115,7 @@ public class RunnerUI : UIController
             if (GM.runnerMonsterManager.CheckForStageChange())
             {
                 StartCoroutine(GM.runnerMonsterManager.cLevelUpMonster(GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage, GM.runnerMonsterManager.ResultMonsterSpawn));
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(1.0f);
             }
             SetXPBars();
             yield return new WaitForSeconds(0.5f); 

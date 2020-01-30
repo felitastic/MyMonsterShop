@@ -30,6 +30,7 @@ public class HomeUI : UIController
     public CameraMovement camMovement;
     public Animator PlayerGold;
     public Animator DLTimerAnim;
+    public Animator LevelUpScreen;
 
     private int totalValue;
     private bool signed = false;
