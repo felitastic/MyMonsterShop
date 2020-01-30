@@ -73,6 +73,62 @@ public class CheatButtons : MonoBehaviour
         }
     }
 
+    public void TogglePetTimer()
+    {
+        if (GM.CurMonsters[GM.curMonsterID].IsHappy)
+        {
+            //change dungeonlord endtime GM
+            GM.CurMonsters[GM.curMonsterID].IsHappy = false;
+            GM.CurMonsters[GM.curMonsterID].PetTimerEnd = System.DateTime.Now;
+            //check if timer should be running Timer
+            GM.monsterTimer.CheckDateTimes();
+        }
+        else
+        {
+            //change dungeonlord endtime GM
+            GM.CurMonsters[GM.curMonsterID].IsHappy = true;
+            GM.SetPetTimer(GM.curMonsterID);
+            //check if timer should be running Timer
+            GM.monsterTimer.CheckDateTimes();
+        }
+    }
+    public void TogglePlayTimer()
+    {
+        if (GM.CurMonsters[GM.curMonsterID].IsTired)
+        {
+            //change dungeonlord endtime GM
+            GM.CurMonsters[GM.curMonsterID].IsTired = false;
+            GM.CurMonsters[GM.curMonsterID].PlayTimerEnd = System.DateTime.Now;
+            //check if timer should be running Timer
+            GM.monsterTimer.CheckDateTimes();
+        }
+        else
+        {
+            //change dungeonlord endtime GM
+            GM.CurMonsters[GM.curMonsterID].IsTired = true;
+            GM.SetPlayTimer(GM.curMonsterID);
+            //check if timer should be running Timer
+            GM.monsterTimer.CheckDateTimes();
+        }
+    }
+
+    public void UnlockAllKompendiumEntries()
+    {
+        for (int i = 0; i < GM.UnlockedLogEntries.Length; ++i)
+        {
+            GM.UnlockedLogEntries[i] = true;
+        }
+    }
+
+    public void UnlockMonsterSlots()
+    {
+        foreach (MonsterSlot slot in GM.CurMonsters)
+        {
+            if (!slot.Unlocked)
+                slot.Unlocked = true;
+        }
+        GM.homeUI.SetSlotSymbol();
+    }
     /// <summary>
     /// Current Monster gains one level, can also lead to growth
     /// </summary>
@@ -82,5 +138,17 @@ public class CheatButtons : MonoBehaviour
         //calculate difference between cur xp and next level threshold
         //give enough xp to reach next threshold
         //do the levelup and growth
+
+        //while (MM.CheckForMonsterLevelUp())
+        //{
+        //    SetXPBars();
+        //    //TODO vfx effekt level up
+        //    if (MM.CheckForStageChange())
+        //    {
+        //        StartCoroutine(MM.cLevelUpMonster(GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage, MM.MonsterSpawn[(int)GM.curMonsterSlot]));
+        //        yield return new WaitForSeconds(1.0f);
+        //    }
+        //    yield return new WaitForSeconds(0.5f);
+
     }
 }

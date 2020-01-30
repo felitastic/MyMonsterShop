@@ -8,6 +8,7 @@ public class PettingController : MonoBehaviour
     //regelt ansprache des animators etc
     public MonsterManager MM;
     public Image HeartMeter;
+    public Animator HeartGlow;
 
     public Image[] XPBars = new Image[3];
     [SerializeField]
@@ -55,6 +56,9 @@ public class PettingController : MonoBehaviour
 
     public IEnumerator cEndPetSession()
     {
+        HeartGlow.SetTrigger("full");
+        yield return new WaitForSeconds(2.0f);
+
         if (GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage != eMonsterStage.Adult)
         {
             GM.homeUI.ShowPetSessionResult();
@@ -103,6 +107,7 @@ public class PettingController : MonoBehaviour
     public void EndSession()
     {
         monsterStroked = 0;
+        HeartGlow.SetTrigger("reset");
         HeartMeter.fillAmount = monsterStroked / GM.StrokesPerPettingSession;
         GM.homeUI.ExitPetSession();
     }

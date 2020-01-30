@@ -16,6 +16,7 @@ public class VFX_Home : MonoBehaviour
         CageRight,
         EggHatching,
         EggGlow,
+        RarityBanner,
 
         //NumberofPositions needs to be the last in list!
         NumberofPositions
@@ -31,6 +32,8 @@ public class VFX_Home : MonoBehaviour
         EggShells,
         TapEgg,
         EggGlow,
+        EpicBanner,
+        LegendaryBanner,
 
         //NumberofVFX needs to be the last in list!
         NumberofVFX

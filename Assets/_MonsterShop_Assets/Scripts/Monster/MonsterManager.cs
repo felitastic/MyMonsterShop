@@ -223,14 +223,16 @@ public class MonsterManager : MonoBehaviour
             yield return new WaitForSeconds(0.4f);
             Destroy(monsterBody[SlotID]);
             SpawnCurrentMonster(monsterSpawn);
-            yield return new WaitForSeconds(0.4f);
+            yield return new WaitForSeconds(0.5f);
             switch (GM.curScreen)
             {
                 case eScene.home:
+                    StartCoroutine(GM.HomeCam.cShake(0.07f, 0.2f));
                     GM.vfx_home.SpawnEffektAtPosition(VFX_Home.VFX.Confetti, monsterSpawn.transform.position);
 
                     break;
                 case eScene.runner:
+                    StartCoroutine(GameManager.Instance.runnerController.cShake(0.07f, 0.25f));
                     GM.vfx_runner.SpawnEffektAtPosition(VFX_Runner.VFX.Confetti, monsterSpawn.transform.position);
 
                     break;

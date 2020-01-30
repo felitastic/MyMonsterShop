@@ -131,7 +131,30 @@ public class MM_Home : MonsterManager
         StartCoroutine(GM.HomeCam.cShake(0.1f, 0.25f));
         GM.vfx_home.SpawnEffect(VFX_Home.VFX.EggGlow, VFX_Home.Position.EggGlow);
         GM.homeMonsterManager.SpawnCurrentMonster(monsterSpawn);
-        yield return new WaitForSeconds(3f);
+        GM.vfx_home.SpawnEffect(VFX_Home.VFX.EggGlow, VFX_Home.Position.EggGlow);
+        yield return new WaitForSeconds(0.5f);
+
+        print("checking rarity and showing banner");
+        switch (GM.CurMonsters[GM.curMonsterID].Rarity)
+        {
+            case eRarity.normal:
+                yield return new WaitForSeconds(2.0f);
+                
+                break;
+            case eRarity.rare:
+                GM.vfx_home.SpawnEffect(VFX_Home.VFX.EpicBanner,VFX_Home.Position.RarityBanner);
+                yield return new WaitForSeconds(3.5f);
+
+                break;
+            case eRarity.legendary:
+                GM.vfx_home.SpawnEffect(VFX_Home.VFX.LegendaryBanner, VFX_Home.Position.RarityBanner);
+                yield return new WaitForSeconds(3.5f);
+
+                break;
+            default:
+                break;
+        }
+        print("back to home with da beby");
         Destroy(monsterBody[SlotID], 0.15f);
         GM.homeUI.SetUIStage(HomeUI.eHomeUIScene.Home);
         GM.homeMonsterManager.SpawnCurrentMonster(MonsterSpawn[SlotID]);

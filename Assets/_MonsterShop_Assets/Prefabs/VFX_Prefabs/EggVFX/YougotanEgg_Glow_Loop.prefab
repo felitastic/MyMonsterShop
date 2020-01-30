@@ -24163,3 +24163,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isTimed: 1
+  time: 5
