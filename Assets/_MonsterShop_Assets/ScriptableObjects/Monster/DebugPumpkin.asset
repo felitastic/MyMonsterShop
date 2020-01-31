@@ -1,0 +1,94 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcb2da6d4402cdf47b668a6ba841bf43, type: 3}
+  m_Name: DebugPumpkin
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 8897925627698123234, guid: d90ca549545cd15459ba403897af83b3, type: 3}
+    - {fileID: 6210505099405860988, guid: 71b654ea1bb4232478d62dce4edcbe2c, type: 3}
+    - {fileID: 2112956810851548724, guid: d3cebc9baf437ad4a86aca540d103a65, type: 3}
+    - {fileID: 8897925627698123234, guid: fead6d29a8a99764cb36624ebbbb1d0f, type: 3}
+    - {fileID: 6210505099405860988, guid: 0cc237601e8bc224e9f62f5418347bdf, type: 3}
+    - {fileID: 2112956810851548724, guid: 48fadddd0a9eea94c9396f1b83677c6d, type: 3}
+    - {fileID: 8897925627698123234, guid: f5711e1c5c4d3dc4897c75706320b27d, type: 3}
+    - {fileID: 6210505099405860988, guid: 1cabcb778de89c84c9be2d4614b112e0, type: 3}
+    - {fileID: 2112956810851548724, guid: 8830554a2695536488f68ed4cfa76d13, type: 3}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: m_MonsterPrefabs
+      Entry: 7
+      Data: 0|UnityEngine.GameObject[,], UnityEngine.CoreModule
+    - Name: 
+      Entry: 12
+      Data: 9
+    - Name: ranks
+      Entry: 1
+      Data: 3|3
+    - Name: 
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 10
+      Data: 1
+    - Name: 
+      Entry: 10
+      Data: 2
+    - Name: 
+      Entry: 10
+      Data: 3
+    - Name: 
+      Entry: 10
+      Data: 4
+    - Name: 
+      Entry: 10
+      Data: 5
+    - Name: 
+      Entry: 10
+      Data: 6
+    - Name: 
+      Entry: 10
+      Data: 7
+    - Name: 
+      Entry: 10
+      Data: 8
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  LevelThreshold_normal:
+  - 2
+  - 3
+  - 4
+  - 5
+  - 6
+  - 7
+  XP_Cap: 8100
+  MultiplicatorRare: 1
+  MultiplicatorLegendary: 1
+  BaseCost: 100
+  GoldModificator:
+  - 1
+  - 1.25
+  - 1.5
+  BaseValue: 50
+  MonsterType: 0
+  MonsterName: Pumpkin
+  EggPrefab: {fileID: 7378189106694598689, guid: 946fc29714ee12148b41cc317badb4bf,
+    type: 3}

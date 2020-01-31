@@ -107,8 +107,9 @@ public class GameManager : Singleton<GameManager>
 
     private void Start()
     {
-        HomeCam.SetScreen(ecurMonsterSlot.middle);
+        Camera.main.transform.position = new Vector3(0, 0, -20);
         CurCamHomePos = Camera.main.transform.position;
+        HomeCam.SetScreen(ecurMonsterSlot.middle);
         homeUI.TrainButtonActive(false);
         ChangePlayerGold(+500);
     }

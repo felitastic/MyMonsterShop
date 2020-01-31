@@ -19,8 +19,8 @@ public class CheckPoint : MonoBehaviour
             }
             else if (this.CompareTag("Goal"))
             {
-                //CollectedCountWinModifier();
-                GameManager.Instance.runnerController.curSpeedModifier = 0.5f;
+                GameManager.Instance.runnerController.IsRunning = false;
+                GameManager.Instance.runnerController.curSpeedModifier = 0.75f;
                 GameManager.Instance.runnerController.win = true;
                 StartCoroutine(GameManager.Instance.runnerController.cGameEnd(other.gameObject));
             }

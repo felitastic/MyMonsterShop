@@ -388,7 +388,7 @@ public class HomeUI : UIController
         }
 
         //scale monsters
-        GM.homeMonsterManager.ScaleMonsterBody(0.20f);
+        GM.homeMonsterManager.ScaleMonsterBody(0.15f);
 
         SetCageVisibility(false);
         EnableMenu((int)eMenus.H_MonsterStats);
@@ -456,7 +456,7 @@ public class HomeUI : UIController
 
         SetCageVisibility(true);
         //scale monsters
-        GM.homeMonsterManager.ScaleMonsterBody(0.150f);
+        GM.homeMonsterManager.ScaleMonsterBody(0.125f);
 
         //DisableMenu((int)eMenus.HomeBG);
         //DisableMenu((int)eMenus.XPBar);
@@ -1130,7 +1130,7 @@ public class HomeUI : UIController
     private IEnumerator cMonsterCage()
     {
         SellButtonActive(false);
-        SetText((int)eTextfields.DungeonDialogue, "Good deal!");
+        SetText((int)eTextfields.DungeonDialogue, "Mine.");
 
         SetText((int)eTextfields.D_MonsterValue,
             "Sold for " + Mathf.RoundToInt(GM.CurMonsters[(int)GM.curMonsterSlot].MonsterValue));
@@ -1190,7 +1190,7 @@ public class HomeUI : UIController
 
     private IEnumerator cExitDungeon()
     {
-        SetText((int)eTextfields.DungeonDialogue, "I'm gonna be busy, come back later");
+        SetText((int)eTextfields.DungeonDialogue, "I'm gonna be busy, come back later.");
         yield return new WaitForSeconds(2f);
         foreach (MonsterSlot slot in GM.CurMonsters)
         {
@@ -1213,6 +1213,7 @@ public class HomeUI : UIController
     {
         if (!signed)
         {
+            SetText((int)eTextfields.DungeonDialogue, "It's a deal!");
             StartCoroutine(cSignMonsterSaleContract());
         }
     }

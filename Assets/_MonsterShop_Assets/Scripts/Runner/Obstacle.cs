@@ -11,6 +11,7 @@ public class Obstacle : MonoBehaviour
             GameManager.Instance.runnerController.IsRunning = false;
             StartCoroutine(GameManager.Instance.runnerController.cShake(0.3f, 0.4f));
             GameManager.Instance.vfx_runner.SpawnEffektAtPosition(VFX_Runner.VFX.Runner_Death, other.gameObject.transform.position);
+            GameManager.Instance.runnerController.curSpeedModifier = 0.0f;
             GameManager.Instance.runnerController.win = false;
             //other.gameObject.SetActive(false);
             StartCoroutine(GameManager.Instance.runnerController.cGameEnd(other.gameObject));

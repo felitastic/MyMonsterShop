@@ -203,12 +203,12 @@ public class CameraMovement : MonoBehaviour
 
         if (zoomIn)
         {
-            EndPos = new Vector3(Camera.main.transform.position.x, -1, Camera.main.transform.position.z);
+            EndPos = new Vector3(Camera.main.transform.position.x, -0.25f, -17.5f);
             EndZoomPos = 7.5f;
         }
         else
         {
-            EndPos = new Vector3(Camera.main.transform.position.x, 0, Camera.main.transform.position.z);
+            EndPos = new Vector3(Camera.main.transform.position.x, 0, -20.0f);
             EndZoomPos = 9.5f;
         }
         StartZoom(zoomTime);

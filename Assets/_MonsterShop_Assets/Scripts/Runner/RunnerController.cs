@@ -93,12 +93,13 @@ public class RunnerController : MonoBehaviour
         {
             UI.SetGameEndText("SUCCESS!");
             yield return new WaitForSeconds(0.5f);
+            Destroy(monster, 0.52f);
         }
         else
         {
             UI.SetGameEndText("GAME OVER");
             yield return new WaitForSeconds(0.3f);
-            monster.SetActive(false);
+            Destroy(monster, 0.2f);
         }
         StartCoroutine(UI.cShowResult());
     }
