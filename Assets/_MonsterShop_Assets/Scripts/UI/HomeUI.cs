@@ -708,12 +708,28 @@ public class HomeUI : UIController
 
     public IEnumerator cSetGoldCounter(int oldValue)
     {
-        while (GM.PlayerMoney > oldValue && !moneyCountFinished)
+        moneyCountFinished = false;
+        StartCoroutine(cEndCoinSpawn((GM.PlayerMoney - oldValue) * 0.045f));
+
+        //for (int i = 0; i <= 75; i++)
+        //{
+        //    SpawnCoins();
+        //    yield return new WaitForSeconds(0.0085f);
+
+        //}
+
+        //yield return new WaitForSeconds(0.76f);
+        while (GM.PlayerMoney > oldValue)
         {
             SetText((int)eTextfields.GoldCount, "" + oldValue);
             oldValue++;
-            yield return new WaitForSeconds(0.025f);
+            yield return new WaitForSeconds(0.05f);
         }
+    }
+
+    public IEnumerator cEndCoinSpawn(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
         moneyCountFinished = true;
     }
 
@@ -1204,17 +1220,14 @@ public class HomeUI : UIController
     //Spawns coins
     private IEnumerator cSpawnCoins()
     {
-        for (int i = 0; i < CoinsPos.Length; ++i)
+        while (!moneyCountFinished)
         {
+            int rand = Random.Range(0, CoinsPos.Length);
+            print("rand: " + rand);
             GameObject newCoin = Instantiate(CoinPrefab, CoinSpawn);
             newCoin.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
-            newCoin.GetComponent<RectTransform>().anchoredPosition = CoinsPos[i].anchoredPosition;
-
-            //    yield return new WaitForSeconds(0.025f);
-            yield return null;
-
-            //if (i == CoinsPos.Length - 1)
-            //    i = 0;
+            newCoin.GetComponent<RectTransform>().anchoredPosition = CoinsPos[rand].anchoredPosition;
+            yield return new WaitForSeconds(0.005f);
         }
     }
 
@@ -1228,16 +1241,20 @@ public class HomeUI : UIController
         D_Signature.SetTrigger("sign");
         yield return new WaitForSeconds(1.0f);
         moneyCountFinished = false;
+
+        //for (int i = 0; i <= 75; i++)
+        //{
+        //    SpawnCoins();
+        //    yield return new WaitForSeconds(0.0050f);
+        //}        
+        StartCoroutine(cSpawnCoins());       
+        yield return new WaitForSeconds(0.76f);
         GM.ChangePlayerGold(+totalValue, GM.PlayerMoney);
 
-           
         while (!moneyCountFinished)
-        {
-            yield return new WaitForSeconds(0.025f);
-            //TODO spawn coins and make them float up
-        }
+            yield return null;
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(2.0f);
         signed = false;
         DisableMenu((int)eMenus.D_SalesContract);
         StartCoroutine(cMonsterCage());
@@ -1246,7 +1263,7 @@ public class HomeUI : UIController
     public void WatchAdButton()
     {
         print("watch an ad and get money");
-        StartCoroutine(cSpawnCoins());
+        //SpawnCoins();
     }
 
     /// <summary>

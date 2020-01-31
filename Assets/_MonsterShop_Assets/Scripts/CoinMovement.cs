@@ -7,60 +7,57 @@ public class CoinMovement : MonoBehaviour
     public Animator coinAnim;
     public RectTransform coinPos;
     public RectTransform coinDestination;
-    private float speed;
+
+    //how many steps you wanna take
+    private float totalSteps;
+
+    private float stepX;
+    private float stepY;
+
     private Vector2 curPos;
     private Vector2 newPos;
+    //how often movement updates
+    private float timeUnit;
 
-    // Start is called before the first frame update
+
     void Start()
     {
         coinDestination = GameManager.Instance.homeUI.CoinDestination;
-        speed = 1.5f;
+        totalSteps = 60.0f;
+        timeUnit = 0.75f/totalSteps;
         curPos = new Vector2(coinPos.anchoredPosition.x, coinPos.anchoredPosition.y);
         newPos = curPos;
         StartCoroutine(Move());
+        stepX = CalculateStep(curPos.x, coinDestination.anchoredPosition.x);
+        stepY = CalculateStep(curPos.y, coinDestination.anchoredPosition.y);
+        //print("move x by " + stepX + ", move y by " + stepY);
+    }
+
+    /// <summary>
+    /// calculates how much coin moves to x/y per time unit
+    /// </summary>
+    /// <returns></returns>
+    private float CalculateStep(float start, float end)
+    {
+        return (Mathf.Abs(end - start)/ totalSteps);
     }
 
     private IEnumerator Move()
     {
         coinAnim.SetBool("moving", true);
-        print("start pos: " + curPos);
+        //print("start pos: " + curPos);
 
-        while (!Mathf.Approximately(coinPos.anchoredPosition.x, coinDestination.anchoredPosition.x) 
-            && !Mathf.Approximately(coinPos.anchoredPosition.y, coinDestination.anchoredPosition.y))
+        for (int i = 0; i <= Mathf.RoundToInt(totalSteps); ++i)
         {
-            float x = curPos.x;
-            float y = curPos.y;
-
-            if (!Mathf.Approximately(coinPos.anchoredPosition.x, coinDestination.anchoredPosition.x))
-            {
-                x = curPos.x - speed;
-            }
-            else
-            {
-                x = curPos.x;
-            }
-
-            if (!Mathf.Approximately(coinPos.anchoredPosition.y, coinDestination.anchoredPosition.y))
-            {
-                y = curPos.y + speed * 5;
-            }
-            else
-            {
-                y = curPos.y;
-            }
-
-            Vector2 newPos = new Vector2(x,y);
+            newPos = new Vector2(curPos.x - stepX, curPos.y + stepY);
             coinPos.anchoredPosition = newPos;
             curPos = newPos;
-            print("new pos: " + newPos);
-            yield return null;
+            //print("new pos: " + newPos);
+            yield return new WaitForSeconds(timeUnit);
         }
-        //wait for spawn to finish
-        //move up to destination
-        //play despawn when reached
-        //destroy this object
+
+        yield return new WaitForSeconds(0.5f);
         coinAnim.SetBool("moving", false);
-        yield return null;
+        Destroy(this.gameObject,0.3f);
     }
 }
