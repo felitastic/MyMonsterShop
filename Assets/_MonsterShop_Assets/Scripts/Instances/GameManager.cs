@@ -152,11 +152,26 @@ public class GameManager : Singleton<GameManager>
         CurMonsters[slotID].PlayTimerEnd = DateTime.Now.AddMinutes(playWaitInMinutes);
     }
 
+    /// <summary>
+    /// Used to change money to its actual value via cheat or on reload
+    /// </summary>
+    /// <param name="value"></param>
     public void ChangePlayerGold(int value)
     {
         PlayerMoney += value;
-        //print("player gold: " + PlayerMoney);
         homeUI.SetGoldCounter();
+    }
+
+    /// <summary>
+    /// Used to change money with fancy count animation when you sell a monster
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="oldValue"></param>
+    public void ChangePlayerGold(int value, int oldValue)
+    {
+        PlayerMoney += value;
+        //print("player gold: " + PlayerMoney);
+        StartCoroutine(homeUI.cSetGoldCounter(oldValue));
     }
 
     public void LoadHomeScene()

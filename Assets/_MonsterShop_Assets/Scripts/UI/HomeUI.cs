@@ -16,12 +16,16 @@ public class HomeUI : UIController
     private int EggHatchCount;
 
     private bool swipeDisabled;
+    private bool moneyCountFinished;
 
     // called via (int)GM.curMonsterSlot
     public SpriteRenderer[] HomeBGs;
 
     public Sprite[] BGsprites;
-
+    public GameObject CoinPrefab;
+    public RectTransform CoinSpawn;
+    public RectTransform CoinDestination;
+    public RectTransform[] CoinsPos;
 
     public Animator[] CageTop;
     public GameObject[] RarityStars = new GameObject[3];
@@ -702,8 +706,20 @@ public class HomeUI : UIController
         }
     }
 
+    public IEnumerator cSetGoldCounter(int oldValue)
+    {
+        while (GM.PlayerMoney > oldValue && !moneyCountFinished)
+        {
+            SetText((int)eTextfields.GoldCount, "" + oldValue);
+            oldValue++;
+            yield return new WaitForSeconds(0.025f);
+        }
+        moneyCountFinished = true;
+    }
+
     public void SetGoldCounter()
     {
+        //PlayerGold.SetTrigger("gain");
         SetText((int)eTextfields.GoldCount, "" + GM.PlayerMoney);
     }
 
@@ -1106,16 +1122,12 @@ public class HomeUI : UIController
         yield return new WaitForSeconds(0.2f);
         DropCage(GM.CurMonsters[(int)GM.curMonsterSlot].SlotID);
         yield return new WaitForSeconds(0.5f);
-        PlayerGold.SetTrigger("gain");
-        yield return new WaitForSeconds(0.2f);
-        GM.ChangePlayerGold(+totalValue);
-        yield return new WaitForSeconds(0.5f);
         DisableMenu((int)eMenus.D_SaleConfirm);
         EnableMenu((int)eMenus.D_BottomButtons);
         EnableMenu((int)eMenus.SwipeButtons);
+        D_Signature.SetTrigger("done");
         DisableSwiping(false);        
     }
-
     private void ShowContract()
     {        
         string msg = GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage +" "+ GM.CurMonsters[(int)GM.curMonsterSlot].Monster.MonsterName + "\n"
@@ -1162,7 +1174,7 @@ public class HomeUI : UIController
 
     private IEnumerator cExitDungeon()
     {
-        SetText((int)eTextfields.DungeonDialogue, "You can come back in 8 hours");
+        SetText((int)eTextfields.DungeonDialogue, "I'm gonna be busy, come back later");
         yield return new WaitForSeconds(2f);
         foreach (MonsterSlot slot in GM.CurMonsters)
         {
@@ -1189,6 +1201,23 @@ public class HomeUI : UIController
         }
     }
 
+    //Spawns coins
+    private IEnumerator cSpawnCoins()
+    {
+        for (int i = 0; i < CoinsPos.Length; ++i)
+        {
+            GameObject newCoin = Instantiate(CoinPrefab, CoinSpawn);
+            newCoin.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+            newCoin.GetComponent<RectTransform>().anchoredPosition = CoinsPos[i].anchoredPosition;
+
+            //    yield return new WaitForSeconds(0.025f);
+            yield return null;
+
+            //if (i == CoinsPos.Length - 1)
+            //    i = 0;
+        }
+    }
+
     /// <summary>
     /// Called by SignContract()
     /// </summary>
@@ -1198,17 +1227,26 @@ public class HomeUI : UIController
         signed = true;
         D_Signature.SetTrigger("sign");
         yield return new WaitForSeconds(1.0f);
+        moneyCountFinished = false;
+        GM.ChangePlayerGold(+totalValue, GM.PlayerMoney);
 
+           
+        while (!moneyCountFinished)
+        {
+            yield return new WaitForSeconds(0.025f);
+            //TODO spawn coins and make them float up
+        }
+
+        yield return new WaitForSeconds(0.5f);
         signed = false;
         DisableMenu((int)eMenus.D_SalesContract);
-        D_Signature.SetTrigger("done");
         StartCoroutine(cMonsterCage());
     }
 
     public void WatchAdButton()
     {
         print("watch an ad and get money");
-        StartCoroutine(GM.HomeCam.cShake(0.05f, 0.1f));
+        StartCoroutine(cSpawnCoins());
     }
 
     /// <summary>
