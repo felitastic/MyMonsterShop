@@ -106,6 +106,7 @@ public class PettingController : MonoBehaviour
 
     public void EndSession()
     {
+        strokeDelay = false;
         monsterStroked = 0;
         HeartGlow.SetTrigger("reset");
         HeartMeter.fillAmount = monsterStroked / GM.StrokesPerPettingSession;
@@ -125,7 +126,7 @@ public class PettingController : MonoBehaviour
             if (monsterStroked >= GM.StrokesPerPettingSession)
             {
                 MM.monsterAnim[MM.CurMonster.SlotID].SetBool("isSad", false);
-                print("oh yay, monster is happy");
+                print("oh yay, monster is happy");                
                 StartCoroutine(cEndPetSession());
             }
             else

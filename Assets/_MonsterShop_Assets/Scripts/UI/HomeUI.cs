@@ -706,33 +706,6 @@ public class HomeUI : UIController
         }
     }
 
-    public IEnumerator cSetGoldCounter(int oldValue)
-    {
-        moneyCountFinished = false;
-        StartCoroutine(cEndCoinSpawn((GM.PlayerMoney - oldValue) * 0.045f));
-
-        //for (int i = 0; i <= 75; i++)
-        //{
-        //    SpawnCoins();
-        //    yield return new WaitForSeconds(0.0085f);
-
-        //}
-
-        //yield return new WaitForSeconds(0.76f);
-        while (GM.PlayerMoney > oldValue)
-        {
-            SetText((int)eTextfields.GoldCount, "" + oldValue);
-            oldValue++;
-            yield return new WaitForSeconds(0.05f);
-        }
-    }
-
-    public IEnumerator cEndCoinSpawn(float waitTime)
-    {
-        yield return new WaitForSeconds(waitTime);
-        moneyCountFinished = true;
-    }
-
     public void SetGoldCounter()
     {
         //PlayerGold.SetTrigger("gain");
@@ -1123,7 +1096,7 @@ public class HomeUI : UIController
         DisableMenu((int)eMenus.D_SaleConfirm);
         SetPopInfoWindowStatus(false);
     }
-    
+
     /// <summary>
     /// Cage is put over monsters to show they are sold
     /// </summary>
@@ -1176,14 +1149,7 @@ public class HomeUI : UIController
             SetUIStage(eHomeUIScene.Home);
         }
         else
-        {
-            // Y/N popup
-            //string msg = 
-            //    "If you leave now, you have to wait x hours before the dungeonlord needs new monsters." +
-            //    "\nReally leave and sell?";
-            //SetPopInfoWindowStatus(true, msg);
-            //DisableMenu((int)eMenus.D_BottomButtons);
-            //EnableMenu((int)eMenus.D_LeaveConfirmButton);            
+        {        
             StartCoroutine(cExitDungeon());
         }
     }
@@ -1218,18 +1184,86 @@ public class HomeUI : UIController
         }
     }
 
-    //Spawns coins
-    private IEnumerator cSpawnCoins()
+    /// <summary>
+    /// spawns coins while moneycountfinished is false
+    /// </summary>
+    /// <param name="timeperCoin"></param>
+    /// <returns></returns>
+    private IEnumerator cSpawnCoins(int coinsToSpawn, float timeperCoin)
     {
-        while (!moneyCountFinished)
+        int coins = 0;
+        while (coins < coinsToSpawn)
         {
+            coins += 1;
             int rand = Random.Range(0, CoinsPos.Length);
-            print("rand: " + rand);
             GameObject newCoin = Instantiate(CoinPrefab, CoinSpawn);
             newCoin.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
             newCoin.GetComponent<RectTransform>().anchoredPosition = CoinsPos[rand].anchoredPosition;
-            yield return new WaitForSeconds(0.005f);
+            yield return new WaitForSeconds(timeperCoin);
         }
+        print(coins+" coins spawned");
+        moneyCountFinished = true;
+    }
+
+    public IEnumerator cSetGoldCounter(int oldValue)
+    {
+        float timeperCoin = 0f;
+
+        if (totalValue <= 500)
+            timeperCoin = 0.005f;
+        else if (totalValue <= 1000)
+            timeperCoin = 0.0025f;
+        else
+            timeperCoin = 0.00125f;
+
+        float diff = GM.PlayerMoney - oldValue;
+        StartCoroutine(cSpawnCoins(Mathf.RoundToInt(diff), timeperCoin));
+        print("new coins: " + diff);
+
+        yield return new WaitForSeconds(0.76f);
+
+        while (GM.PlayerMoney >= oldValue)
+        {
+            SetText((int)eTextfields.GoldCount, "" + oldValue);            
+            oldValue++;            
+            yield return new WaitForSeconds(timeperCoin);
+        }
+
+
+        //float waitSecs;
+
+        //if (totalValue <= 100)
+        //    waitSecs = 1.0f;
+        //else if (totalValue <= 500)
+        //    waitSecs = 2.0f;
+        //else if (totalValue <= 1000)
+        //    waitSecs = 3.5f;
+        //else if (totalValue <= 2000)
+        //    waitSecs = 5.0f;
+        //else
+        //    waitSecs = 6.5f;
+
+        //float diff = (float)(GM.PlayerMoney - oldValue);
+        //float oneStep = waitSecs / diff;
+        //float coinStopIn = oneStep * diff;
+        //StartCoroutine(cEndCoinSpawn(coinStopIn));
+
+        //print("one coin per " + oneStep);
+        //print("coins stop in " + coinStopIn);
+        //while (GM.PlayerMoney >= oldValue)
+        //{
+        //    SetText((int)eTextfields.GoldCount, "" + oldValue);
+        //    oldValue++;
+        //    yield return new WaitForSeconds(oneStep);
+        //}
+        //for (int i = 0; i <= 75; i++)
+        //{
+        //    SpawnCoins();
+        //    yield return new WaitForSeconds(0.0085f);
+
+        //}
+
+        //yield return new WaitForSeconds(0.76f);
     }
 
     /// <summary>
@@ -1241,21 +1275,23 @@ public class HomeUI : UIController
         signed = true;
         D_Signature.SetTrigger("sign");
         yield return new WaitForSeconds(1.0f);
+
+        //start spawning money 
         moneyCountFinished = false;
+        //StartCoroutine(cSpawnCoins());       
+        //yield return new WaitForSeconds(0.76f);
+        GM.ChangePlayerGold(+totalValue, GM.PlayerMoney);
 
         //for (int i = 0; i <= 75; i++)
         //{
         //    SpawnCoins();
         //    yield return new WaitForSeconds(0.0050f);
         //}        
-        StartCoroutine(cSpawnCoins());       
-        yield return new WaitForSeconds(0.76f);
-        GM.ChangePlayerGold(+totalValue, GM.PlayerMoney);
 
         while (!moneyCountFinished)
             yield return null;
 
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(2.5f);
         signed = false;
         DisableMenu((int)eMenus.D_SalesContract);
         StartCoroutine(cMonsterCage());
