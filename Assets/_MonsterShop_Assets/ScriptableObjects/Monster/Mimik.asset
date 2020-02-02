@@ -79,12 +79,12 @@ MonoBehaviour:
   XP_Cap: 8100
   MultiplicatorRare: 2
   MultiplicatorLegendary: 3
-  BaseCost: 100
+  BaseCost: 20
   GoldModificator:
   - 1
   - 1.25
   - 1.5
-  BaseValue: 50
+  BaseValue: 10
   MonsterType: 3
   MonsterName: Mimik
   EggPrefab: {fileID: 4718825962684987210, guid: 5829bb730b3ff2b419f2eea1ad22fe29,

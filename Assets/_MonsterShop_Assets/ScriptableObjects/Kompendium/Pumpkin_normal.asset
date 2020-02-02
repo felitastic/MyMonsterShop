@@ -20,6 +20,6 @@ MonoBehaviour:
   MonsterFluff: The classic halloween pumpkin we all love. Do not approach with knives!
   MonsterName: Pumpkin
   MonsterRarity: Atlantic Giant
-  MonsterHatchCount: 1
+  MonsterHatchCount: 7
   MonsterHighestPrice: 220
   MonsterType: 0

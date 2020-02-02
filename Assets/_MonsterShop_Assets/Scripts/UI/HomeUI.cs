@@ -1198,7 +1198,7 @@ public class HomeUI : UIController
             GameObject newCoin = Instantiate(CoinPrefab, CoinSpawn);
             newCoin.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
             newCoin.GetComponent<RectTransform>().anchoredPosition = CoinsPos[rand].anchoredPosition;
-            yield return new WaitForSeconds(timeperCoin);
+            yield return null;
         }
         print(coins+" coins spawned");
         moneyCountFinished = true;
@@ -1214,18 +1214,17 @@ public class HomeUI : UIController
             timeperCoin = 0.0025f;
         else
             timeperCoin = 0.00125f;
-
-        float diff = GM.PlayerMoney - oldValue;
-        StartCoroutine(cSpawnCoins(Mathf.RoundToInt(diff), timeperCoin));
-        print("new coins: " + diff);
+      
+        StartCoroutine(cSpawnCoins(Mathf.RoundToInt(totalValue), timeperCoin));
+        //print("new coins: " + diff);
 
         yield return new WaitForSeconds(0.76f);
 
         while (GM.PlayerMoney >= oldValue)
         {
             SetText((int)eTextfields.GoldCount, "" + oldValue);            
-            oldValue++;            
-            yield return new WaitForSeconds(timeperCoin);
+            oldValue++;
+            yield return null;
         }
 
 
