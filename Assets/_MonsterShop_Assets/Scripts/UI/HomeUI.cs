@@ -1113,8 +1113,7 @@ public class HomeUI : UIController
         yield return new WaitForSeconds(0.5f);
         DisableMenu((int)eMenus.D_SaleConfirm);
         EnableMenu((int)eMenus.D_BottomButtons);
-        EnableMenu((int)eMenus.SwipeButtons);
-        D_Signature.SetTrigger("done");
+        EnableMenu((int)eMenus.SwipeButtons);  
         DisableSwiping(false);        
     }
     private void ShowContract()
@@ -1276,30 +1275,26 @@ public class HomeUI : UIController
         D_Signature.SetTrigger("sign");
         yield return new WaitForSeconds(1.0f);
 
-        //start spawning money 
         moneyCountFinished = false;
-        //StartCoroutine(cSpawnCoins());       
-        //yield return new WaitForSeconds(0.76f);
         GM.ChangePlayerGold(+totalValue, GM.PlayerMoney);
-
-        //for (int i = 0; i <= 75; i++)
-        //{
-        //    SpawnCoins();
-        //    yield return new WaitForSeconds(0.0050f);
-        //}        
-
+        
         while (!moneyCountFinished)
             yield return null;
 
         yield return new WaitForSeconds(2.5f);
         signed = false;
+        D_Signature.SetTrigger("done");
+        yield return new WaitForSeconds(0.01f);
         DisableMenu((int)eMenus.D_SalesContract);
         StartCoroutine(cMonsterCage());
     }
 
     public void WatchAdButton()
     {
-        print("watch an ad and get money");
+        GM.homeMonsterManager.SetMonsterXP(111);
+        SetMonsterValue();
+
+       print("watch an ad and get money");
         //SpawnCoins();
     }
 
