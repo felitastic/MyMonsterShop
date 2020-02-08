@@ -29,6 +29,18 @@ public class Monster_Kompendium : MonoBehaviour
         GM = GameManager.Instance;
         GM.monsterKompendium = this;
         curPage = 0;
+
+        if (GM.TutorialOn)
+            ResetKompendiumEntries();
+    }
+
+    private void ResetKompendiumEntries()
+    {
+        foreach (Kompendium_Entry entry in MonsterEntry)
+        {
+            entry.MonsterHatchCount = 0;
+            entry.MonsterHighestPrice = 0;
+        }
     }
 
     public void SetButtons()

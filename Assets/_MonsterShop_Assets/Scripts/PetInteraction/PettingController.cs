@@ -57,7 +57,7 @@ public class PettingController : MonoBehaviour
     public IEnumerator cEndPetSession()
     {
         HeartGlow.SetTrigger("full");
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(1.5f);
 
         if (GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage != eMonsterStage.Adult)
         {
@@ -109,7 +109,7 @@ public class PettingController : MonoBehaviour
         strokeDelay = false;
         monsterStroked = 0;
         HeartGlow.SetTrigger("reset");
-        HeartMeter.fillAmount = monsterStroked / GM.StrokesPerPettingSession;
+        HeartMeter.fillAmount = monsterStroked / GM.StrokesPerPettingSession;        
         GM.homeUI.ExitPetSession();
     }
 
@@ -125,6 +125,7 @@ public class PettingController : MonoBehaviour
 
             if (monsterStroked >= GM.StrokesPerPettingSession)
             {
+                GM.homeUI.TogglePetBackButton(false);
                 MM.monsterAnim[MM.CurMonster.SlotID].SetBool("isSad", false);
                 print("oh yay, monster is happy");                
                 StartCoroutine(cEndPetSession());

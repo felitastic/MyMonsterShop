@@ -4,10 +4,16 @@ using UnityEngine;
 
 public class MM_Home : MonsterManager
 {
+    public Material[] PumpkinEgg;
+    public Material[] MimikEgg;
+
     public GameObject[] Lock;
     public GameObject[] Plus;
     public Transform EggSpawn;
     public Transform BabySpawn;
+
+    private Renderer eggRenderer;
+
 
     public double RareDrop = 5.0f;
     public double EpicDrop = 1.0f;
@@ -116,9 +122,34 @@ public class MM_Home : MonsterManager
     {
         //effect for spawning
         //yield return new WaitForSeconds(0.5f);        
-        CurMonster.MonsterStage = eMonsterStage.Egg;
+        CurMonster.MonsterStage = eMonsterStage.Egg;        
         SpawnAnyMonster(CurMonster.Monster.EggPrefab, EggSpawn, CurMonster.SlotID);
         yield return null;
+    }
+
+    //Egg cracks with each tap
+    public void CrackEgg(int taps)
+    {
+        eggRenderer = monsterBody[CurMonster.SlotID].GetComponentInChildren<Renderer>();
+
+        switch (GM.CurMonsters[CurMonster.SlotID].Monster.MonsterType)
+        {
+            case eMonsterType.pumpkin:
+                eggRenderer.material = PumpkinEgg[taps - 1];
+                break;
+            case eMonsterType.mimik:
+                eggRenderer.material = MimikEgg[taps - 1];
+
+                break;
+            case eMonsterType.sphere:
+                break;
+            case eMonsterType.cube:
+                break;
+            case eMonsterType.capsule:
+                break;
+            default:
+                break;
+        }
     }
 
     // Hatching egg animation

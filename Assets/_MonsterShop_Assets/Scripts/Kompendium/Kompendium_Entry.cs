@@ -17,6 +17,6 @@ public class Kompendium_Entry : ScriptableObject
     public string MonsterName;
     public string MonsterRarity;
     public int MonsterHatchCount;
-    public string MonsterHighestPrice;
+    public int MonsterHighestPrice;
     public eMonsterType MonsterType;
 }

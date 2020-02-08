@@ -79,12 +79,6 @@ public class RunnerUI : UIController
         GM.runnerUI.SetText((int)eTextfields.GameOverFeedback, text);
     }
 
-    // Called after monster hits an obstacle
-    //public void GameOver()
-    //{
-    //    StartCoroutine(cShowResult());
-    //}
-
     // called after game over or win 
     public IEnumerator cShowResult()
     {

@@ -89,7 +89,8 @@ public class HomeUI : UIController
         H_TrainButtonTimeOut,
         CheatWindow,
         TutorialIntro,
-        RunnerLevelChoice
+        RunnerLevelChoice,
+        PetBackButton
     }
 
     private enum  eButtons
@@ -168,7 +169,23 @@ public class HomeUI : UIController
             GM.TutorialOn = false;
         }
     }
-    
+
+    /// <summary>
+    /// Dis/Enables the Back button in the petting scene
+    /// </summary>
+    /// <param name="enable"></param>
+    public void TogglePetBackButton(bool enable)
+    {
+        if (enable)
+        {
+            EnableMenu((int)eMenus.PetBackButton);
+        }
+        else
+        {
+            DisableMenu((int)eMenus.PetBackButton);
+        }
+    }
+
     /// <summary>
     /// true = the DL button is not pulsing
     /// </summary>
@@ -394,6 +411,8 @@ public class HomeUI : UIController
         DisableMenu((int)eMenus.PlayerInfo);
         DisableSwiping(true);
 
+
+        TogglePetBackButton(true);
         EnableMenu((int)eMenus.Petting);
         EnableMenu((int)eMenus.PettingInfo);
         DisableMenu((int)eMenus.PettingXPBar);
@@ -541,6 +560,13 @@ public class HomeUI : UIController
             DisableMenu((int)eMenus.LockedButton);
             DisableMenu((int)eMenus.AddButton);
         }
+    }
+
+    public void TrainTimerClicked()
+    {
+        SetPopInfoWindowStatus(true, "This monster is tired!\n Try again when the timer has run out.");
+        DisableSwiping(true);
+        EnablePopupInfoCloseButton();
     }
 
     public void ShowMonsterStats(bool show)
@@ -804,7 +830,7 @@ public class HomeUI : UIController
     }
 
     public void ExitPetSession()
-    {
+    {        
         StartCoroutine(cWaitForZoom(true));
     }
 
@@ -962,7 +988,6 @@ public class HomeUI : UIController
         {
             StartCoroutine(cCancelEggPurchas());
         }
-
         DisableMenu((int)eMenus.S_PurchaseConfirm);
     }
 
@@ -994,9 +1019,6 @@ public class HomeUI : UIController
     public void TapEgg()
     {
         hatchTaps += 1;
-        StartCoroutine(GM.HomeCam.cShake(0.05f, 0.1f));
-        GM.vfx_home.SpawnEffect(VFX_Home.VFX.TapEgg, VFX_Home.Position.EggHatching);
-        //tapeffect
 
         if (hatchTaps == EggHatchCount)
         {
@@ -1012,6 +1034,13 @@ public class HomeUI : UIController
             SetMonsterXPBarUndLevel();
             SetSlotSymbol();
             hatchTaps = 0;
+        }
+        else
+        {
+            StartCoroutine(GM.HomeCam.cShake(0.05f, 0.1f));
+            if (hatchTaps < 3)
+                GM.homeMonsterManager.CrackEgg(hatchTaps);
+            GM.vfx_home.SpawnEffect(VFX_Home.VFX.TapEgg, VFX_Home.Position.EggHatching);
         }
     }
 
@@ -1087,8 +1116,10 @@ public class HomeUI : UIController
     {
         int entrySlot = CurKompendiumEntrySlot();
         GM.UnlockedLogEntries[entrySlot] = true;
-        GM.monsterKompendium.MonsterEntry[entrySlot].MonsterHighestPrice =
-            "" + Mathf.RoundToInt(GM.CurMonsters[(int)GM.curMonsterSlot].MonsterValue);
+        int newPrice = Mathf.RoundToInt(GM.CurMonsters[(int)GM.curMonsterSlot].MonsterValue);
+
+        if (GM.monsterKompendium.MonsterEntry[entrySlot].MonsterHighestPrice < newPrice)
+            GM.monsterKompendium.MonsterEntry[entrySlot].MonsterHighestPrice = newPrice;
     }
 
     public int CurKompendiumEntrySlot()
