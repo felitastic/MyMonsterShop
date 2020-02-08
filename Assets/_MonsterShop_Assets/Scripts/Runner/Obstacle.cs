@@ -6,7 +6,7 @@ public class Obstacle : MonoBehaviour
 {
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player") && GameManager.Instance.runnerController.IsRunning)
         {
             GameManager.Instance.runnerController.IsRunning = false;
             StartCoroutine(GameManager.Instance.runnerController.cShake(0.3f, 0.4f));

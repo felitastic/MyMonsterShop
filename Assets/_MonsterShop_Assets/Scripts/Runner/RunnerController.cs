@@ -55,7 +55,7 @@ public class RunnerController : MonoBehaviour
     public IEnumerator cOnCollectFeedback()
     {
         CollectedFeedbackText.text = "+" + curCollectableValue + "XP";
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.1f);
         CollectedFeedbackText.text = "";
 
         //GameObject feedback = Instantiate(FeedbackPrefab, FeedbackSpawm);

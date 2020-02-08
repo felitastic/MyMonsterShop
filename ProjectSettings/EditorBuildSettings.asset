@@ -9,6 +9,15 @@ EditorBuildSettings:
     path: Assets/_MonsterShop_Assets/Scenes/Home.unity
     guid: c2d606dc5c34be54f88a01202b9ba649
   - enabled: 1
-    path: Assets/_MonsterShop_Assets/Scenes/Runner.unity
+    path: Assets/_MonsterShop_Assets/Scenes/RunnerTut.unity
     guid: ec42c642c49f0024090ba21a1cba0584
+  - enabled: 1
+    path: Assets/_MonsterShop_Assets/Scenes/RunnerEasy.unity
+    guid: 05ac4ffc3300bfa45820faac3529d7be
+  - enabled: 1
+    path: Assets/_MonsterShop_Assets/Scenes/RunnerIntermed.unity
+    guid: 455a2b99213387643b0d5071923eee98
+  - enabled: 1
+    path: Assets/_MonsterShop_Assets/Scenes/RunnerHard.unity
+    guid: 132a43afc77494846970fe5cb4f15e47
   m_configObjects: {}

@@ -88,7 +88,8 @@ public class HomeUI : UIController
         DungeonSellButton,
         H_TrainButtonTimeOut,
         CheatWindow,
-        TutorialIntro
+        TutorialIntro,
+        RunnerLevelChoice
     }
 
     private enum  eButtons
@@ -1023,11 +1024,21 @@ public class HomeUI : UIController
     }
 
     //Button Inputs extra menus in home (Minigame, Pet, Feed?)
-    public void ChooseMinigame(int scene)
+    public void ChooseRunner()
+    {
+        EnableMenu((int)eMenus.RunnerLevelChoice);
+    }
+
+    public void ChooseRunnerLevel(int scene)
     {
         GM.CurMonsters[GM.curMonsterID].IsTired = true;
-        GM.curScreen = (eScene)scene;
+        GM.curScreen = eScene.runner;
         SceneManager.LoadScene(scene);
+    }
+
+    public void ExitLevelChoice()
+    {
+        DisableMenu((int)eMenus.RunnerLevelChoice);
     }
 
     public void FeedButtonPressed()
