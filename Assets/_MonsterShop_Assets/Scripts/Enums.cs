@@ -14,7 +14,10 @@ public enum VFXRunner
 public enum eMonsterType
 {    
     pumpkin = 0,
-    mimik = 3
+    mimik = 3,
+    sphere = 6,
+    cube = 9,
+    capsule = 12
 }
 
 public enum eMonsterStage

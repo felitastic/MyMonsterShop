@@ -1,0 +1,94 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcb2da6d4402cdf47b668a6ba841bf43, type: 3}
+  m_Name: Sphere
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 6782392998223291607, guid: 5de1e83dd5bfa194bae585be997a64bc, type: 3}
+    - {fileID: 8014256208994360963, guid: f1d3b1bd9b64fe34691b742a79a1de5c, type: 3}
+    - {fileID: 8140093263507681976, guid: 20b16e9c1b301c54696581a63f1c5685, type: 3}
+    - {fileID: 6782392998223291607, guid: b0b3c30e34922694a9168e62e668bb4d, type: 3}
+    - {fileID: 8014256208994360963, guid: 58008fc56603209409847cd14623db0d, type: 3}
+    - {fileID: 8140093263507681976, guid: a896fa55839cba441bd9d26ba8d79428, type: 3}
+    - {fileID: 6782392998223291607, guid: 664073c2e137e78458dcbfbf6fcdcb72, type: 3}
+    - {fileID: 8014256208994360963, guid: 9f62a5f7526a6c14bb461727c786dcaf, type: 3}
+    - {fileID: 8140093263507681976, guid: 1933ca1b6ae388d42b322344ef9ea8dc, type: 3}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: m_MonsterPrefabs
+      Entry: 7
+      Data: 0|UnityEngine.GameObject[,], UnityEngine.CoreModule
+    - Name: 
+      Entry: 12
+      Data: 9
+    - Name: ranks
+      Entry: 1
+      Data: 3|3
+    - Name: 
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 10
+      Data: 1
+    - Name: 
+      Entry: 10
+      Data: 2
+    - Name: 
+      Entry: 10
+      Data: 3
+    - Name: 
+      Entry: 10
+      Data: 4
+    - Name: 
+      Entry: 10
+      Data: 5
+    - Name: 
+      Entry: 10
+      Data: 6
+    - Name: 
+      Entry: 10
+      Data: 7
+    - Name: 
+      Entry: 10
+      Data: 8
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  LevelThreshold_normal:
+  - 30
+  - 60
+  - 90
+  - 120
+  - 150
+  - 180
+  XP_Cap: 8100
+  MultiplicatorRare: 2
+  MultiplicatorLegendary: 3
+  BaseCost: 99999999
+  GoldModificator:
+  - 1
+  - 1.25
+  - 1.5
+  BaseValue: 500000
+  MonsterType: 0
+  MonsterName: Sphere
+  EggPrefab: {fileID: 7378189106694598689, guid: 054e070afe0c4294786fe17d0c86a048,
+    type: 3}

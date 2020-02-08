@@ -72,7 +72,7 @@ public class PettingController : MonoBehaviour
             SetXPBars();
             MM.SetMonsterXP(GM.XPGainPerPettingSession);
 
-            if (GM.CurMonsters[(int)GM.curMonsterSlot].StrokeTimes > 5)
+            if (GM.CurMonsters[(int)GM.curMonsterSlot].StrokeTimes % 5 == 0)
             {
                 MM.SetMonsterXP(GM.XPAffectionBonus);
             }

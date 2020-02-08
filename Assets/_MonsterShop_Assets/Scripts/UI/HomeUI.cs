@@ -87,7 +87,8 @@ public class HomeUI : UIController
         PettingXPBar,
         DungeonSellButton,
         H_TrainButtonTimeOut,
-        CheatWindow
+        CheatWindow,
+        TutorialIntro
     }
 
     private enum  eButtons
@@ -136,6 +137,7 @@ public class HomeUI : UIController
         Kompendium,
         Petting,
         Cheats,
+        Tutorial,
         none
     }
 
@@ -150,15 +152,20 @@ public class HomeUI : UIController
     private void Start()
     {
         EggHatchCount = GM.TapsToHatch;
-        SetUIStage(eHomeUIScene.Home);
         ShowMonsterStats(GM.CurMonsters[(int)GM.curMonsterSlot].Monster != null);
         SetMonsterXPBarUndLevel();
         SetSlotSymbol();
         SetMonsterValue();
         DisableSwiping(false);
-
-        //if (GM.monsterTimer = null)
-        //    GM.monsterTimer = FindObjectOfType<MonsterTimer>();
+        if (!GM.TutorialOn)
+        {
+            SetUIStage(eHomeUIScene.Home);
+        }
+        else
+        {
+            SetUIStage(HomeUI.eHomeUIScene.Tutorial);
+            GM.TutorialOn = false;
+        }
     }
     
     /// <summary>
@@ -308,7 +315,6 @@ public class HomeUI : UIController
                 UI_DungeonLord();
 
                 break;
-
             case eHomeUIScene.Kompendium:
                 UI_Kompendium();
 
@@ -324,10 +330,35 @@ public class HomeUI : UIController
             case eHomeUIScene.Cheats:
                 UI_Cheats();
                 break;
+            case eHomeUIScene.Tutorial:
+                UI_TutorialIntro();
+                break;
             default:
                 Debug.LogError("No UI scene set!");
                 break;
         }
+    }
+
+    private void UI_TutorialIntro()
+    {
+        DisableMenu((int)eMenus.Home);
+        DisableMenu((int)eMenus.CheatWindow);
+        DisableMenu((int)eMenus.Petting);
+        DisableMenu((int)eMenus.Kompendium);
+        DisableMenu((int)eMenus.Dungeon);
+        DisableMenu((int)eMenus.Shop);
+        DisableMenu((int)eMenus.S_EggMenu);
+        DisableMenu((int)eMenus.S_BottomButtons);
+        DisableMenu((int)eMenus.H_MonsterStats);
+        DisableMenu((int)eMenus.D_MonsterStats);
+        DisableMenu((int)eMenus.D_BottomButtons);
+        DisableMenu((int)eMenus.MiniGameWindow);
+        DisableMenu((int)eMenus.PlayerInfo);
+        DisableMenu((int)eMenus.SwipeButtons);
+        DisableMenu((int)eMenus.XPBar);
+        DisableMenu((int)eMenus.SwipeButtons);
+
+        EnableMenu((int)eMenus.TutorialIntro);
     }
 
     private void NoUI()
@@ -348,6 +379,7 @@ public class HomeUI : UIController
         DisableMenu((int)eMenus.SwipeButtons);
         DisableMenu((int)eMenus.XPBar);
         DisableMenu((int)eMenus.SwipeButtons);
+        DisableMenu((int)eMenus.TutorialIntro);
     }
 
     private void UI_Petting()
@@ -409,10 +441,8 @@ public class HomeUI : UIController
         DisableMenu((int)eMenus.S_BottomButtons);
         DisableMenu((int)eMenus.MiniGameWindow);
         DisableMenu((int)eMenus.D_MonsterStats);
+        DisableMenu((int)eMenus.TutorialIntro);
 
-        //EnableMenu((int)eMenus.HomeBG);
-        //EnableMenu((int)eMenus.H_SwipeButtons);
-        //EnableMenu((int)eMenus.XPBar);
         DisableSwiping(false);
 
         SetMonsterTexts();
@@ -799,6 +829,11 @@ public class HomeUI : UIController
         {
             SetUIStage(eHomeUIScene.Petting);
         }
+    }
+
+    public void GoToHome()
+    {
+        SetUIStage(eHomeUIScene.Home);
     }
 
     public void GoToEggShop()

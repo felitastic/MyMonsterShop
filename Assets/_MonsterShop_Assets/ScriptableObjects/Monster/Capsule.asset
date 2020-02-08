@@ -1,0 +1,94 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcb2da6d4402cdf47b668a6ba841bf43, type: 3}
+  m_Name: Capsule
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 8014256208994360963, guid: 2348b40bb361a6f4ba9ed7ac211d87e7, type: 3}
+    - {fileID: 8014256208994360963, guid: 397685c7308bc914fb4ab53d20a670bc, type: 3}
+    - {fileID: 2307102814756397314, guid: 87b7fd93830d78249b828ae99170c100, type: 3}
+    - {fileID: 8014256208994360963, guid: 5cdb4d76fa8d2dc489fa71db589db92a, type: 3}
+    - {fileID: 8014256208994360963, guid: bb49c79a8fd362541a70643edd4d4c16, type: 3}
+    - {fileID: 2307102814756397314, guid: 2b52a5a271a6aca47a43a71d4096fd15, type: 3}
+    - {fileID: 8014256208994360963, guid: a081c96c17fe5fa4cb35bb34194f423c, type: 3}
+    - {fileID: 8014256208994360963, guid: a1e5344ee8f25474497f8aeca22ea37e, type: 3}
+    - {fileID: 2307102814756397314, guid: 79637ce3e43861c40a00d7cd2a622295, type: 3}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: m_MonsterPrefabs
+      Entry: 7
+      Data: 0|UnityEngine.GameObject[,], UnityEngine.CoreModule
+    - Name: 
+      Entry: 12
+      Data: 9
+    - Name: ranks
+      Entry: 1
+      Data: 3|3
+    - Name: 
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 10
+      Data: 1
+    - Name: 
+      Entry: 10
+      Data: 2
+    - Name: 
+      Entry: 10
+      Data: 3
+    - Name: 
+      Entry: 10
+      Data: 4
+    - Name: 
+      Entry: 10
+      Data: 5
+    - Name: 
+      Entry: 10
+      Data: 6
+    - Name: 
+      Entry: 10
+      Data: 7
+    - Name: 
+      Entry: 10
+      Data: 8
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  LevelThreshold_normal:
+  - 30
+  - 60
+  - 90
+  - 120
+  - 150
+  - 180
+  XP_Cap: 8100
+  MultiplicatorRare: 2
+  MultiplicatorLegendary: 3
+  BaseCost: 99999999
+  GoldModificator:
+  - 1
+  - 1.25
+  - 1.5
+  BaseValue: 500000
+  MonsterType: 0
+  MonsterName: Capsule
+  EggPrefab: {fileID: 7378189106694598689, guid: e279f3742a2700a4392b2eccfe2e6f93,
+    type: 3}

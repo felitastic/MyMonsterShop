@@ -55,9 +55,9 @@ public class GameManager : Singleton<GameManager>
     //how many taps til egg hatches
     public int TapsToHatch = 3;
 
-    public int StrokesPerPettingSession = 5;
-    public float XPGainPerPettingSession = 100.0f;
-    public float XPAffectionBonus = 50.0f;
+    public int StrokesPerPettingSession = 3;
+    public float XPGainPerPettingSession = 10.0f;
+    public float XPAffectionBonus = 5.0f;
     /// <summary>
     /// Reihenfolge wie eMonsterType
     /// </summary>
@@ -83,6 +83,7 @@ public class GameManager : Singleton<GameManager>
     //Cheats
     public bool getEpic;
     public bool getLegendary;
+    public bool TutorialOn;
 
     //Lautstärke vom Spieler eingestellt
     //public float BGMVolume;
@@ -103,6 +104,7 @@ public class GameManager : Singleton<GameManager>
         SetDLTimer();
         petWaitInMinutes = 3.0f;
         playWaitInMinutes = 2.0f;
+        TutorialOn = true;
     }
 
     private void Start()
@@ -181,36 +183,5 @@ public class GameManager : Singleton<GameManager>
         SetPlayTimer(curMonsterID);
         curScreen = eScene.home;
         SceneManager.LoadScene(0);
-    }
-
-
-    //public IEnumerator TestLoad()
-    //{
-    //    AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(0);
-    //    //yield return new WaitUntil(asyncOperation.isDone);
-    //    while (!asyncOperation.isDone)
-    //    {
-    //        print("loading in progress");
-    //        //    //if (homeUI != null)
-    //        //    //{
-    //        //    //    print("home ui loaded");
-    //        //    //}            
-    //        //    //if (homeMonsterManager != null)
-    //        //    //{
-    //        //    //    print("home mm loaded");
-    //        //    //}
-    //        //    //SpawnAllCurrentMonsters();
-    //        //    //homeMonsterManager.CalculateMonsterValue();
-    //        //    //homeUI.SetGoldCounter();
-    //        yield return null;
-    //    }
-    //    print("loading done");
-    //    //GetImportantScripts();
-    //    //SceneManager.LoadScene(0);
-    //    //print("loading scene");
-    //    //yield return new WaitForSeconds(1.5f);
-    //    //GetImportantScripts();
-    //    //print("loading done");
-    //    //homeUI.DisableLoadingScreen();
-    //}    
+    }    
 }
