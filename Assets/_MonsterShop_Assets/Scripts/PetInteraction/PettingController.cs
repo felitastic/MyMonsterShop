@@ -67,11 +67,13 @@ public class PettingController : MonoBehaviour
             print("monster has been stroked " + GM.CurMonsters[(int)GM.curMonsterSlot].StrokeTimes + " times");
             //TODO change monster idle to happy
 
-            yield return new WaitForSeconds(0.25f);
+            yield return new WaitForSeconds(0.5f);
 
             SetXPBars();
             MM.SetMonsterXP(GM.XPGainPerPettingSession);
-
+            yield return new WaitForSeconds(0.4f);
+            SetXPBars();
+            yield return new WaitForSeconds(0.7f);
             if (GM.CurMonsters[(int)GM.curMonsterSlot].StrokeTimes % 5 == 0)
             {
                 MM.SetMonsterXP(GM.XPAffectionBonus);
@@ -82,15 +84,16 @@ public class PettingController : MonoBehaviour
             {
                 SetXPBars();
                 //TODO vfx effekt level up
+                yield return new WaitForSeconds(0.5f);
+
                 if (MM.CheckForStageChange())
                 {
                     StartCoroutine(MM.cLevelUpMonster(GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage, MM.MonsterSpawn[(int)GM.curMonsterSlot]));
                     yield return new WaitForSeconds(1.0f);
                 }
-                yield return new WaitForSeconds(0.5f);
             }
 
-            yield return new WaitForSeconds(0.25f);
+            yield return new WaitForSeconds(0.5f);
         }
         else
         {
@@ -161,6 +164,7 @@ public class PettingController : MonoBehaviour
         }
         yield return new WaitForSeconds(0.2f);
         GM.vfx_home.SpawnEffectViaInt(VFX_Home.VFX.Pet, pos);        
+        GM.vfx_home.SpawnEffectViaInt(VFX_Home.VFX.PetLow, pos);        
         yield return new WaitForSeconds(petTime);
         strokeDelay = false;
     }

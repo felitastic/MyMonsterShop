@@ -29,6 +29,7 @@ public class VFX_Home : MonoBehaviour
         Cage_falls,
         Confetti,
         Pet,
+        PetLow,
         EggShells,
         TapEgg,
         EggGlow,

@@ -139,8 +139,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7337201316984926387}
   m_Layer: 0
-  m_Name: s_teen_R1 1
-  m_TagString: Untagged
+  m_Name: s_adult_R1
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

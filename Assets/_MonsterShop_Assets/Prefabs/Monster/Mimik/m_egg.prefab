@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 5545510022436311505}
   m_Layer: 0
   m_Name: m_egg
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

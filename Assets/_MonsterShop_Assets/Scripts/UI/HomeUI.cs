@@ -14,6 +14,7 @@ public class HomeUI : UIController
     private Vector3 camShopPos;
     //private Vector3 camDungeonPos;
     private int EggHatchCount;
+    private int GoldSkipTapped;
 
     private bool swipeDisabled;
     private bool moneyCountFinished;
@@ -90,7 +91,8 @@ public class HomeUI : UIController
         CheatWindow,
         TutorialIntro,
         RunnerLevelChoice,
-        PetBackButton
+        PetBackButton,
+        SkipGoldButton
     }
 
     private enum  eButtons
@@ -1268,7 +1270,7 @@ public class HomeUI : UIController
     private IEnumerator cSpawnCoins(int coinsToSpawn, float timeperCoin)
     {
         int coins = 0;
-        while (coins < coinsToSpawn)
+        while (coins < coinsToSpawn && !moneyCountFinished)
         {
             coins += 1;
             int rand = Random.Range(0, CoinsPos.Length);
@@ -1302,43 +1304,7 @@ public class HomeUI : UIController
             SetText((int)eTextfields.GoldCount, "" + oldValue);            
             oldValue++;
             yield return null;
-        }
-
-
-        //float waitSecs;
-
-        //if (totalValue <= 100)
-        //    waitSecs = 1.0f;
-        //else if (totalValue <= 500)
-        //    waitSecs = 2.0f;
-        //else if (totalValue <= 1000)
-        //    waitSecs = 3.5f;
-        //else if (totalValue <= 2000)
-        //    waitSecs = 5.0f;
-        //else
-        //    waitSecs = 6.5f;
-
-        //float diff = (float)(GM.PlayerMoney - oldValue);
-        //float oneStep = waitSecs / diff;
-        //float coinStopIn = oneStep * diff;
-        //StartCoroutine(cEndCoinSpawn(coinStopIn));
-
-        //print("one coin per " + oneStep);
-        //print("coins stop in " + coinStopIn);
-        //while (GM.PlayerMoney >= oldValue)
-        //{
-        //    SetText((int)eTextfields.GoldCount, "" + oldValue);
-        //    oldValue++;
-        //    yield return new WaitForSeconds(oneStep);
-        //}
-        //for (int i = 0; i <= 75; i++)
-        //{
-        //    SpawnCoins();
-        //    yield return new WaitForSeconds(0.0085f);
-
-        //}
-
-        //yield return new WaitForSeconds(0.76f);
+        }   
     }
 
     /// <summary>
@@ -1351,9 +1317,11 @@ public class HomeUI : UIController
         D_Signature.SetTrigger("sign");
         yield return new WaitForSeconds(1.0f);
 
+        EnableMenu((int)eMenus.SkipGoldButton);
+
         moneyCountFinished = false;
-        GM.ChangePlayerGold(+totalValue, GM.PlayerMoney);
-        
+        GM.ChangePlayerGold(+totalValue, GM.PlayerMoney);        
+       
         while (!moneyCountFinished)
             yield return null;
 
@@ -1363,6 +1331,19 @@ public class HomeUI : UIController
         yield return new WaitForSeconds(0.01f);
         DisableMenu((int)eMenus.D_SalesContract);
         StartCoroutine(cMonsterCage());
+    }
+
+    public void SkipGoldCount()
+    {
+        GoldSkipTapped += 1;
+
+        if (GoldSkipTapped == 2)
+        {
+            DisableMenu((int)eMenus.SkipGoldButton);
+            moneyCountFinished = true;
+            GoldSkipTapped = 0;
+            GM.ChangePlayerGold(GM.PlayerMoney);
+        }
     }
 
     public void WatchAdButton()
