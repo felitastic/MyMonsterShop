@@ -119,8 +119,8 @@ public class GameManager : Singleton<GameManager>
         }
 
         CurMonsters[1].Unlocked = true;
-        CurMonsters[0].UnlockPrice = 50;
-        CurMonsters[2].UnlockPrice = 150;
+        CurMonsters[0].UnlockPrice = 1350;
+        CurMonsters[2].UnlockPrice = 2700;
     }
 
     public void SetDLTimer()

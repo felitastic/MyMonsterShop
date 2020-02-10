@@ -108,7 +108,7 @@ public class PettingController : MonoBehaviour
     {
         strokeDelay = false;
         monsterStroked = 0;
-        HeartGlow.SetTrigger("reset");
+        //HeartGlow.SetTrigger("reset");
         HeartMeter.fillAmount = monsterStroked / GM.StrokesPerPettingSession;        
         GM.homeUI.ExitPetSession();
     }
