@@ -79,22 +79,12 @@ public class GameManager : Singleton<GameManager>
     //Scripte für die Minigames
     public RunnerController runnerController;
 
-
     //Cheats
     public bool getEpic;
     public bool getLegendary;
+
     public bool TutorialOn;
-
-    //Lautstärke vom Spieler eingestellt
-    //public float BGMVolume;
-    //public float SFXVolume;
-
-    //private bool isLoading;
-    //private AsyncOperation asyncOperation;
-
-    //private bool isLoading = false;
-    //private AsyncOperation asyncOperation;
-
+    
     private void Awake()
     {
         Application.targetFrameRate = 60;        
@@ -102,8 +92,9 @@ public class GameManager : Singleton<GameManager>
         curScreen = eScene.home;
         DLIsGone = true;
         SetDLTimer();
-        petWaitInMinutes = 3.0f;
+        petWaitInMinutes = 1.0f;
         playWaitInMinutes = 2.0f;
+        DLWaitInMinutes = 15.0f;
         TutorialOn = true;
     }
 
@@ -113,7 +104,7 @@ public class GameManager : Singleton<GameManager>
         CurCamHomePos = Camera.main.transform.position;
         HomeCam.SetScreen(ecurMonsterSlot.middle);
         homeUI.TrainButtonActive(false);
-        ChangePlayerGold(+500);
+        ChangePlayerGold(+50);
     }
 
     private void WriteEmptySlots()

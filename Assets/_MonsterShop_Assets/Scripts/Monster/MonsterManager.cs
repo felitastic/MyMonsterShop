@@ -18,29 +18,7 @@ public class MonsterManager : MonoBehaviour
 
     //Pos to spawn creature 
     public Transform[] MonsterSpawn = new Transform[3];
-
-    //public Transform EggSpawn;
-    //private float WaitForHatch = 0.01f;
-    //public float LevelUpWait = 0.25f;
-
-    //put this in UI manager!
-
-    //private float _MonsterValue = 0;
-
-    //Scriptable Objekt der Creature einlesen
-    //has player unlocked this slot?
-    //public bool Unlocked;
-
-    //public float[] LevelThreshold_current = new float[9];
-
-    //public eMonsterStage MonsterStage;
-    //[Tooltip("Rarity rank of the creature")]
-    //public eRarity Rarity;
-
-    //current values, starting with zero/base
-    //public int MonsterLevel = 0;
-    //public float MonsterXP = 0;
-
+    
     public void GetGameManager()
     {
         GM = GameManager.Instance;

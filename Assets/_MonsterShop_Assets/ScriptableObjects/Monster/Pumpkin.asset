@@ -73,16 +73,16 @@ MonoBehaviour:
       Entry: 8
       Data: 
   LevelThreshold_normal:
-  - 400
-  - 900
-  - 1400
-  - 2100
-  - 2800
-  - 3800
-  XP_Cap: 8100
+  - 40
+  - 90
+  - 140
+  - 210
+  - 280
+  - 380
+  XP_Cap: 810
   MultiplicatorRare: 2
   MultiplicatorLegendary: 4
-  BaseCost: 10
+  BaseCost: 15
   GoldModificator:
   - 1
   - 1.25

@@ -79,10 +79,10 @@ MonoBehaviour:
   - 120
   - 150
   - 180
-  XP_Cap: 8100
+  XP_Cap: 810
   MultiplicatorRare: 2
   MultiplicatorLegendary: 3
-  BaseCost: 99999999
+  BaseCost: 200
   GoldModificator:
   - 1
   - 1.25

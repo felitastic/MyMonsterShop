@@ -26,7 +26,7 @@ public class PettingController : MonoBehaviour
         HeartMeter.fillAmount = 0;
     }
 
-    public virtual void SetXPBars()
+    public void SetXPBars()
     {
         if (GM.CurMonsters[(int)GM.curMonsterSlot].MonsterLevel < 7)
         {

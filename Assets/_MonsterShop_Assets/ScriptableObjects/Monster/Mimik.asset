@@ -15,13 +15,7 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects:
-    - {fileID: 1726278807984886216, guid: 2e59b769548a21e4faf212389ac273b4, type: 3}
-    - {fileID: 1726278807984886216, guid: 3bae605bf4ef56746aab75be7af505d1, type: 3}
-    - {fileID: 1726278807984886216, guid: 942fd82a969cc304ea8ac10d46294b20, type: 3}
-    - {fileID: 1726278807984886216, guid: bc20ca332ae5e4a4dbd3adc35adc573a, type: 3}
-    - {fileID: 1726278807984886216, guid: 0c671f3f705174441b9d4605d1d1591c, type: 3}
-    - {fileID: 1726278807984886216, guid: 5f700ae8c1cd40243a117c12f5a99054, type: 3}
+    ReferencedUnityObjects: []
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -37,32 +31,32 @@ MonoBehaviour:
       Entry: 1
       Data: 3|3
     - Name: 
-      Entry: 10
-      Data: 0
+      Entry: 6
+      Data: 
     - Name: 
-      Entry: 10
-      Data: 1
+      Entry: 6
+      Data: 
     - Name: 
-      Entry: 10
-      Data: 1
+      Entry: 6
+      Data: 
     - Name: 
-      Entry: 10
-      Data: 2
+      Entry: 6
+      Data: 
     - Name: 
-      Entry: 10
-      Data: 3
+      Entry: 6
+      Data: 
     - Name: 
-      Entry: 10
-      Data: 3
+      Entry: 6
+      Data: 
     - Name: 
-      Entry: 10
-      Data: 4
+      Entry: 6
+      Data: 
     - Name: 
-      Entry: 10
-      Data: 5
+      Entry: 6
+      Data: 
     - Name: 
-      Entry: 10
-      Data: 5
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 13
       Data: 
@@ -76,10 +70,10 @@ MonoBehaviour:
   - 120
   - 150
   - 180
-  XP_Cap: 8100
+  XP_Cap: 810
   MultiplicatorRare: 2
   MultiplicatorLegendary: 3
-  BaseCost: 20
+  BaseCost: 50
   GoldModificator:
   - 1
   - 1.25

@@ -134,21 +134,54 @@ public class CheatButtons : MonoBehaviour
     /// </summary>
     public void OneLevelUp()
     {
-        //steal logic from petting scene
-        //calculate difference between cur xp and next level threshold
-        //give enough xp to reach next threshold
-        //do the levelup and growth
+        if (GM.CurMonsters[GM.curMonsterID].Monster != null)
+        {
+            float curXP = GM.CurMonsters[GM.curMonsterID].MonsterXP;
+            float totalXPforStageUp;
+            float XPdiff;
 
-        //while (MM.CheckForMonsterLevelUp())
-        //{
-        //    SetXPBars();
-        //    //TODO vfx effekt level up
-        //    if (MM.CheckForStageChange())
-        //    {
-        //        StartCoroutine(MM.cLevelUpMonster(GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage, MM.MonsterSpawn[(int)GM.curMonsterSlot]));
-        //        yield return new WaitForSeconds(1.0f);
-        //    }
-        //    yield return new WaitForSeconds(0.5f);
+            if (GM.CurMonsters[GM.curMonsterID].MonsterLevel < 7)
+            {
+                if (GM.CurMonsters[GM.curMonsterID].MonsterLevel < 4)
+                {
+                    //lvl 1-3
+                    totalXPforStageUp = GM.CurMonsters[GM.curMonsterID].LevelThreshold_current[2];
+                    XPdiff = totalXPforStageUp - curXP;
 
+                }
+                else
+                {
+                    //lvl 4-6
+                    totalXPforStageUp = GM.CurMonsters[GM.curMonsterID].LevelThreshold_current[5];
+                    XPdiff = totalXPforStageUp - curXP;
+                }
+
+                GM.homeUI.SetUIStage(HomeUI.eHomeUIScene.none);
+                GM.homeUI.DisableSwiping(true);
+                GM.homeMonsterManager.SetMonsterXP(XPdiff);
+                StartCoroutine(cSetNewStage());
+            }
+            else
+            {
+                print("monster is already an adult");
+            }
+        }
+    }
+
+    private IEnumerator cSetNewStage()
+    {
+        while (GM.homeMonsterManager.CheckForMonsterLevelUp())
+        {
+            GM.homeUI.SetMonsterXPBarUndLevel();
+            //TODO vfx effekt level up
+            if (GM.homeMonsterManager.CheckForStageChange())
+            {
+                StartCoroutine(GM.homeMonsterManager.cLevelUpMonster(GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage, GM.homeMonsterManager.MonsterSpawn[(int)GM.curMonsterSlot]));
+                yield return new WaitForSeconds(1.0f);
+            }
+            yield return new WaitForSeconds(0.5f);
+            GM.homeUI.SetUIStage(HomeUI.eHomeUIScene.Home);
+            GM.homeUI.DisableSwiping(false);
+        }
     }
 }
