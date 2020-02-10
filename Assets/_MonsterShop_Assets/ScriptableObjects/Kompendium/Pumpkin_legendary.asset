@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75f36803bf407fe4f828c9bda9cd6105, type: 3}
   m_Name: Pumpkin_legendary
   m_EditorClassIdentifier: 
-  ShadowButtonImage: {fileID: 21300000, guid: 46ee40c10b64f69488d36ffd44e2f114, type: 3}
-  UnlockedButtonImage: {fileID: 21300000, guid: 2b5fa41f7b18109459380e8636c703d0,
+  ShadowButtonImage: {fileID: 21300000, guid: 72e67bdc8135bc449845fa71fc644f25, type: 3}
+  UnlockedButtonImage: {fileID: 21300000, guid: 38ed46522d45f0f46824d529aad0558a,
     type: 3}
   ButtonText: Pumpkin
-  MonsterImage: {fileID: 21300000, guid: 2b5fa41f7b18109459380e8636c703d0, type: 3}
+  MonsterImage: {fileID: 21300000, guid: 676db4e211a718a45a51fcb000dd85f2, type: 3}
   MonsterFluff: Grows best in winter, prefers dark and cold spaces.
   MonsterName: Pumpkin
   MonsterRarity: Sweet dumpling
