@@ -13,23 +13,65 @@ MonoBehaviour:
   m_Name: Mimik
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 0
-    SerializedBytes: 0101100000006d005f004d006f006e00730074006500720050007200650066006100620073002f00000000013100000055006e0069007400790045006e00670069006e0065002e00470061006d0065004f0062006a006500630074005b002c005d002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c00650000000000060900000000000000270105000000720061006e006b007300010300000033007c0033000c000000000c010000000c020000000c030000000c040000000c050000000c060000000c070000000c080000000705
+    SerializedFormat: 2
+    SerializedBytes: 
     ReferencedUnityObjects:
-    - {fileID: 3954918895041569823, guid: fcdc11823cf197a43b5e6fb2d3898d48, type: 3}
-    - {fileID: 9096706893746411745, guid: 86c8667fb09af2045991210183d9378b, type: 3}
-    - {fileID: 1111404353887180854, guid: abc597d2d9ebd264f861767e91cb7695, type: 3}
-    - {fileID: 1460001082709430429, guid: d887cfe880e43144e998b104d09faef0, type: 3}
-    - {fileID: 2400984523217792183, guid: adbd4819fdcbabf4186078f3708ccc74, type: 3}
-    - {fileID: 2388003616747189303, guid: 4c46ced9d5bbe9f4da39427141de4129, type: 3}
-    - {fileID: 6735197497200249116, guid: 27c5aa3aed2687947bc9055ac1046bfa, type: 3}
-    - {fileID: 7090427757144043214, guid: 640992a5256a5054cbbd14011b0484d3, type: 3}
-    - {fileID: 3066914209687452860, guid: 65d90c416dd5d0943aa61c7721fd6d31, type: 3}
+    - {fileID: 2551004940214289019, guid: 96ccb0a17308e464c9760145cb394cce, type: 3}
+    - {fileID: 5941750836160654144, guid: fe9b55392679b674e96c58a3c8e6af2d, type: 3}
+    - {fileID: 2121073856152650882, guid: f31858b15a4873e42bb9ba1813bc86f0, type: 3}
+    - {fileID: 2587625423310960835, guid: 9ad1f87c99d60894ca4c5207e3a7727e, type: 3}
+    - {fileID: 8048308820338101805, guid: 128e0bd6019809c45897854bf0355448, type: 3}
+    - {fileID: 2888369732928351460, guid: a0b26d25d79e35649bb7699ff35d0880, type: 3}
+    - {fileID: 7072035485171181994, guid: 2c400b0bbf9d9b94198c5fb4c6bd4f54, type: 3}
+    - {fileID: 16958138284462408, guid: a5635da15fc3e2e468e14a54dc80a25e, type: 3}
+    - {fileID: 8638522522350121855, guid: 31a436b3c7d574945bbafe2ae6d2618c, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes: []
+    SerializationNodes:
+    - Name: m_MonsterPrefabs
+      Entry: 7
+      Data: 0|UnityEngine.GameObject[,], UnityEngine.CoreModule
+    - Name: 
+      Entry: 12
+      Data: 9
+    - Name: ranks
+      Entry: 1
+      Data: 3|3
+    - Name: 
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 10
+      Data: 1
+    - Name: 
+      Entry: 10
+      Data: 2
+    - Name: 
+      Entry: 10
+      Data: 3
+    - Name: 
+      Entry: 10
+      Data: 4
+    - Name: 
+      Entry: 10
+      Data: 5
+    - Name: 
+      Entry: 10
+      Data: 6
+    - Name: 
+      Entry: 10
+      Data: 7
+    - Name: 
+      Entry: 10
+      Data: 8
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
   LevelThreshold_normal:
   - 30
   - 60

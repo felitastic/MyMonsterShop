@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -2544,7 +2544,7 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'Monstrous regards,
 
-    
+
 
     The Dungeonlord'
 --- !u!222 &197671702
