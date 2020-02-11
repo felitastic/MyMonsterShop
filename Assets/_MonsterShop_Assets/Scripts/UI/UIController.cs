@@ -30,7 +30,7 @@ public abstract class UIController : MonoBehaviour
         Menus[menu].SetActive(false);
     }
     public virtual void EnableMenu(int menu)
-    { 
+    {
         Menus[menu].SetActive(true);
     }
 
@@ -43,7 +43,7 @@ public abstract class UIController : MonoBehaviour
         Buttons[thisButton].interactable = true;
     }
     public virtual void DisableButton(int thisButton)
-    { 
+    {
         Buttons[thisButton].interactable = false;
     }
 
@@ -72,6 +72,12 @@ public abstract class UIController : MonoBehaviour
             XPBars[0].fillAmount = fillAmount[0];
             XPBars[1].fillAmount = fillAmount[1];
             XPBars[2].fillAmount = fillAmount[2];
+        }
+        else if (GM.CurMonsters[(int)GM.curMonsterSlot].MonsterLevel >= 7)
+        {
+            XPBars[0].fillAmount = 1.0f;
+            XPBars[1].fillAmount = 1.0f;
+            XPBars[2].fillAmount = 1.0f;
         }
     }
 

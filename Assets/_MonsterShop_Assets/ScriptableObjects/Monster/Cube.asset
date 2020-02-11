@@ -88,7 +88,7 @@ MonoBehaviour:
   - 1.25
   - 1.5
   BaseValue: 500000
-  MonsterType: 0
+  MonsterType: 9
   MonsterName: Cube
   EggPrefab: {fileID: 7378189106694598689, guid: 3a0929edef780584b8fce41e4457e61b,
     type: 3}

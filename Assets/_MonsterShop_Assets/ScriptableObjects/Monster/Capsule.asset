@@ -88,7 +88,7 @@ MonoBehaviour:
   - 1.25
   - 1.5
   BaseValue: 500000
-  MonsterType: 0
+  MonsterType: 12
   MonsterName: Capsule
   EggPrefab: {fileID: 7378189106694598689, guid: e279f3742a2700a4392b2eccfe2e6f93,
     type: 3}

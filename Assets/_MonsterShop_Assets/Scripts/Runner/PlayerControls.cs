@@ -25,7 +25,7 @@ public class PlayerControls : MonoBehaviour
         GM = GameManager.Instance;
         monsterSpeed = new Vector2(0f, 0f);
     }
-    
+
     private void Update()
     {
         if (GM.runnerController.IsRunning)
@@ -35,6 +35,7 @@ public class PlayerControls : MonoBehaviour
             if (!pointerdown)
             {
                 monsterSpeed = new Vector2(0f, verticalSpeed);
+                GM.homeMonsterManager.monsterAnim[GM.curMonsterID].SetTrigger("ahead");
             }
             else
             {
@@ -60,10 +61,17 @@ public class PlayerControls : MonoBehaviour
         {
             pointerdown = true;
 
-        if (left)
-            horizontalDirection = -1;
-        else
-            horizontalDirection = +1;
+            if (left)
+            {
+                horizontalDirection = -1;
+                GM.homeMonsterManager.monsterAnim[GM.curMonsterID].SetTrigger("left");
+            }
+            else
+            {
+                horizontalDirection = +1;
+                GM.homeMonsterManager.monsterAnim[GM.curMonsterID].SetTrigger("right");
+
+            }
         }
     }
 

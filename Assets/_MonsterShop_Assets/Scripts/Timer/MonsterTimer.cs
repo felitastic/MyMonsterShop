@@ -101,6 +101,7 @@ public class MonsterTimer : MonoBehaviour
     {
         runPetTimer = false;
         GM.CurMonsters[GM.curMonsterID].IsHappy = false;
+        GM.homeMonsterManager.monsterAnim[GM.curMonsterID].SetBool("isSad", true);
         curPetWaitTime = 0.0f;
         GM.homeUI.SetPettingSymbol(true);
         print("Pet timer done");
@@ -141,6 +142,7 @@ public class MonsterTimer : MonoBehaviour
             {
                 curPetWaitTime = CalculateWaitingTimes(curMonster.PetTimerEnd);
                 GM.homeUI.SetPettingSymbol(false);
+                GM.homeMonsterManager.monsterAnim[GM.curMonsterID].SetBool("isSad", false);
                 runPetTimer = true;
             }
 

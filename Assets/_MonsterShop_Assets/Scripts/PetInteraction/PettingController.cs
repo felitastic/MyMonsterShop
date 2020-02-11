@@ -68,16 +68,13 @@ public class PettingController : MonoBehaviour
             print("this monster has been stroked " + GM.CurMonsters[(int)GM.curMonsterSlot].StrokeTimes + " times");
             //TODO change monster idle to happy
 
-
             MM.SetMonsterXP(GM.XPGainPerPettingSession);
-            //yield return new WaitForSeconds(0.4f);
-            //SetXPBars();
-            //yield return new WaitForSeconds(0.7f);
             if (GM.CurMonsters[(int)GM.curMonsterSlot].StrokeTimes % 5 == 0)
             {
                 MM.SetMonsterXP(GM.XPAffectionBonus);
             }
-            yield return new WaitForSeconds(0.75f);
+
+            yield return new WaitForSeconds(1.0f);
 
             //the whole shitty check for levelup and call levelup scene
             while (MM.CheckForMonsterLevelUp())
@@ -92,7 +89,8 @@ public class PettingController : MonoBehaviour
                 }
             }
 
-            yield return new WaitForSeconds(0.5f);
+            SetXPBars();
+            yield return new WaitForSeconds(1.0f);
         }
         else
         {

@@ -92,7 +92,8 @@ public class HomeUI : UIController
         TutorialIntro,
         RunnerLevelChoice,
         PetBackButton,
-        SkipGoldButton
+        SkipGoldButton,
+        EggGlow
     }
 
     private enum  eButtons
@@ -710,16 +711,17 @@ public class HomeUI : UIController
             DisableMenu((int)eMenus.XPBar);
             GM.homeUI.SetText((int)eTextfields.H_MonsterLevel, "");
         }
-        else if (GM.CurMonsters[(int)GM.curMonsterSlot].Monster != null && GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage != eMonsterStage.Adult)
+        else if (GM.CurMonsters[(int)GM.curMonsterSlot].Monster != null && GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage != eMonsterStage.Egg)
         {
             EnableMenu((int)eMenus.XPBar);
             SetText((int)eTextfields.H_MonsterLevel, "Lvl " + GM.CurMonsters[(int)GM.curMonsterSlot].MonsterLevel);
-            SetXPBars();           
+            SetXPBars();
         }
         else
         {
             DisableMenu((int)eMenus.XPBar);
             SetText((int)eTextfields.H_MonsterLevel, "Lvl " + GM.CurMonsters[(int)GM.curMonsterSlot].MonsterLevel);
+            SetXPBars();
         }
     }    
 
@@ -1018,6 +1020,18 @@ public class HomeUI : UIController
             DisableButton((int)eButtons.H_Train);
     }
 
+    public void EnableEggGlow(bool enable)
+    {
+        if (enable)
+        {
+            EnableMenu((int)eMenus.EggGlow);
+        }
+        else
+        {
+            DisableMenu((int)eMenus.EggGlow);
+        }
+    }
+
     public void TapEgg()
     {
         hatchTaps += 1;
@@ -1299,7 +1313,7 @@ public class HomeUI : UIController
 
         yield return new WaitForSeconds(0.76f);
 
-        while (GM.PlayerMoney >= oldValue)
+        while (GM.PlayerMoney >= oldValue && !moneyCountFinished)
         {
             SetText((int)eTextfields.GoldCount, "" + oldValue);            
             oldValue++;

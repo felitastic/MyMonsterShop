@@ -139,7 +139,6 @@ public class MM_Home : MonsterManager
                 break;
             case eMonsterType.mimik:
                 eggRenderer.material = MimikEgg[taps - 1];
-
                 break;
             case eMonsterType.sphere:
                 break;
@@ -152,17 +151,17 @@ public class MM_Home : MonsterManager
         }
     }
 
-    // Hatching egg animation
-    public IEnumerator cHatchEgg(Transform monsterSpawn)
+     // Hatching egg animation
+public IEnumerator cHatchEgg(Transform monsterSpawn)
     {
         yield return new WaitForSeconds(0.05f);
         CurMonster.MonsterStage = eMonsterStage.Baby;
         Destroy(monsterBody[SlotID]);
-        GM.vfx_home.SpawnEffect(VFX_Home.VFX.EggShells, VFX_Home.Position.EggHatching);
         StartCoroutine(GM.HomeCam.cShake(0.1f, 0.25f));
-        GM.vfx_home.SpawnEffect(VFX_Home.VFX.EggGlow, VFX_Home.Position.EggGlow);
+        GM.vfx_home.SpawnEffect(VFX_Home.VFX.EggShells, VFX_Home.Position.EggHatching);
+        GM.homeUI.EnableEggGlow(true);
+        //GM.vfx_home.SpawnEffect(VFX_Home.VFX.EggGlow, VFX_Home.Position.EggGlow);
         GM.homeMonsterManager.SpawnCurrentMonster(monsterSpawn);
-        GM.vfx_home.SpawnEffect(VFX_Home.VFX.EggGlow, VFX_Home.Position.EggGlow);
         yield return new WaitForSeconds(0.5f);
 
         print("checking rarity and showing banner");
@@ -192,6 +191,7 @@ public class MM_Home : MonsterManager
         GM.homeUI.ShowMonsterStats(true);
         GM.homeUI.TrainButtonActive(true);
         GM.homeMonsterManager.monsterAnim[GM.homeMonsterManager.CurMonster.SlotID].SetBool("isSad", true);
+        GM.homeUI.EnableEggGlow(false);
         yield return null;
     }
 }

@@ -22,11 +22,11 @@ public enum eMonsterType
 
 public enum eMonsterStage
 {
-    Baby,
-    Teen,
-    Adult,
-    Egg,
-    none
+    Baby = 0,
+    Teen = 1,
+    Adult = 2,
+    Egg = 3,
+    none = 4
 }
 
 public enum eRarity
