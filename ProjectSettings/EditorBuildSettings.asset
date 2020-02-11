@@ -10,14 +10,14 @@ EditorBuildSettings:
     guid: c2d606dc5c34be54f88a01202b9ba649
   - enabled: 1
     path: Assets/_MonsterShop_Assets/Scenes/RunnerTut.unity
-    guid: 0d3eaa8e83b000d4e9dfc9c672f52272
+    guid: c968e691592881e41b5a7e75cce9cf60
   - enabled: 1
     path: Assets/_MonsterShop_Assets/Scenes/RunnerEasy.unity
     guid: 05ac4ffc3300bfa45820faac3529d7be
   - enabled: 1
     path: Assets/_MonsterShop_Assets/Scenes/RunnerIntermed.unity
-    guid: a027b2dd512af5043bfcb317d0a896f2
+    guid: 4f4814f99d907eb4393a157790d5127b
   - enabled: 1
     path: Assets/_MonsterShop_Assets/Scenes/RunnerHard.unity
-    guid: 2fd2e45fa36a9d2499bd98fd69ed144c
+    guid: 32067246c101ff742a9e9341443b0b5b
   m_configObjects: {}

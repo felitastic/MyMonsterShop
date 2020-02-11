@@ -61,29 +61,28 @@ public class PettingController : MonoBehaviour
 
         if (GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage != eMonsterStage.Adult)
         {
+            SetXPBars();
             GM.homeUI.ShowPetSessionResult();
 
             GM.CurMonsters[(int)GM.curMonsterSlot].StrokeTimes += 1;
-            print("monster has been stroked " + GM.CurMonsters[(int)GM.curMonsterSlot].StrokeTimes + " times");
+            print("this monster has been stroked " + GM.CurMonsters[(int)GM.curMonsterSlot].StrokeTimes + " times");
             //TODO change monster idle to happy
 
-            yield return new WaitForSeconds(0.5f);
 
-            SetXPBars();
             MM.SetMonsterXP(GM.XPGainPerPettingSession);
-            yield return new WaitForSeconds(0.4f);
-            SetXPBars();
-            yield return new WaitForSeconds(0.7f);
+            //yield return new WaitForSeconds(0.4f);
+            //SetXPBars();
+            //yield return new WaitForSeconds(0.7f);
             if (GM.CurMonsters[(int)GM.curMonsterSlot].StrokeTimes % 5 == 0)
             {
                 MM.SetMonsterXP(GM.XPAffectionBonus);
             }
+            yield return new WaitForSeconds(0.75f);
 
             //the whole shitty check for levelup and call levelup scene
             while (MM.CheckForMonsterLevelUp())
             {
-                SetXPBars();
-                //TODO vfx effekt level up
+                SetXPBars();   
                 yield return new WaitForSeconds(0.5f);
 
                 if (MM.CheckForStageChange())

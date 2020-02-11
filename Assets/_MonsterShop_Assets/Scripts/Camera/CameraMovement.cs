@@ -251,7 +251,7 @@ public class CameraMovement : MonoBehaviour
 
     public IEnumerator cShake(float duration, float magnitude)
     {
-        print("start camshake");
+        //print("start camshake");
         Vector3 originalPos = Camera.main.transform.position;
 
         float elapsedTime = 0f;
@@ -267,7 +267,7 @@ public class CameraMovement : MonoBehaviour
             yield return null;      //waits for the next frame before continuing while loop
         }
 
-        print("end camshake");
+        //print("end camshake");
         Camera.main.transform.position = originalPos;
     }
 }

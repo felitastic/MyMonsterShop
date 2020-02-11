@@ -82,9 +82,10 @@ public class MonsterManager : MonoBehaviour
     // Changes the monsters xp
     public void SetMonsterXP(float gainValue)
     {
+        print("start XP: " + CurMonster.MonsterXP);
+
         if (Mathf.Approximately(CurMonster.MonsterXP,CurMonster.XPCap))
         {
-            print("xp: " + CurMonster.MonsterXP);
             print("monster has reached max XP: "+CurMonster.XPCap);
         }
         else
@@ -92,12 +93,15 @@ public class MonsterManager : MonoBehaviour
             CurMonster.MonsterXP += gainValue;
             //print("xp: " + CurMonster.MonsterXP);
         }
+
+        print("new XP: " + CurMonster.MonsterXP);
     }
 
     // at which XP a level up occurs
     public float NextLvlUpAt()
     {
-        return (CurMonster.LevelThreshold_current[CurMonster.MonsterLevel - 1]);
+        //print("XP needed for next level: " + CurMonster.LevelThreshold_current[CurMonster.MonsterLevel - 1]);
+        return (CurMonster.LevelThreshold_current[CurMonster.MonsterLevel-1]);
     }
 
     //returns 3 floats for each xp bar
@@ -108,43 +112,37 @@ public class MonsterManager : MonoBehaviour
         xpBar2 = 0.0f;
         xpBar3 = 0.0f;
 
-        switch (CurMonster.MonsterLevel)
+        if (CurMonster.MonsterLevel < 4)
         {
-            case 1:
-                xpBar1 = CurMonster.MonsterXP / CurMonster.LevelThreshold_current[CurMonster.MonsterLevel - 1];
-                break;
-            case 2:
-                xpBar1 = 1.0f;
-                xpBar2 = (CurMonster.MonsterXP - CurMonster.MonsterLevel) / CurMonster.LevelThreshold_current[CurMonster.MonsterLevel - 1];
-                break;
-            case 3:
-                xpBar1 = 1.0f;
-                xpBar2 = 1.0f;
-                if (Mathf.Approximately(CurMonster.MonsterXP, CurMonster.LevelThreshold_current[CurMonster.MonsterLevel - 1]))
-                {
-                    xpBar3 = 1.0f;
-                }
-                else
-                {
-                    xpBar3 = (CurMonster.MonsterXP - CurMonster.MonsterLevel) / CurMonster.LevelThreshold_current[CurMonster.MonsterLevel - 1];
-                }
-                break;
-            case 4:
-                xpBar1 = (CurMonster.MonsterXP - CurMonster.MonsterLevel) / CurMonster.LevelThreshold_current[CurMonster.MonsterLevel - 1];
-                break;
-            case 5:
-                xpBar1 = 1.0f;
-                xpBar2 = (CurMonster.MonsterXP - CurMonster.MonsterLevel) / CurMonster.LevelThreshold_current[CurMonster.MonsterLevel - 1];
-                break;
-            case 6:
-                xpBar1 = 1.0f;
-                xpBar2 = 1.0f;
-                xpBar3 = (CurMonster.MonsterXP - CurMonster.MonsterLevel) / CurMonster.LevelThreshold_current[CurMonster.MonsterLevel - 1];
-                break;
-            default:
-                break;
+            xpBar1 = CurMonster.MonsterXP / CurMonster.LevelThreshold_current[0];
+            xpBar2 = (CurMonster.MonsterXP - CurMonster.LevelThreshold_current[0]) / 
+                     (CurMonster.LevelThreshold_current[1] - CurMonster.LevelThreshold_current[0]);
+            xpBar3 = (CurMonster.MonsterXP - CurMonster.LevelThreshold_current[1]) / 
+                     (CurMonster.LevelThreshold_current[2] - CurMonster.LevelThreshold_current[1]);        
+            
+            //print("xp bar 2 ergibt sich aus \n" + 
+            //    (CurMonster.MonsterXP - CurMonster.LevelThreshold_current[0]) + " : " + 
+            //    (CurMonster.LevelThreshold_current[1] - CurMonster.LevelThreshold_current[0]));
+        }
+        else if (CurMonster.MonsterLevel < 7)
+        {
+            xpBar1 = (CurMonster.MonsterXP - CurMonster.LevelThreshold_current[2]) / 
+                     (CurMonster.LevelThreshold_current[3] - CurMonster.LevelThreshold_current[2]);
+            xpBar2 = (CurMonster.MonsterXP - CurMonster.LevelThreshold_current[3]) / 
+                     (CurMonster.LevelThreshold_current[4] - CurMonster.LevelThreshold_current[3]);
+            xpBar3 = (CurMonster.MonsterXP - CurMonster.LevelThreshold_current[4]) / 
+                     (CurMonster.LevelThreshold_current[5] - CurMonster.LevelThreshold_current[4]);
+        }
+        else
+        {
+            xpBar1 = 1.0f;
+            xpBar2 = 1.0f;
+            xpBar3 = 1.0f;
         }
 
+        //print("bar 1: " + xpBar1);
+        //print("bar 2: " + xpBar2);
+        //print("bar 3: " + xpBar3);
         return new float[] { xpBar1, xpBar2, xpBar3 };
     }
 

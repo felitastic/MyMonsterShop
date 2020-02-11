@@ -77,7 +77,7 @@ public class MonsterTimer : MonoBehaviour
         GM.DLIsGone = false;
         curDungeonLordWaitTime = 0.0f;
         GM.homeUI.UpdateDLTimer("Sell");
-        GM.homeUI.UpdateDLButtonAnim(false);
+        //GM.homeUI.UpdateDLButtonAnim(false);
         print("Dungeon lord is ready");
     }
 
@@ -164,7 +164,7 @@ public class MonsterTimer : MonoBehaviour
         else
         {
             curDungeonLordWaitTime = CalculateWaitingTimes(GM.DungeonLordWaitTimeEnd);
-            GM.homeUI.UpdateDLButtonAnim(true);
+            //GM.homeUI.UpdateDLButtonAnim(true);
             runDLTimer = true;
         }
     }
