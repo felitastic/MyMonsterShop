@@ -135,7 +135,7 @@ public class MonsterTimer : MonoBehaviour
         if (curMonster.Monster != null)
         {
             if (curMonster.PetTimerEnd <= curDate)
-            {
+            {                
                 EnablePetSession();
             }
             else

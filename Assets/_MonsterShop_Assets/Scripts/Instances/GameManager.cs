@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Notifications.Android;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -105,6 +106,25 @@ public class GameManager : Singleton<GameManager>
         HomeCam.SetScreen(ecurMonsterSlot.middle);
         homeUI.TrainButtonActive(false);
         ChangePlayerGold(+50);
+
+        var c = new AndroidNotificationChannel()
+        {
+            Id = "channel_id",
+            Name = "Default Channel",
+            Importance = Importance.High,
+            Description = "Generic notifications",
+        };
+        AndroidNotificationCenter.RegisterNotificationChannel(c);
+    }
+
+    public void SendNotification(DateTime FireTime, string msg)
+    {
+        var notification = new AndroidNotification();
+        notification.Title = "SomeTitle";
+        notification.Text = msg;
+        notification.FireTime = FireTime;
+
+        AndroidNotificationCenter.SendNotification(notification, "channel_id");
     }
 
     private void WriteEmptySlots()
@@ -126,6 +146,7 @@ public class GameManager : Singleton<GameManager>
     public void SetDLTimer()
     {
         DungeonLordWaitTimeEnd = DateTime.Now.AddMinutes(DLWaitInMinutes);
+        SendNotification(DungeonLordWaitTimeEnd, "The dungeonlord wants to buy some new monsters!");
     }
 
     /// <summary>
@@ -135,6 +156,7 @@ public class GameManager : Singleton<GameManager>
     public void SetPetTimer(int slotID)
     {
         CurMonsters[slotID].PetTimerEnd = DateTime.Now.AddMinutes(petWaitInMinutes);
+        SendNotification(CurMonsters[slotID].PetTimerEnd, "A monster is sad and needs affection! :(");
     }
 
     /// <summary>
