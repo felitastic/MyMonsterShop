@@ -138,6 +138,10 @@ public class MonsterTimer : MonoBehaviour
             {                
                 EnablePetSession();
             }
+            else if (curMonster.Sold)
+            {
+                GM.homeMonsterManager.monsterAnim[GM.curMonsterID].SetBool("isSad", true);
+            }
             else
             {
                 curPetWaitTime = CalculateWaitingTimes(curMonster.PetTimerEnd);

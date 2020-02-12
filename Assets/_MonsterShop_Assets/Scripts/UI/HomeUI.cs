@@ -1230,7 +1230,9 @@ public class HomeUI : UIController
 
         yield return new WaitForSeconds(0.2f);
         DropCage(GM.CurMonsters[(int)GM.curMonsterSlot].SlotID);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.2f);
+        GM.homeMonsterManager.monsterAnim[GM.curMonsterID].SetBool("isSad", true);
+        yield return new WaitForSeconds(0.3f);
         DisableMenu((int)eMenus.D_SaleConfirm);
         EnableMenu((int)eMenus.D_BottomButtons);
         EnableMenu((int)eMenus.SwipeButtons);  

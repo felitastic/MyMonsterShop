@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75f36803bf407fe4f828c9bda9cd6105, type: 3}
   m_Name: Mimik_legendary
   m_EditorClassIdentifier: 
-  ShadowButtonImage: {fileID: 21300000, guid: 46ee40c10b64f69488d36ffd44e2f114, type: 3}
-  UnlockedButtonImage: {fileID: 21300000, guid: 8f6c4004b346a6a41bedc9623425dbd3,
+  ShadowButtonImage: {fileID: 21300000, guid: 1aaf6208c1db1a04a9f13f5275d35ef3, type: 3}
+  UnlockedButtonImage: {fileID: 21300000, guid: 6565cda9e594480408032b1867bdc4c2,
     type: 3}
   ButtonText: Mimik
-  MonsterImage: {fileID: 21300000, guid: 8f6c4004b346a6a41bedc9623425dbd3, type: 3}
+  MonsterImage: {fileID: 21300000, guid: 6565cda9e594480408032b1867bdc4c2, type: 3}
   MonsterFluff: This breed of mimik is commonly used in assassinations of kings and
     lords.
   MonsterName: Mimik
   MonsterRarity: Black Velvet
   MonsterHatchCount: 0
-  MonsterHighestPrice: 1234
+  MonsterHighestPrice: 0
   MonsterType: 3
