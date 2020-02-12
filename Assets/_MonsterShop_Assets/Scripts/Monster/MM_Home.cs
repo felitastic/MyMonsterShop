@@ -160,15 +160,16 @@ public IEnumerator cHatchEgg(Transform monsterSpawn)
         StartCoroutine(GM.HomeCam.cShake(0.1f, 0.25f));
         GM.vfx_home.SpawnEffect(VFX_Home.VFX.EggShells, VFX_Home.Position.EggHatching);
         GM.homeUI.EnableEggGlow(true);
-        //GM.vfx_home.SpawnEffect(VFX_Home.VFX.EggGlow, VFX_Home.Position.EggGlow);
         GM.homeMonsterManager.SpawnCurrentMonster(monsterSpawn);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.25f);
+        GM.homeMonsterManager.monsterAnim[GM.curMonsterID].SetTrigger("hatch");
+        yield return new WaitForSeconds(0.75f);
 
         print("checking rarity and showing banner");
         switch (GM.CurMonsters[GM.curMonsterID].Rarity)
         {
             case eRarity.normal:
-                yield return new WaitForSeconds(2.0f);
+                yield return new WaitForSeconds(2.5f);
                 
                 break;
             case eRarity.rare:
