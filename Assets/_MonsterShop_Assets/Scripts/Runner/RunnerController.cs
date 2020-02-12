@@ -27,6 +27,7 @@ public class RunnerController : MonoBehaviour
     public Text CollectedText;
     public Text GameEndText;
     public Text CollectedFeedbackText;
+    public Animator CollectedAnimation;
          
     //level spawn stuff, maybe second controller dafür
     public int curTile = 0;
@@ -34,7 +35,7 @@ public class RunnerController : MonoBehaviour
     public GameObject[] LevelTiles;
     public bool IsRunning;
     public bool win;
-
+    
     private void Awake()
     {
         IsRunning = false;
@@ -52,15 +53,10 @@ public class RunnerController : MonoBehaviour
         GM.runnerController = this;
     }    
 
-    public IEnumerator cOnCollectFeedback()
+    public void OnCollectFeedback()
     {
         CollectedFeedbackText.text = "+" + curCollectableValue + "XP";
-        yield return new WaitForSeconds(0.1f);
-        CollectedFeedbackText.text = "";
-
-        //GameObject feedback = Instantiate(FeedbackPrefab, FeedbackSpawm);
-        //feedback.transform.SetParent(FeedbackSpawm, true);
-        //Destroy(feedback, 0.3f);
+        CollectedAnimation.SetTrigger("gain");
     }
 
     public IEnumerator cShake(float duration, float magnitude)

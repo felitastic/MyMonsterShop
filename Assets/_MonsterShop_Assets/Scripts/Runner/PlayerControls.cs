@@ -35,7 +35,7 @@ public class PlayerControls : MonoBehaviour
             if (!pointerdown)
             {
                 monsterSpeed = new Vector2(0f, verticalSpeed);
-                GM.homeMonsterManager.monsterAnim[GM.curMonsterID].SetTrigger("ahead");
+                GM.runnerMonsterManager.monsterAnim[GM.curMonsterID].SetTrigger("ahead");
             }
             else
             {
@@ -55,6 +55,21 @@ public class PlayerControls : MonoBehaviour
             Monster.velocity = monsterSpeed;
     }
 
+    //public void AnimateLeaning(bool left)
+    //{
+    //    if (GM.runnerController.IsRunning)
+    //    {
+    //        if (left)
+    //        {
+    //            GM.runnerMonsterManager.monsterAnim[GM.curMonsterID].SetTrigger("left");
+    //        }
+    //        else
+    //        {
+    //            GM.runnerMonsterManager.monsterAnim[GM.curMonsterID].SetTrigger("right");
+    //        }
+    //    }
+    //}
+
     public void PointerEnter(bool left)
     {
         if (GM.runnerController.IsRunning)
@@ -63,14 +78,13 @@ public class PlayerControls : MonoBehaviour
 
             if (left)
             {
+                GM.runnerMonsterManager.monsterAnim[GM.curMonsterID].SetTrigger("left");
                 horizontalDirection = -1;
-                GM.homeMonsterManager.monsterAnim[GM.curMonsterID].SetTrigger("left");
             }
             else
             {
+                GM.runnerMonsterManager.monsterAnim[GM.curMonsterID].SetTrigger("right");
                 horizontalDirection = +1;
-                GM.homeMonsterManager.monsterAnim[GM.curMonsterID].SetTrigger("right");
-
             }
         }
     }

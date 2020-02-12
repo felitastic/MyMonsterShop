@@ -11,10 +11,29 @@ public class GameManager : Singleton<GameManager>
     // um zu verhindern, dass andere/Kind Elemente den Konstruktor des GameManagers aufruft
     protected GameManager() { }
 
-    [Header("Home Screen Values")]
-    //ui controller schreibt sich bei onenable/awake hier rein
-    //delete later
-    //public UIController CurUI;
+    [Header("For changes in inspector")]
+    [Header("Timer Values")]
+    [Tooltip("Timer for the Sell Option in Minutes")]
+    public float DLWaitInMinutes = 15.0f;
+    [Tooltip("Timer until Monster is sad again in Minutes")]
+    public float petWaitInMinutes = 1.0f;
+    [Tooltip("Timer until Monster can train again in Minutes")]
+    public float playWaitInMinutes = 2.0f;
+
+    [Header("Pet Scene")]
+    [Tooltip("How many times monster needs to be stroked per session")]
+    public int StrokesPerPettingSession = 3;
+    [Tooltip("Base XP gain per petting session")]
+    public float XPGainPerPettingSession = 10.0f;
+    [Tooltip("Bonus XP gain per petting, every 5 times")]
+    public float XPAffectionBonus = 5.0f;
+
+    [Header("Egg Hatching")]
+    [Tooltip("How many times to tap the egg until it hatches")]
+    public int TapsToHatch = 3;
+
+    [Header("Do not touch")]
+    [Header("Scripts")]
 
     //UIs
     public HomeUI homeUI;
@@ -29,67 +48,58 @@ public class GameManager : Singleton<GameManager>
     public MM_Runner runnerMonsterManager;
     public Monster_Kompendium monsterKompendium;
 
-    [Header("Monster Values")]
-    public CameraMovement HomeCam;
-
-    public int CurPlayerID;
-    public int PlayerMoney = 0;
-
-    //wie oft spieler schon minigames gespielt hat (für unlocks)
-    public int MinigamesPlayed;
-    public eScene curScreen;
-
-    //left, middle, right screen in home
-    public ecurMonsterSlot curMonsterSlot;
-    //uses above value as (int) to get the currently selected MonsterSlot ID
-    public int curMonsterID { get { return CurMonsters[(int)curMonsterSlot].SlotID; } }
-
-    public Vector3 CurCamHomePos;
-
-    public Rigidbody[] curMonsterRigid;
-    public Animator[] curMonsterAnim;
-
-    //momentane unlocked slots and creatures, die der Spieler hat
-    //public CurrentMonster[] CurMonsters = new CurrentMonster[3];
-    public MonsterSlot[] CurMonsters;
-
-    //how many taps til egg hatches
-    public int TapsToHatch = 3;
-
-    public int StrokesPerPettingSession = 3;
-    public float XPGainPerPettingSession = 10.0f;
-    public float XPAffectionBonus = 5.0f;
-    /// <summary>
-    /// Reihenfolge wie eMonsterType
-    /// </summary>
-    public bool[] UnlockedLogEntries = new bool[9];
-
-    //Timer
-    //For the dungeon lord timer
-    public System.DateTime DungeonLordWaitTimeEnd;
-    public bool DLIsGone;
-    public float DLWaitInMinutes = 10.0f;
-
-    //is petting enabled
-    public bool petting;
-
     //Other timers
     public MonsterTimer monsterTimer;
-    //How long until you can pet again
-    public float petWaitInMinutes = 2.0f;
-    //How long until you can play again
-    public float playWaitInMinutes = 4.0f;
 
     //Scripte für die Minigames
     public RunnerController runnerController;
+    
+    [Header("Dungeonlord Timer")]
+    public System.DateTime DungeonLordWaitTimeEnd;
+    public bool DLIsGone;
 
-    //Cheats
+    [Header("Minigame Values")]
+    //wie oft spieler schon minigames gespielt hat (für unlocks)
+    public int MinigamesPlayed;
+
+    [Header("Monster stuff")]
+    public Rigidbody[] curMonsterRigid;
+    public Animator[] curMonsterAnim;
+    public MonsterSlot[] CurMonsters;
+
+    //uses above value as (int) to get the currently selected MonsterSlot ID
+    public int curMonsterID { get { return CurMonsters[(int)curMonsterSlot].SlotID; } }
+    
+    [Header("Camera & Scene")]
+    public CameraMovement HomeCam;
+    [Tooltip("Left = 0, Middle = 1, Right = 2; Screens in Home")]
+    public ecurMonsterSlot curMonsterSlot;
+    [Tooltip("Which scene: home, runner, other games ...")]
+    public eScene curScreen;
+    public Vector3 CurCamHomePos;
+
+    [Tooltip("Player ID for local savegames")]
+    public int CurPlayerID;
+
+    [Tooltip("Money the player owns")]
+    public int PlayerMoney = 0;
+
+    [Tooltip("Kompendium Entries that are unlocked")]
+    public bool[] UnlockedLogEntries = new bool[9];
+
+    [Tooltip("True if the monster is sad and can be stroked")]
+    public bool petting;
+
+    [Header("For the cheats")]
     public bool getEpic;
     public bool getLegendary;
 
+    [Header("Other")]
     public bool TutorialOn;
 
+    [Tooltip("Notifications for the pet timer")]
     AndroidNotification[] PetNotifs = new AndroidNotification[3]; 
+
     
     private void Awake()
     {
@@ -98,9 +108,6 @@ public class GameManager : Singleton<GameManager>
         curScreen = eScene.home;
         DLIsGone = true;
         SetDLTimer();
-        petWaitInMinutes = 1.0f;
-        playWaitInMinutes = 2.0f;
-        DLWaitInMinutes = 15.0f;
         TutorialOn = true;
         petting = false;
     }
