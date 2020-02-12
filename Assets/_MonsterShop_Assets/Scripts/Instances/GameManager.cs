@@ -70,6 +70,9 @@ public class GameManager : Singleton<GameManager>
     public bool DLIsGone;
     public float DLWaitInMinutes = 10.0f;
 
+    //is petting enabled
+    public bool petting;
+
     //Other timers
     public MonsterTimer monsterTimer;
     //How long until you can pet again
@@ -85,6 +88,8 @@ public class GameManager : Singleton<GameManager>
     public bool getLegendary;
 
     public bool TutorialOn;
+
+    AndroidNotification[] PetNotifs = new AndroidNotification[3]; 
     
     private void Awake()
     {
@@ -97,6 +102,7 @@ public class GameManager : Singleton<GameManager>
         playWaitInMinutes = 2.0f;
         DLWaitInMinutes = 15.0f;
         TutorialOn = true;
+        petting = false;
     }
 
     private void Start()
@@ -109,22 +115,30 @@ public class GameManager : Singleton<GameManager>
 
         var c = new AndroidNotificationChannel()
         {
-            Id = "channel_id",
+            Id = "normal",
             Name = "Default Channel",
             Importance = Importance.High,
-            Description = "Generic notifications",
+            Description = "Timer notifications",
         };
         AndroidNotificationCenter.RegisterNotificationChannel(c);
     }
 
-    public void SendNotification(DateTime FireTime, string msg)
+    public void SendNotification(DateTime FireTime, string msg, string title, int monsterID = 0)
     {
         var notification = new AndroidNotification();
-        notification.Title = "SomeTitle";
+        notification.Title = title;
         notification.Text = msg;
         notification.FireTime = FireTime;
+        PetNotifs[monsterID] = notification;
 
-        AndroidNotificationCenter.SendNotification(notification, "channel_id");
+        AndroidNotificationCenter.SendNotification(notification, "normal");
+    }
+
+    public void CancelNotification(int monsterID)
+    {
+        AndroidNotification notif = PetNotifs[monsterID];
+        var identifier = AndroidNotificationCenter.SendNotification(notif, "normal");
+        AndroidNotificationCenter.CancelNotification(identifier);        
     }
 
     private void WriteEmptySlots()
@@ -146,7 +160,7 @@ public class GameManager : Singleton<GameManager>
     public void SetDLTimer()
     {
         DungeonLordWaitTimeEnd = DateTime.Now.AddMinutes(DLWaitInMinutes);
-        SendNotification(DungeonLordWaitTimeEnd, "The dungeonlord wants to buy some new monsters!");
+        SendNotification(DungeonLordWaitTimeEnd, "The dungeonlord wants to buy some new monsters!", "Sell monsters!");
     }
 
     /// <summary>
@@ -156,7 +170,7 @@ public class GameManager : Singleton<GameManager>
     public void SetPetTimer(int slotID)
     {
         CurMonsters[slotID].PetTimerEnd = DateTime.Now.AddMinutes(petWaitInMinutes);
-        SendNotification(CurMonsters[slotID].PetTimerEnd, "A monster is sad and needs affection! :(");
+        SendNotification(CurMonsters[slotID].PetTimerEnd, "A monster is sad and needs affection! :(", "Time for hugs!");
     }
 
     /// <summary>

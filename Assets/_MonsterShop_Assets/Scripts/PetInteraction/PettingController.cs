@@ -26,6 +26,30 @@ public class PettingController : MonoBehaviour
         HeartMeter.fillAmount = 0;
     }
 
+    private void Update()
+    {
+        if (GM.petting)
+        {
+            if (Input.touchCount >= 1)
+            {
+                Vector2 touchPos = Input.GetTouch(0).position;
+                Ray ray = Camera.main.ScreenPointToRay(touchPos);
+                Debug.Log("Touch pos: " + touchPos);
+                RaycastHit touchHit;
+
+
+                if (Physics.Raycast(ray.origin, ray.direction, out touchHit))
+                {
+                    Debug.Log("Hit: "+ touchHit.transform.name);
+                    if (touchHit.transform.CompareTag("Player"))
+                    {
+                        PetMonster();
+                    }
+                }
+            }
+        }
+    }
+
     public void SetXPBars()
     {
         if (GM.CurMonsters[(int)GM.curMonsterSlot].MonsterLevel < 7)
@@ -125,6 +149,7 @@ public class PettingController : MonoBehaviour
 
             if (monsterStroked >= GM.StrokesPerPettingSession)
             {
+                GM.petting = false;
                 GM.homeUI.TogglePetBackButton(false);
                 MM.monsterAnim[MM.CurMonster.SlotID].SetBool("isSad", false);
                 print("oh yay, monster is happy");                

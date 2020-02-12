@@ -173,6 +173,29 @@ public class HomeUI : UIController
         }
     }
 
+    private void Update()
+    {
+        //if (!GM.CurMonsters[GM.curMonsterID].IsHappy && curScene == eHomeUIScene.Home)
+        //{
+        //    if (Input.touchCount >= 1)
+        //    {
+        //        Vector2 touchPos = Input.GetTouch(0).position;
+        //        Ray ray = Camera.main.ScreenPointToRay(touchPos);
+        //        Debug.Log("Touch pos: " + touchPos);
+        //        RaycastHit touchHit;
+
+        //        if (Physics.Raycast(ray.origin, ray.direction, out touchHit))
+        //        {
+        //            Debug.Log("Hit: " + touchHit.transform.name);
+        //            if (touchHit.transform.CompareTag("Player"))
+        //            {
+        //                GoToPetSession();
+        //            }
+        //        }
+        //    }
+        //}
+    }
+
     /// <summary>
     /// Dis/Enables the Back button in the petting scene
     /// </summary>
@@ -419,6 +442,7 @@ public class HomeUI : UIController
         EnableMenu((int)eMenus.Petting);
         EnableMenu((int)eMenus.PettingInfo);
         DisableMenu((int)eMenus.PettingXPBar);
+        GM.petting = true;
     }
 
     private void UI_Kompendium()
@@ -834,7 +858,8 @@ public class HomeUI : UIController
     }
 
     public void ExitPetSession()
-    {        
+    {
+        GM.petting = false;
         StartCoroutine(cWaitForZoom(true));
     }
 
@@ -850,6 +875,7 @@ public class HomeUI : UIController
         yield return new WaitForSeconds(0.15f);
         if (zoomedIn)
         {
+            
             if (GM.CurMonsters[GM.curMonsterID].IsHappy)
                 GM.SetPetTimer(GM.curMonsterID);
             GM.monsterTimer.CheckDateTimes();
@@ -858,7 +884,7 @@ public class HomeUI : UIController
         }
         else
         {
-            SetUIStage(eHomeUIScene.Petting);
+            SetUIStage(eHomeUIScene.Petting);            
         }
     }
 
@@ -1167,6 +1193,7 @@ public class HomeUI : UIController
     {
         if (yes)
         {
+            GM.CancelNotification(GM.curMonsterID);
             GM.DLIsGone = true;
             GM.CurMonsters[(int)GM.curMonsterSlot].Sold = true;
             if (GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage == eMonsterStage.Adult)

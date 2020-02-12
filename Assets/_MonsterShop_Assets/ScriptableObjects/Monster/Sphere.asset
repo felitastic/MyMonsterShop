@@ -73,12 +73,12 @@ MonoBehaviour:
       Entry: 8
       Data: 
   LevelThreshold_normal:
-  - 30
-  - 60
+  - 40
   - 90
-  - 120
-  - 150
-  - 180
+  - 140
+  - 210
+  - 280
+  - 380
   XP_Cap: 810
   MultiplicatorRare: 2
   MultiplicatorLegendary: 3

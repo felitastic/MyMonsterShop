@@ -9,11 +9,11 @@ public class EndlessRunner_Values : ScriptableObject
     public float VerticalSpeed;
     [Tooltip("Speed of the monster left and right")]
     public float HorizontalSpeed;
-    [Tooltip("Speed multiplier for every checkpoint")]
+    [Tooltip("Multiplier on speed for each checkpoint")]
     public float SpeedModifier;
     [Tooltip("Base XP value of one powerup")]
     public float CollectableValue;
-    [Tooltip("Added value for the powerup per Checkpoint")]
+    [Tooltip("Added value for the powerup per checkpoint")]
     public float ValueModifier;
     [Tooltip("Multiplier for reward after reaching the goal")]
     public float GoalReward;

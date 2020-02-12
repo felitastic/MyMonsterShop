@@ -765,7 +765,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5941750836160654144}
-  m_LocalRotation: {x: -0, y: 0.99993885, z: -0.011060808, w: 0}
+  m_LocalRotation: {x: -0.0000000020719872, y: 0.9999388, z: -0.011065145, w: -0.00000018724204}
   m_LocalPosition: {x: 0, y: -5.74, z: -2.83}
   m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_Children:
@@ -819,8 +819,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 100, y: 100, z: 100}
-  m_Center: {x: 0, y: 48, z: 0}
+  m_Size: {x: 32, y: 29, z: 29}
+  m_Center: {x: 0, y: 14, z: 0}
 --- !u!1 &5941750836191218364
 GameObject:
   m_ObjectHideFlags: 0
