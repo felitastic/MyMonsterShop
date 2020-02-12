@@ -16,5 +16,5 @@ MonoBehaviour:
   HorizontalSpeed: 5
   SpeedModifier: 1.25
   CollectableValue: 5
-  ValueModifier: 1
+  ValueModifier: 3
   GoalReward: 1.25

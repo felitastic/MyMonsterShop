@@ -1103,6 +1103,7 @@ public class HomeUI : UIController
 
     public void ChooseRunnerLevel(int scene)
     {
+        GM.CancelNotifsForRunner();
         GM.CurMonsters[GM.curMonsterID].IsTired = true;
         GM.curScreen = eScene.runner;
         SceneManager.LoadScene(scene);
@@ -1398,8 +1399,7 @@ public class HomeUI : UIController
 
     public void WatchAdButton()
     {
-        GM.homeMonsterManager.SetMonsterXP(111);
-        SetMonsterValue();
+        //GM.CurMonsters[GM.curMonsterID].IsHappy;
 
        print("watch an ad and get money");
         //SpawnCoins();

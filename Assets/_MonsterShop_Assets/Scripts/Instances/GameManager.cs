@@ -14,7 +14,7 @@ public class GameManager : Singleton<GameManager>
     [Header("For changes in inspector")]
     [Header("Timer Values")]
     [Tooltip("Timer for the Sell Option in Minutes")]
-    public float DLWaitInMinutes = 15.0f;
+    public float DLWaitInMinutes = 10.0f;
     [Tooltip("Timer until Monster is sad again in Minutes")]
     public float petWaitInMinutes = 1.0f;
     [Tooltip("Timer until Monster can train again in Minutes")]
@@ -98,9 +98,9 @@ public class GameManager : Singleton<GameManager>
     public bool TutorialOn;
 
     [Tooltip("Notifications for the pet timer")]
-    AndroidNotification[] PetNotifs = new AndroidNotification[3]; 
-
-    
+    AndroidNotification[] PetNotifs = new AndroidNotification[3];
+    AndroidNotification DungeonNotif;
+        
     private void Awake()
     {
         Application.targetFrameRate = 60;        
@@ -130,15 +130,20 @@ public class GameManager : Singleton<GameManager>
         AndroidNotificationCenter.RegisterNotificationChannel(c);
     }
 
-    public void SendNotification(DateTime FireTime, string msg, string title, int monsterID = 0)
+    public void SendNotification(DateTime FireTime, string msg, string title, int monsterID = 3)
     {
+
         var notification = new AndroidNotification();
         notification.Title = title;
         notification.Text = msg;
         notification.FireTime = FireTime;
-        PetNotifs[monsterID] = notification;
+        if (monsterID < 3)
+            PetNotifs[monsterID] = notification;
+        else
+            DungeonNotif = notification;
 
         AndroidNotificationCenter.SendNotification(notification, "normal");
+        print("Firing notif: " + msg);
     }
 
     public void CancelNotification(int monsterID)
@@ -146,6 +151,39 @@ public class GameManager : Singleton<GameManager>
         AndroidNotification notif = PetNotifs[monsterID];
         var identifier = AndroidNotificationCenter.SendNotification(notif, "normal");
         AndroidNotificationCenter.CancelNotification(identifier);        
+        print("Canceling pet notif for no" + monsterID);
+    }
+
+    public void CancelNotifsForRunner()
+    {
+        AndroidNotificationCenter.CancelAllScheduledNotifications();
+        //foreach(AndroidNotification notif in PetNotifs)
+        //{
+        //    var identifier = AndroidNotificationCenter.SendNotification(notif, "normal");
+        //    AndroidNotificationCenter.CancelNotification(identifier);
+        //}
+
+        //var dungeonidenti = AndroidNotificationCenter.SendNotification(DungeonNotif, "normal");
+        //AndroidNotificationCenter.CancelNotification(dungeonidenti);
+        print("Canceling all notifs");
+    }
+
+    public void RestartNotifs()
+    {
+        print("Restarting all notifs");
+
+        for (int i = 0; i < 3; i++)
+        {
+            if (CurMonsters[i].PetTimerEnd > System.DateTime.Now)
+            {
+                SendNotification(CurMonsters[i].PetTimerEnd, "A monster is sad and needs affection! :(", "Time for hugs!");
+            }
+        }
+
+        if (DungeonLordWaitTimeEnd > System.DateTime.Now)
+        {
+            SendNotification(DungeonLordWaitTimeEnd, "The dungeonlord wants to buy some new monsters!", "Sell monsters!");           
+        }
     }
 
     private void WriteEmptySlots()

@@ -46,6 +46,22 @@ public class PettingController : MonoBehaviour
                     }
                 }
             }
+            else if (Input.GetMouseButtonDown(0))
+            {
+                Vector2 mousePos = Input.mousePosition;
+                Ray ray = Camera.main.ScreenPointToRay(mousePos);
+                Debug.Log("Touch pos: " + mousePos);
+                RaycastHit touchHit;
+
+                if (Physics.Raycast(ray.origin, ray.direction, out touchHit))
+                {
+                    Debug.Log("Hit: " + touchHit.transform.name);
+                    if (touchHit.transform.CompareTag("Player"))
+                    {
+                        PetMonster();
+                    }
+                }
+            }
         }
     }
 

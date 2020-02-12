@@ -129,6 +129,7 @@ public class RunnerUI : UIController
     // EndResultButtons function
     public void TapResult()
     {
+        GM.RestartNotifs();
         GM.LoadHomeScene();
     }
 
