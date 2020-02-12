@@ -37,7 +37,6 @@ public class PettingController : MonoBehaviour
                 Debug.Log("Touch pos: " + touchPos);
                 RaycastHit touchHit;
 
-
                 if (Physics.Raycast(ray.origin, ray.direction, out touchHit))
                 {
                     Debug.Log("Hit: "+ touchHit.transform.name);
