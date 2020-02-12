@@ -39,6 +39,7 @@ public class HomeUI : UIController
 
     private int totalValue;
     private bool signed = false;
+    private bool goldCountSkip;
 
     private enum BGsprite
     {
@@ -1191,6 +1192,8 @@ public class HomeUI : UIController
     /// </summary>
     public void ConfirmMonsterSale(bool yes)
     {
+        DisableMenu((int)eMenus.D_SaleConfirm);
+
         if (yes)
         {
             GM.CancelNotification(GM.curMonsterID);
@@ -1240,7 +1243,8 @@ public class HomeUI : UIController
     }
     private void ShowContract()
     {        
-        string msg = GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage +" "+ GM.CurMonsters[(int)GM.curMonsterSlot].Monster.MonsterName + "\n"
+        string msg = GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage +" "
+            + GM.CurMonsters[(int)GM.curMonsterSlot].Monster.MonsterName + "\n"
             + "Selling Price: " + Mathf.RoundToInt(GM.CurMonsters[(int)GM.curMonsterSlot].MonsterValue);
 
         totalValue = Mathf.RoundToInt(GM.CurMonsters[(int)GM.curMonsterSlot].MonsterValue);
@@ -1342,7 +1346,7 @@ public class HomeUI : UIController
 
         yield return new WaitForSeconds(0.76f);
 
-        while (GM.PlayerMoney >= oldValue && !moneyCountFinished)
+        while (GM.PlayerMoney >= oldValue && !goldCountSkip)
         {
             SetText((int)eTextfields.GoldCount, "" + oldValue);            
             oldValue++;
@@ -1360,10 +1364,10 @@ public class HomeUI : UIController
         D_Signature.SetTrigger("sign");
         yield return new WaitForSeconds(1.0f);
 
-        EnableMenu((int)eMenus.SkipGoldButton);
-
         moneyCountFinished = false;
-        GM.ChangePlayerGold(+totalValue, GM.PlayerMoney);        
+        GM.ChangePlayerGold(+totalValue, GM.PlayerMoney);       
+        
+        EnableMenu((int)eMenus.SkipGoldButton);
        
         while (!moneyCountFinished)
             yield return null;
@@ -1373,7 +1377,9 @@ public class HomeUI : UIController
         D_Signature.SetTrigger("done");
         yield return new WaitForSeconds(0.01f);
         DisableMenu((int)eMenus.D_SalesContract);
+        DisableMenu((int)eMenus.SkipGoldButton);
         StartCoroutine(cMonsterCage());
+        goldCountSkip = false;
     }
 
     public void SkipGoldCount()
@@ -1384,8 +1390,9 @@ public class HomeUI : UIController
         {
             DisableMenu((int)eMenus.SkipGoldButton);
             moneyCountFinished = true;
+            goldCountSkip = true;
             GoldSkipTapped = 0;
-            GM.ChangePlayerGold(GM.PlayerMoney);
+            GM.ChangePlayerGold(0);
         }
     }
 

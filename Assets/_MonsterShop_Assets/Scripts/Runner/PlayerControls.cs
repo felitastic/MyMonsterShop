@@ -34,8 +34,7 @@ public class PlayerControls : MonoBehaviour
 
             if (!pointerdown)
             {
-                monsterSpeed = new Vector2(0f, verticalSpeed);
-                GM.runnerMonsterManager.monsterAnim[GM.curMonsterID].SetTrigger("ahead");
+                monsterSpeed = new Vector2(0f, verticalSpeed);                
             }
             else
             {
@@ -92,5 +91,6 @@ public class PlayerControls : MonoBehaviour
     public void PointerExit()
     {
         pointerdown = false;
+        GM.runnerMonsterManager.monsterAnim[GM.curMonsterID].SetTrigger("ahead");
     }
 }

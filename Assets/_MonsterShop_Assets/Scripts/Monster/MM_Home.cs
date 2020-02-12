@@ -161,9 +161,9 @@ public IEnumerator cHatchEgg(Transform monsterSpawn)
         GM.vfx_home.SpawnEffect(VFX_Home.VFX.EggShells, VFX_Home.Position.EggHatching);
         GM.homeUI.EnableEggGlow(true);
         GM.homeMonsterManager.SpawnCurrentMonster(monsterSpawn);
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(0.15f);
         GM.homeMonsterManager.monsterAnim[GM.curMonsterID].SetTrigger("hatch");
-        yield return new WaitForSeconds(0.75f);
+        yield return new WaitForSeconds(1.0f);
 
         print("checking rarity and showing banner");
         switch (GM.CurMonsters[GM.curMonsterID].Rarity)
