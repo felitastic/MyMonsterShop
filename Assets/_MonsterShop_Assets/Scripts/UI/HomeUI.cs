@@ -1198,6 +1198,8 @@ public class HomeUI : UIController
         if (yes)
         {
             GM.CancelNotification(GM.curMonsterID);
+
+
             GM.DLIsGone = true;
             GM.CurMonsters[(int)GM.curMonsterSlot].Sold = true;
             if (GM.CurMonsters[(int)GM.curMonsterSlot].MonsterStage == eMonsterStage.Adult)

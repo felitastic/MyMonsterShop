@@ -150,7 +150,7 @@ public class GameManager : Singleton<GameManager>
     {
         AndroidNotification notif = PetNotifs[monsterID];
         var identifier = AndroidNotificationCenter.SendNotification(notif, "normal");
-        AndroidNotificationCenter.CancelNotification(identifier);        
+        AndroidNotificationCenter.CancelScheduledNotification(identifier);
         print("Canceling pet notif for no" + monsterID);
     }
 
