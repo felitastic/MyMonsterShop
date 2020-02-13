@@ -917,7 +917,8 @@ public class HomeUI : UIController
         {
             SetUIStage(eHomeUIScene.Dungeonlord);
             SetDungeonDialogue();
-      
+
+            GM.CancelAllNotifs();
             GM.homeUI.SetMonsterTexts();
             GM.homeUI.SetMonsterValue();
             GM.homeUI.SetMonsterlevel_Dungeon();
@@ -1103,7 +1104,7 @@ public class HomeUI : UIController
 
     public void ChooseRunnerLevel(int scene)
     {
-        GM.CancelNotifsForRunner();
+        GM.CancelAllNotifs();
         GM.CurMonsters[GM.curMonsterID].IsTired = true;
         GM.curScreen = eScene.runner;
         SceneManager.LoadScene(scene);
@@ -1274,6 +1275,7 @@ public class HomeUI : UIController
         // nothing has been sold to the dungeon lord
         if (!GM.DLIsGone)
         {
+            GM.RestartNotifs();
             SetUIStage(eHomeUIScene.Home);
         }
         else
@@ -1295,7 +1297,8 @@ public class HomeUI : UIController
             }
         }
         SetSlotSymbol();
-        GM.SetDLTimer();
+        GM.RestartNotifs();
+        GM.SetDLTimer();        
         GM.monsterTimer.CheckDateTimes();
         SetUIStage(eHomeUIScene.Home);
     }

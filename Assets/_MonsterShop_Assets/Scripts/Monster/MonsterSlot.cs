@@ -44,5 +44,7 @@ public class MonsterSlot
         IsHappy = false;
         IsTired = false;
         StrokeTimes = 0;
+        PetTimerEnd = System.DateTime.Now;
+        PlayTimerEnd = System.DateTime.Now;
     }
 }

@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: PlaceHolder
   m_EditorClassIdentifier: 
   ShadowButtonImage: {fileID: 21300000, guid: 46ee40c10b64f69488d36ffd44e2f114, type: 3}
-  UnlockedButtonImage: {fileID: 0}
+  UnlockedButtonImage: {fileID: 21300000, guid: 68dafd6f396b0994f867b925e7f77126,
+    type: 3}
   ButtonText: 
-  MonsterImage: {fileID: 0}
-  MonsterFluff: 
-  MonsterName: 
+  MonsterImage: {fileID: 21300000, guid: 46ee40c10b64f69488d36ffd44e2f114, type: 3}
+  MonsterFluff: Nothing to see here... yet
+  MonsterName: Placeholder
   MonsterRarity: 
   MonsterHatchCount: 0
-  MonsterHighestPrice: 
+  MonsterHighestPrice: 0
   MonsterType: 0

@@ -85,7 +85,7 @@ public class GameManager : Singleton<GameManager>
     public int PlayerMoney = 0;
 
     [Tooltip("Kompendium Entries that are unlocked")]
-    public bool[] UnlockedLogEntries = new bool[9];
+    public bool[] UnlockedLogEntries = new bool[12];
 
     [Tooltip("True if the monster is sad and can be stroked")]
     public bool petting;
@@ -154,7 +154,7 @@ public class GameManager : Singleton<GameManager>
         print("Canceling pet notif for no" + monsterID);
     }
 
-    public void CancelNotifsForRunner()
+    public void CancelAllNotifs()
     {
         AndroidNotificationCenter.CancelAllScheduledNotifications();
         //foreach(AndroidNotification notif in PetNotifs)

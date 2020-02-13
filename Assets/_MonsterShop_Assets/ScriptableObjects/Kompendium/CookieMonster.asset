@@ -17,9 +17,9 @@ MonoBehaviour:
     type: 3}
   ButtonText: Cookie Monster
   MonsterImage: {fileID: 21300000, guid: baf5b270c528de84daf19efaa6941921, type: 3}
-  MonsterFluff: Its the one and only cookie monster. Hide your cookies. Now!
+  MonsterFluff: Oops, how did this one sneak in here?
   MonsterName: Cookie Monster
   MonsterRarity: Unique
   MonsterHatchCount: 1
-  MonsterHighestPrice: Invaluable
-  MonsterType: 0
+  MonsterHighestPrice: 0
+  MonsterType: 12
