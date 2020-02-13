@@ -132,7 +132,6 @@ public class GameManager : Singleton<GameManager>
 
     public void SendNotification(DateTime FireTime, string msg, string title, int monsterID = 3)
     {
-
         var notification = new AndroidNotification();
         notification.Title = title;
         notification.Text = msg;
@@ -148,15 +147,15 @@ public class GameManager : Singleton<GameManager>
 
     public void CancelNotification(int monsterID)
     {
-        AndroidNotification notif = PetNotifs[monsterID];
-        var identifier = AndroidNotificationCenter.SendNotification(notif, "normal");
-        AndroidNotificationCenter.CancelScheduledNotification(identifier);
-        print("Canceling pet notif for no" + monsterID);
+        //AndroidNotification notif = PetNotifs[monsterID];
+        //var identifier = AndroidNotificationCenter.SendNotification(notif, "normal");
+        //AndroidNotificationCenter.CancelScheduledNotification(identifier);
+        //print("Canceling pet notif for no" + monsterID);
     }
 
     public void CancelAllNotifs()
     {
-        AndroidNotificationCenter.CancelAllScheduledNotifications();
+        //AndroidNotificationCenter.CancelAllScheduledNotifications();
         //foreach(AndroidNotification notif in PetNotifs)
         //{
         //    var identifier = AndroidNotificationCenter.SendNotification(notif, "normal");
@@ -165,25 +164,25 @@ public class GameManager : Singleton<GameManager>
 
         //var dungeonidenti = AndroidNotificationCenter.SendNotification(DungeonNotif, "normal");
         //AndroidNotificationCenter.CancelNotification(dungeonidenti);
-        print("Canceling all notifs");
+        //print("Canceling all notifs");
     }
 
     public void RestartNotifs()
     {
-        print("Restarting all notifs");
+        //print("Restarting all notifs");
 
-        for (int i = 0; i < 3; i++)
-        {
-            if (CurMonsters[i].PetTimerEnd > System.DateTime.Now)
-            {
-                SendNotification(CurMonsters[i].PetTimerEnd, "A monster is sad and needs affection! :(", "Time for hugs!");
-            }
-        }
+        //for (int i = 0; i < 3; i++)
+        //{
+        //    if (CurMonsters[i].PetTimerEnd > System.DateTime.Now)
+        //    {
+        //        SendNotification(CurMonsters[i].PetTimerEnd, "A monster is sad and needs affection! :(", "Time for hugs!");
+        //    }
+        //}
 
-        if (DungeonLordWaitTimeEnd > System.DateTime.Now)
-        {
-            SendNotification(DungeonLordWaitTimeEnd, "The dungeonlord wants to buy some new monsters!", "Sell monsters!");           
-        }
+        //if (DungeonLordWaitTimeEnd > System.DateTime.Now)
+        //{
+        //    SendNotification(DungeonLordWaitTimeEnd, "The dungeonlord wants to buy some new monsters!", "Sell monsters!");           
+        //}
     }
 
     private void WriteEmptySlots()
@@ -205,7 +204,7 @@ public class GameManager : Singleton<GameManager>
     public void SetDLTimer()
     {
         DungeonLordWaitTimeEnd = DateTime.Now.AddMinutes(DLWaitInMinutes);
-        SendNotification(DungeonLordWaitTimeEnd, "The dungeonlord wants to buy some new monsters!", "Sell monsters!");
+        //SendNotification(DungeonLordWaitTimeEnd, "The dungeonlord wants to buy some new monsters!", "Sell monsters!");
     }
 
     /// <summary>
@@ -215,7 +214,7 @@ public class GameManager : Singleton<GameManager>
     public void SetPetTimer(int slotID)
     {
         CurMonsters[slotID].PetTimerEnd = DateTime.Now.AddMinutes(petWaitInMinutes);
-        SendNotification(CurMonsters[slotID].PetTimerEnd, "A monster is sad and needs affection! :(", "Time for hugs!");
+        //SendNotification(CurMonsters[slotID].PetTimerEnd, "A monster is sad and needs affection! :(", "Time for hugs!");
     }
 
     /// <summary>

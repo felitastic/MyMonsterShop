@@ -169,6 +169,7 @@ public class HomeUI : UIController
         }
         else
         {
+            GM.SendNotification(System.DateTime.Now.AddSeconds(0.5f), "The dungeonlord needs new monsters!", "Open your Monster Shop!");
             SetUIStage(HomeUI.eHomeUIScene.Tutorial);
             GM.TutorialOn = false;
         }
